@@ -113,3 +113,15 @@ Password = Password1#
 ```
 
 2. Import ai_store.sql
+
+### Prepare FrontEnd Client
+
+1. Install dependencies
+
+```
+npm install
+```
+2. Run apps
+```
+npm start
+```
