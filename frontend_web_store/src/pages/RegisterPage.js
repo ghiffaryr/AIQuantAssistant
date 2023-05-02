@@ -1,0 +1,501 @@
+import Container from "react-bootstrap/esm/Container";
+import Form from "react-bootstrap/Form";
+import Toast from "react-bootstrap/Toast";
+import ToastContainer from "react-bootstrap/ToastContainer";
+import FooterComponent from "../components/FooterComponent";
+import NavbarComponent from "../components/NavbarComponent";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { LinkContainer } from "react-router-bootstrap";
+import { useNavigate } from "react-router-dom";
+import Button from "react-bootstrap/esm/Button";
+import { useState } from "react";
+import "../css/Register.css";
+import { BASE_URL } from "../env/Constants";
+import { useDispatch, useSelector } from "react-redux";
+import { storage } from "../env/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
+function RegisterPage() {
+  const [inputs, setInputs] = useState({
+    image: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    coPassword: "",
+    recoveryPhrase: "",
+    phone: "",
+    address: "",
+    gender: "",
+    birthdate: "",
+    role: "ROLE_CUSTOMER",
+  });
+  const [show, setShow] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [validated, setValidated] = useState(false);
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const loggedIn = useSelector((state) => state.loggedIn);
+  //   let loggedIn = false;
+
+  if (
+    localStorage.getItem("user_email") &&
+    localStorage.getItem("user_token") &&
+    localStorage.getItem("token_type")
+  ) {
+    dispatch({ type: "loggedIn" });
+    // loggedIn = true;
+  }
+
+  function handleChange(e) {
+    setInputs({
+      ...inputs,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  function handleSubmit(e) {
+    const form = e.currentTarget;
+
+    console.log(
+      JSON.stringify({
+        ...Object.fromEntries(
+          Object.entries(inputs).filter(
+            ([key, value]) =>
+              key !== "firstName" &&
+              key !== "lastName" &&
+              key !== "coPassword" &&
+              key !== "birthdate" &&
+              key !== "gender" &&
+              value !== ""
+          )
+        ),
+        name: `${inputs.firstName} ${inputs.lastName}`,
+        birthdate: new Date(inputs.birthdate).toISOString(),
+        gender: inputs.gender === "male",
+      })
+    );
+
+    setValidated(true);
+    e.preventDefault();
+    if (form.checkValidity()) {
+      fetch(`${BASE_URL}/api/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...Object.fromEntries(
+            Object.entries(inputs).filter(
+              ([key, value]) =>
+                key !== "firstName" &&
+                key !== "lastName" &&
+                key !== "coPassword" &&
+                key !== "birthdate" &&
+                key !== "gender" &&
+                value !== ""
+            )
+          ),
+          name: `${inputs.firstName} ${inputs.lastName}`,
+          birthdate: new Date(inputs.birthdate).toISOString(),
+          gender: inputs.gender === "male",
+        }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error(response.body);
+          }
+        })
+        .then((data) => {
+          if (data) {
+            setError(false);
+            setShow(true);
+            setTimeout(() => {
+              navigate("/login");
+            }, 3000);
+          }
+        })
+        .catch((error) => {
+          setError(true);
+          setErrorMessage(
+            `This is an HTTP error: The status is ${error.message}`
+          );
+          setInputs({
+            ...inputs,
+            password: "",
+            coPassword: "",
+            recoveryPhrase: "",
+          });
+          setShow(true);
+        });
+    }
+  }
+
+  function upload(e) {
+    e.preventDefault();
+    // console.log(e.target.files); -> FileList {0: File, length: 1}
+    const fileName = e.target.files[0].name;
+    const storageRef = ref(storage, `${fileName}`);
+    uploadBytes(storageRef, e.target.files[0])
+      .then((snapshot) => {
+        console.log("Upload success!");
+        return getDownloadURL(storageRef);
+      })
+      .then((downloadURL) => {
+        setInputs({
+          ...inputs,
+          image: downloadURL,
+        });
+      })
+      .catch((err) => {
+        alert("Error uploading file. Please try again.");
+      });
+  }
+
+  return (
+    <>
+      <NavbarComponent navStyle="simple" />
+      <>
+        <Container className="container register-main d-flex justify-content-center flex-column align-items-center my-5 pt-5">
+          {loggedIn ? (
+            <>
+              <h3 className="main-title">You are already registered.</h3>
+              <LinkContainer to="/">
+                <Button variant="outline-danger">Go back to Home page</Button>
+              </LinkContainer>
+            </>
+          ) : (
+            <>
+              <h1 className="main-title">Register a new account</h1>
+              <Form
+                className="login-form mt-4"
+                style={{ width: "30rem" }}
+                noValidate
+                validated={validated}
+                onSubmit={handleSubmit}
+              >
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="validationCustom01"
+                >
+                  <Form.Label column sm="4">
+                    Profile Picture
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      name="image"
+                      type="file"
+                      accept="image/*"
+                      onChange={upload}
+                      placeholder="Upload Profile Picture"
+                      aria-label="Upload Profile Picture"
+                      aria-describedby="basic-addon1"
+                    />
+                  </Col>
+                </Form.Group>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="validationCustom02"
+                >
+                  <Form.Label column sm="4">
+                    First Name <span className="text-danger">*</span>
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      aria-label="First name"
+                      type="text"
+                      name="firstName"
+                      placeholder="First name"
+                      value={inputs.firstName}
+                      onChange={handleChange}
+                      pattern="^[A-Za-z]{1,30}"
+                      required
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please provide a valid first name.
+                    </Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="validationCustom03"
+                >
+                  <Form.Label column sm="4">
+                    Last Name <span className="text-danger">*</span>
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      aria-label="Last name"
+                      type="text"
+                      name="lastName"
+                      placeholder="Last name"
+                      value={inputs.lastName}
+                      onChange={handleChange}
+                      pattern="^[A-Za-z]{1,30}"
+                      required
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please provide a valid last name.
+                    </Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="validationCustom04"
+                >
+                  <Form.Label column sm="4">
+                    Email Address <span className="text-danger">*</span>
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      type="email"
+                      placeholder="Email address"
+                      name="email"
+                      value={inputs.email}
+                      onChange={handleChange}
+                      pattern="([a-zA-Z0-9]+(?:[._+-][a-zA-Z0-9]+)*)@([a-zA-Z0-9]+(?:[.-][a-zA-Z0-9]+)*[.][a-zA-Z]{2,})"
+                      required
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please provide a valid email address.
+                    </Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="validationCustom05"
+                >
+                  <Form.Label column sm="4">
+                    Password <span className="text-danger">*</span>
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      value={inputs.password}
+                      onChange={handleChange}
+                      pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
+                      required
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      <p>
+                        Please provide a valid password. The password needs to:{" "}
+                      </p>
+                      <ul>
+                        <li>include both lower and upper case characters</li>
+                        <li>
+                          include at least one number and one special character
+                        </li>
+                        <li>be at least 8 characters long.</li>
+                      </ul>
+                    </Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="validationCustom06"
+                >
+                  <Form.Label column sm="4">
+                    Confirm Password <span className="text-danger">*</span>
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      type="password"
+                      name="coPassword"
+                      placeholder="Confirm password"
+                      value={inputs.coPassword}
+                      onChange={handleChange}
+                      pattern={inputs.password}
+                      required
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Passwords don't match.
+                    </Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="validationCustom07"
+                >
+                  <Form.Label column sm="4">
+                    Recovery Phrase <span className="text-danger">*</span>
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      type="text"
+                      name="recoveryPhrase"
+                      placeholder="Recovery phrase"
+                      value={inputs.recoveryPhrase}
+                      onChange={handleChange}
+                      pattern="^(?!\s*$).+"
+                      required
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Recovery phrase cannot be blank.
+                    </Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="validationCustom08"
+                >
+                  <Form.Label column sm="4">
+                    Phone
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      type="text"
+                      name="phone"
+                      placeholder="Phone"
+                      value={inputs.phone}
+                      onChange={handleChange}
+                      pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$"
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please provide a valid phone number.
+                    </Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="validationCustom09"
+                >
+                  <Form.Label column sm="4">
+                    Address
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      type="text"
+                      name="address"
+                      placeholder="Address"
+                      value={inputs.address}
+                      onChange={handleChange}
+                      pattern="^(?!\s*$).+"
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please provide a valid address.
+                    </Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="validationCustom10"
+                >
+                  <Form.Label column sm="4">
+                    Gender
+                  </Form.Label>
+                  <Col sm="8" className="d-flex align-items-center">
+                    <Form.Check
+                      inline
+                      label="Male"
+                      name="gender"
+                      value="male"
+                      type={"radio"}
+                      id="inline-radio-gender-male"
+                      onChange={handleChange}
+                    />
+                    <Form.Check
+                      inline
+                      label="Female"
+                      name="gender"
+                      value="female"
+                      type={"radio"}
+                      id="inline-radio-gender-female"
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Form.Group>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="validationCustom11"
+                >
+                  <Form.Label column sm="4">
+                    Birth Date
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      type="date"
+                      name="birthdate"
+                      placeholder="Birth Date"
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </Form.Group>
+                <div className="text-center">
+                  <Button
+                    type="submit"
+                    variant="outline-primary"
+                    className="w-50 mt-3"
+                  >
+                    Register
+                  </Button>
+                  <br />
+                  <Form.Text>
+                    Already have an account?{" "}
+                    <LinkContainer
+                      to="/login"
+                      className="login-link text-primary"
+                    >
+                      <span>Login</span>
+                    </LinkContainer>
+                  </Form.Text>
+                </div>
+              </Form>
+            </>
+          )}
+        </Container>
+        <div className="register-footer">
+          <FooterComponent />
+        </div>
+      </>
+      <ToastContainer className="p-3 top-0 end-0">
+        <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>
+          {error ? (
+            <>
+              <Toast.Header>
+                <img
+                  src="holder.js/20x20?text=%20"
+                  className="rounded me-2"
+                  alt=""
+                />
+                <strong className="me-auto text-danger">Error!</strong>
+              </Toast.Header>
+              <Toast.Body>{errorMessage}</Toast.Body>
+            </>
+          ) : (
+            <>
+              <Toast.Header>
+                <img
+                  src="holder.js/20x20?text=%20"
+                  className="rounded me-2"
+                  alt=""
+                />
+                <strong className="me-auto text-success">Success!</strong>
+              </Toast.Header>
+              <Toast.Body>Successfully registered! Please log in!</Toast.Body>
+            </>
+          )}
+        </Toast>
+      </ToastContainer>
+    </>
+  );
+}
+
+export default RegisterPage;

@@ -1,0 +1,26 @@
+.main-homepage {
+  width: 100%;
+  height: calc(100vh - 56px);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
+    url("https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/background.jpg?alt=media&token=ec156959-a15f-4156-af31-2386126d8ef6");
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0;
+}
+
+.main-content {
+  width: 100%;
+  height: calc(100vh - 330px);
+  margin: 0;
+}
+
+.homepage-footer .footer-item > a:hover {
+  color: white;
+}
+
+.homepage-footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  margin: auto;
+}

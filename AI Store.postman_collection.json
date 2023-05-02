@@ -1,0 +1,928 @@
+{
+	"info": {
+		"_postman_id": "74bb9fe4-ca5d-4439-9ebc-6baa07eb8574",
+		"name": "AI Store",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "25724909"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"manager@domain.com\",\n  \"name\": \"Real Manager\",\n  \"password\": \"Password1#\",\n  \"recoveryPhrase\": \"what zit tooya\",\n  \"role\": \"ROLE_MANAGER\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://0.0.0.0:8080/api/register"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"ghiffaryr@domain.com\",\n    \"password\": \"G\\\\1Qc&zv\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://0.0.0.0:8080/api/login"
+			},
+			"response": []
+		},
+		{
+			"name": "View Profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbXBsb3llZUBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjg5LCJleHAiOjE2ODMwMTkwODl9.pYeEh7HxkR9fRpwU7IXwqB6NL3jxNZy_fm-MZUEat29HerqJnriuldSt-QUR8IcNiCEoV5OzhxhJce-qyzLSqw"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/profile"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnaGlmZmFyeXJAZG9tYWluLmNvbSIsImlhdCI6MTY4MjY4NzU5MSwiZXhwIjoxNjgyNzczOTkxfQ.bw0pjHh39NaI3jFroY4035Fi0SaNqoipZVj8NviOKK76H__PbGmqIr4BRn8ZeeS-cGypUUgu252Y97JKV_V_IA"
+					}
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"address\": \"New World\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://0.0.0.0:8080/api/profile/update"
+			},
+			"response": []
+		},
+		{
+			"name": "Recovery",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnaGlmZmFyeXJAZG9tYWluLmNvbSIsImlhdCI6MTY4MjY1NzYwMywiZXhwIjoxNjgyNzQ0MDAzfQ.7AIuQesuKwLtoYOYOEVbFGu2uFCbCcXowU73PqLr5BoI-uGUTbXFOwnxao42ntz0U5c_UcrgtzRA5IAX1V5oxw"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"ghiffaryr@domain.com\",\n  \"recoveryPhrase\": \"what zit tooya\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://0.0.0.0:8080/api/recovery"
+			},
+			"response": []
+		},
+		{
+			"name": "Deactivate Profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnaGlmZmFyeXJAZG9tYWluLmNvbSIsImlhdCI6MTY4MjY1NzYwMywiZXhwIjoxNjgyNzQ0MDAzfQ.7AIuQesuKwLtoYOYOEVbFGu2uFCbCcXowU73PqLr5BoI-uGUTbXFOwnxao42ntz0U5c_UcrgtzRA5IAX1V5oxw"
+					}
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"address\": \"Alamat B\",\n  \"email\": \"ghiffaryr@domain.com\",\n  \"name\": \"Ghiffary Baru\",\n  \"password\": \"Password1#\",\n  \"phone\": \"08124125215\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://0.0.0.0:8080/api/profile/deactivate"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Product Category",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2ODI5MzI3MDEsImV4cCI6MTY4MzAxOTEwMX0.uomqqVXREBL90iftevNW6_iqKDWJMGbx220SfvpMwrxbmMgq94VNUEs2HkFvU6i3YSSQUC51SRpqVdKO6YOn6w"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"productCategoryCode\": \"neuralprophet\",\n  \"productCategoryImage\": \"https://user-images.githubusercontent.com/21246060/111388960-6c367e80-866d-11eb-91c1-46f2c0d21879.PNG\",\n  \"productCategoryName\": \"Neural Prophet\",\n  \"productCategoryDescription\": \"Neural Prophet Algorithm\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://0.0.0.0:8080/api/seller/category/create"
+			},
+			"response": []
+		},
+		{
+			"name": "View All Product Categories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/category"
+			},
+			"response": []
+		},
+		{
+			"name": "View Product Category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/category/autots"
+			},
+			"response": []
+		},
+		{
+			"name": "View All Products By Product Category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/category/autots?page=1&size=3",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"category",
+						"autots"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View All On Sale Products By Product Category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/category/autots/product/onsale?page=1&size=3",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"category",
+						"autots",
+						"product",
+						"onsale"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View All Off Sale Products By Product Category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/category/autots/product/offsale?page=1&size=3",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"category",
+						"autots",
+						"product",
+						"offsale"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Product Category Predict (Direct Python)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"model_choice\":\"facebookprophet\",\n    \"forecasting_horizon\":1,\n    \"stock_code\":\"TLKM.jk\",\n    \"training_window\":3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://0.0.0.0:8000/api/predict"
+			},
+			"response": []
+		},
+		{
+			"name": "Product Category Predict (Java)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2ODI5MzI3MDEsImV4cCI6MTY4MzAxOTEwMX0.uomqqVXREBL90iftevNW6_iqKDWJMGbx220SfvpMwrxbmMgq94VNUEs2HkFvU6i3YSSQUC51SRpqVdKO6YOn6w"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"forecastingHorizon\": 1,\n  \"stockCode\": \"TLKM.JK\",\n  \"trainingWindow\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://0.0.0.0:8080/api/category/neuralprophet/predict"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product Category",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2ODI5MzI3MDEsImV4cCI6MTY4MzAxOTEwMX0.uomqqVXREBL90iftevNW6_iqKDWJMGbx220SfvpMwrxbmMgq94VNUEs2HkFvU6i3YSSQUC51SRpqVdKO6YOn6w"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"productCategoryCode\": \"autots\",\n  \"productCategoryDescription\": \"AutoTS Algorithm\",\n  \"productCategoryImage\": \"https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png\",\n  \"productCategoryName\": \"AutoTS\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://0.0.0.0:8080/api/seller/category/autotimeseries/update"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product Category",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2NzcyNTk1NDUsImV4cCI6MTY3NzM0NTk0NX0.7EYWJewhPTK5k0vbT4_V6aJlKPpcqxFB1t09aZ8lfET5XSqmWcTe0xQm9U5vnKJmt22iCaiJ6tJy-zp8m58NPw"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/seller/category/autots/delete"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2ODI5MzI3MDEsImV4cCI6MTY4MzAxOTEwMX0.uomqqVXREBL90iftevNW6_iqKDWJMGbx220SfvpMwrxbmMgq94VNUEs2HkFvU6i3YSSQUC51SRpqVdKO6YOn6w"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"productCategoryCode\": \"autots\",\n  \"productCode\": \"autots12m\",\n  \"productDescription\": \"High performance AI quant assistant backed by ensemble method\",\n  \"productImage\": \"https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png\",\n  \"productName\": \"Stock Market AI Assistant 12 Month Subscription\",\n  \"productPeriod\": 12,\n  \"productPrice\": 70,\n  \"productStatus\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://0.0.0.0:8080/api/seller/product/create"
+			},
+			"response": []
+		},
+		{
+			"name": "View All Products",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": ""
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/product?page=1&size=9",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"product"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View All On Sale Products",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": ""
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/product/onsale?page=1&size=9",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"product",
+						"onsale"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View All Off Sale Products",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": ""
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/product/offsale?page=1&size=9",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"product",
+						"offsale"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": ""
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/product/autots1m"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2ODI5MzI3MDEsImV4cCI6MTY4MzAxOTEwMX0.uomqqVXREBL90iftevNW6_iqKDWJMGbx220SfvpMwrxbmMgq94VNUEs2HkFvU6i3YSSQUC51SRpqVdKO6YOn6w"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"productCategoryCode\": \"autots\",\n  \"productCode\": \"autots1m\",\n  \"productDescription\": \"High performance AI quant assistant backed by ensemble method\",\n  \"productImage\": \"https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png\",\n  \"productName\": \"Stock Market AI Assistant 1 Month Subscription\",\n  \"productPeriod\": 1,\n  \"productPrice\": 21,\n  \"productStatus\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://0.0.0.0:8080/api/seller/product/autots1m/update"
+			},
+			"response": []
+		},
+		{
+			"name": "On Sale Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2ODI5MzI3MDEsImV4cCI6MTY4MzAxOTEwMX0.uomqqVXREBL90iftevNW6_iqKDWJMGbx220SfvpMwrxbmMgq94VNUEs2HkFvU6i3YSSQUC51SRpqVdKO6YOn6w"
+					}
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"categoryType\": 0,\n  \"productDescription\": \"Facebook Prophet Stock Forecaster 6 Month Subscription\",\n  \"productIcon\": \"https://www.google.com/url?sa=i&url=https%3A%2F%2Fid.m.wikipedia.org%2Fwiki%2FBerkas%3AFacebook_f_logo_%25282019%2529.svg&psig=AOvVaw0O5lTg3sETZlqmbQc7-01q&ust=1677394297834000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCOCrneyKsP0CFQAAAAAdAAAAABAE\",\n  \"productId\": \"FBP6M\",\n  \"productName\": \"Facebook Prophet 6 Month\",\n  \"productPeriod\": 6,\n  \"productPrice\": 41,\n  \"productStatus\": 0,\n  \"updateTime\": \"2023-02-25T06:55:49.120Z\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://0.0.0.0:8080/api/seller/product/autots12m/on"
+			},
+			"response": []
+		},
+		{
+			"name": "Off Sale Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2ODI5MzI3MDEsImV4cCI6MTY4MzAxOTEwMX0.uomqqVXREBL90iftevNW6_iqKDWJMGbx220SfvpMwrxbmMgq94VNUEs2HkFvU6i3YSSQUC51SRpqVdKO6YOn6w"
+					}
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"categoryType\": 0,\n  \"productDescription\": \"Facebook Prophet Stock Forecaster 6 Month Subscription\",\n  \"productIcon\": \"https://www.google.com/url?sa=i&url=https%3A%2F%2Fid.m.wikipedia.org%2Fwiki%2FBerkas%3AFacebook_f_logo_%25282019%2529.svg&psig=AOvVaw0O5lTg3sETZlqmbQc7-01q&ust=1677394297834000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCOCrneyKsP0CFQAAAAAdAAAAABAE\",\n  \"productId\": \"FBP6M\",\n  \"productName\": \"Facebook Prophet 6 Month\",\n  \"productPeriod\": 6,\n  \"productPrice\": 41,\n  \"productStatus\": 0,\n  \"updateTime\": \"2023-02-25T06:55:49.120Z\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://0.0.0.0:8080/api/seller/product/autots1m/offsale"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2ODI5MzI3MDEsImV4cCI6MTY4MzAxOTEwMX0.uomqqVXREBL90iftevNW6_iqKDWJMGbx220SfvpMwrxbmMgq94VNUEs2HkFvU6i3YSSQUC51SRpqVdKO6YOn6w"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/seller/product/random/delete"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Order Detail to Cart",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjY3LCJleHAiOjE2ODMwMTkwNjd9.z4uPffML1i8P4ybiDYW8jOyqbFZLyT-uCOZ6k8a56COpDd_B273XgodxWVaXCURm4VsQt6qI8V8Eb96KLgU7UQ"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"productCode\": \"neuralprophet1m\",\n  \"quantity\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://0.0.0.0:8080/api/cart/add"
+			},
+			"response": []
+		},
+		{
+			"name": "Merge Local Cart",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjY3LCJleHAiOjE2ODMwMTkwNjd9.z4uPffML1i8P4ybiDYW8jOyqbFZLyT-uCOZ6k8a56COpDd_B273XgodxWVaXCURm4VsQt6qI8V8Eb96KLgU7UQ"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  {\n    \"productCode\": \"autots12m\",\n    \"productPrice\": 70,\n    \"quantity\": 1\n  }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://0.0.0.0:8080/api/cart"
+			},
+			"response": []
+		},
+		{
+			"name": "View Cart",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnaGlmZmFyeXJAZG9tYWluLmNvbSIsImlhdCI6MTY4Mjk0MDMyNywiZXhwIjoxNjgzMDI2NzI3fQ.0UdFzIpeCyoy7TiaW3hg8EaC1-SiH9GVj5sqHttmsWcnTm-auGYp3jPIt0vDy5oknYcrVtEMbfPo13M-ILxPfQ"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/cart"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Order Detail in Cart",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjY3LCJleHAiOjE2ODMwMTkwNjd9.z4uPffML1i8P4ybiDYW8jOyqbFZLyT-uCOZ6k8a56COpDd_B273XgodxWVaXCURm4VsQt6qI8V8Eb96KLgU7UQ"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "2",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://0.0.0.0:8080/api/cart/facebookprophet1m/update"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Order Detail in Cart",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjY3LCJleHAiOjE2ODMwMTkwNjd9.z4uPffML1i8P4ybiDYW8jOyqbFZLyT-uCOZ6k8a56COpDd_B273XgodxWVaXCURm4VsQt6qI8V8Eb96KLgU7UQ"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/cart/ /delete"
+			},
+			"response": []
+		},
+		{
+			"name": "Checkout Cart",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnaGlmZmFyeXJAZG9tYWluLmNvbSIsImlhdCI6MTY4Mjk0MDMyNywiZXhwIjoxNjgzMDI2NzI3fQ.0UdFzIpeCyoy7TiaW3hg8EaC1-SiH9GVj5sqHttmsWcnTm-auGYp3jPIt0vDy5oknYcrVtEMbfPo13M-ILxPfQ"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/cart/checkout"
+			},
+			"response": []
+		},
+		{
+			"name": "View All Orders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbXBsb3llZUBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjg5LCJleHAiOjE2ODMwMTkwODl9.pYeEh7HxkR9fRpwU7IXwqB6NL3jxNZy_fm-MZUEat29HerqJnriuldSt-QUR8IcNiCEoV5OzhxhJce-qyzLSqw"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/order"
+			},
+			"response": []
+		},
+		{
+			"name": "View All New Orders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjY3LCJleHAiOjE2ODMwMTkwNjd9.z4uPffML1i8P4ybiDYW8jOyqbFZLyT-uCOZ6k8a56COpDd_B273XgodxWVaXCURm4VsQt6qI8V8Eb96KLgU7UQ"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/order/new"
+			},
+			"response": []
+		},
+		{
+			"name": "View All Finished Orders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjY3LCJleHAiOjE2ODMwMTkwNjd9.z4uPffML1i8P4ybiDYW8jOyqbFZLyT-uCOZ6k8a56COpDd_B273XgodxWVaXCURm4VsQt6qI8V8Eb96KLgU7UQ"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/order/finished"
+			},
+			"response": []
+		},
+		{
+			"name": "View All Canceled Orders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbXBsb3llZUBkb21haW4uY29tIiwiaWF0IjoxNjc3MzkxMzMzLCJleHAiOjE2Nzc0Nzc3MzN9.Dqc6_BUBqBJUx-BbCE-1sonNJyuA7TvDP7c2yMwllxEvUOuxiUCdqLjmq5CLk0Qas7FqmRQhzP8y3k_HbErY2Q"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/order/canceled"
+			},
+			"response": []
+		},
+		{
+			"name": "View Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjY3LCJleHAiOjE2ODMwMTkwNjd9.z4uPffML1i8P4ybiDYW8jOyqbFZLyT-uCOZ6k8a56COpDd_B273XgodxWVaXCURm4VsQt6qI8V8Eb96KLgU7UQ"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/order/25"
+			},
+			"response": []
+		},
+		{
+			"name": "Finish Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbXBsb3llZUBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjg5LCJleHAiOjE2ODMwMTkwODl9.pYeEh7HxkR9fRpwU7IXwqB6NL3jxNZy_fm-MZUEat29HerqJnriuldSt-QUR8IcNiCEoV5OzhxhJce-qyzLSqw"
+					}
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/order/finish/25"
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbXBsb3llZUBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjg5LCJleHAiOjE2ODMwMTkwODl9.pYeEh7HxkR9fRpwU7IXwqB6NL3jxNZy_fm-MZUEat29HerqJnriuldSt-QUR8IcNiCEoV5OzhxhJce-qyzLSqw"
+					}
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/order/cancel/25"
+			},
+			"response": []
+		},
+		{
+			"name": "View All Subscriptions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjY3LCJleHAiOjE2ODMwMTkwNjd9.z4uPffML1i8P4ybiDYW8jOyqbFZLyT-uCOZ6k8a56COpDd_B273XgodxWVaXCURm4VsQt6qI8V8Eb96KLgU7UQ"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/subscription"
+			},
+			"response": []
+		},
+		{
+			"name": "View All Active Subscriptions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbXBsb3llZUBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjg5LCJleHAiOjE2ODMwMTkwODl9.pYeEh7HxkR9fRpwU7IXwqB6NL3jxNZy_fm-MZUEat29HerqJnriuldSt-QUR8IcNiCEoV5OzhxhJce-qyzLSqw"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/subscription/active"
+			},
+			"response": []
+		},
+		{
+			"name": "View Subscription",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbXBsb3llZUBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjg5LCJleHAiOjE2ODMwMTkwODl9.pYeEh7HxkR9fRpwU7IXwqB6NL3jxNZy_fm-MZUEat29HerqJnriuldSt-QUR8IcNiCEoV5OzhxhJce-qyzLSqw"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/subscription/26"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Subscription",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbXBsb3llZUBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjg5LCJleHAiOjE2ODMwMTkwODl9.pYeEh7HxkR9fRpwU7IXwqB6NL3jxNZy_fm-MZUEat29HerqJnriuldSt-QUR8IcNiCEoV5OzhxhJce-qyzLSqw"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"expTime\": \"2023-11-02T02:36:52.758Z\",\n  \"productCategoryCode\": \"autots\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://0.0.0.0:8080/api/seller/subscription/28/update"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Subscription",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjY3LCJleHAiOjE2ODMwMTkwNjd9.z4uPffML1i8P4ybiDYW8jOyqbFZLyT-uCOZ6k8a56COpDd_B273XgodxWVaXCURm4VsQt6qI8V8Eb96KLgU7UQ"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/seller/subscription/28/delete"
+			},
+			"response": []
+		},
+		{
+			"name": "Search",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjY3LCJleHAiOjE2ODMwMTkwNjd9.z4uPffML1i8P4ybiDYW8jOyqbFZLyT-uCOZ6k8a56COpDd_B273XgodxWVaXCURm4VsQt6qI8V8Eb96KLgU7UQ"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/seller/subscription/28/delete"
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,188 @@
+package com.ghiffaryr.store.service.impl;
+
+import com.ghiffaryr.store.dto.request.ForecastForm;
+import com.ghiffaryr.store.entity.ProductCategory;
+import com.ghiffaryr.store.entity.Subscription;
+import com.ghiffaryr.store.enums.ResultEnum;
+import com.ghiffaryr.store.exception.*;
+import com.ghiffaryr.store.repository.ProductCategoryRepository;
+import com.ghiffaryr.store.service.ProductCategoryService;
+import com.ghiffaryr.store.dto.request.ProductCategoryForm;
+import com.ghiffaryr.store.service.SubscriptionService;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class ProductCategoryServiceImpl implements ProductCategoryService {
+    @Autowired
+    ProductCategoryRepository productCategoryRepository;
+
+    @Autowired
+    SubscriptionService subscriptionService;
+
+    JSONParser jsonParser = new JSONParser();
+
+    @Override
+    public ProductCategory find(String productCategoryCode) {
+        ProductCategory productCategory = productCategoryRepository.findByProductCategoryCode(productCategoryCode);
+        if (productCategory == null){
+            throw new NotFoundException(ResultEnum.CATEGORY_NOT_FOUND);
+        }
+        return productCategory;
+    }
+
+    @Override
+    public Page<ProductCategory> findAll(Pageable pageable) {
+        Page<ProductCategory> productCategory = productCategoryRepository.findAllByOrderByProductCategoryCodeAsc(pageable);
+        if (productCategory.getTotalElements() == 0){
+            throw new NotFoundException(ResultEnum.CATEGORY_NOT_FOUND);
+        }
+        return productCategory;
+    }
+
+    @Override
+    @Transactional
+    public ProductCategory update(String productCategoryCode, ProductCategoryForm productCategoryForm) {
+        ProductCategory oldProductCategory = productCategoryRepository.findByProductCategoryCode(productCategoryCode);
+        if (oldProductCategory == null) {
+            throw new NotFoundException(ResultEnum.CATEGORY_NOT_FOUND);
+        }
+        ProductCategory isCategoryCodeExist = productCategoryRepository.findByProductCategoryCode(productCategoryForm.getProductCategoryCode());
+        if (isCategoryCodeExist != null) {
+            throw new ConflictException(ResultEnum.CATEGORY_EXISTS);
+        }
+        oldProductCategory.setProductCategoryCode(productCategoryForm.getProductCategoryCode());
+        oldProductCategory.setProductCategoryName(productCategoryForm.getProductCategoryName());
+        oldProductCategory.setProductCategoryDescription(productCategoryForm.getProductCategoryDescription());
+        oldProductCategory.setProductCategoryImage(productCategoryForm.getProductCategoryImage());
+        return productCategoryRepository.save(oldProductCategory);
+    }
+
+    @Override
+    @Transactional
+    public ProductCategory create(ProductCategoryForm productCategoryForm) {
+        ProductCategory isCategoryCodeExist = productCategoryRepository.findByProductCategoryCode(productCategoryForm.getProductCategoryCode());
+        if (isCategoryCodeExist != null) {
+            throw new ConflictException(ResultEnum.CATEGORY_EXISTS);
+        }
+        ProductCategory newProductCategory = new ProductCategory();
+        newProductCategory.setProductCategoryCode(productCategoryForm.getProductCategoryCode());
+        newProductCategory.setProductCategoryName(productCategoryForm.getProductCategoryName());
+        newProductCategory.setProductCategoryDescription(productCategoryForm.getProductCategoryDescription());
+        newProductCategory.setProductCategoryImage(productCategoryForm.getProductCategoryImage());
+        return productCategoryRepository.save(newProductCategory);
+    }
+
+    @Override
+    @Transactional
+    public void delete(String productCategoryCode) {
+        ProductCategory productCategory = find(productCategoryCode);
+        productCategoryRepository.delete(productCategory);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public String predict(String modelApi, String productCategoryCode, ForecastForm forecastForm, String authenticationEmail, Boolean isCustomer){
+        JSONObject forecastJsonObject = new JSONObject();
+        forecastJsonObject.put("stock_code", forecastForm.getStockCode());
+        forecastJsonObject.put("training_window", forecastForm.getTrainingWindow());
+        forecastJsonObject.put("model_choice", productCategoryCode);
+        forecastJsonObject.put("forecasting_horizon", forecastForm.getForecastingHorizon());
+        System.out.println(forecastJsonObject);
+
+        if (isCustomer){
+            Subscription subscription = subscriptionService.findByUserEmailAndProductCategoryCode(authenticationEmail, productCategoryCode, true);
+            if(subscription == null || subscription.getExpTime().isAfter(LocalDateTime.now())) {
+                throw new ForbiddenException(ResultEnum.SUBSCRIPTION_INACTIVE);
+            }
+        }
+
+        HttpURLConnection con = null;
+        try {
+            URL myurl = new URL(modelApi);
+            con = (HttpURLConnection) myurl.openConnection();
+
+            con.setDoOutput(true);
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", "Java Client");
+            con.setRequestProperty("Content-Type", "application/json");
+
+            try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
+                wr.write(forecastJsonObject.toString().getBytes());
+            }
+
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+            if (responseCode == 200) {
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else {
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line).append(System.lineSeparator());
+            }
+            String responseBody = sb.toString();
+
+            if (responseCode == 200) {
+                return responseBody;
+            } else {
+                try {
+                    JSONObject responseBodyJsonObject = (JSONObject) jsonParser.parse(responseBody);
+                    JSONArray responseBodyErrors = (JSONArray) responseBodyJsonObject.get("errors");
+                    List<Integer> responseBodyErrorCodes = new ArrayList<>();
+                    List<String> responseBodyErrorMessages = new ArrayList<>();
+                    for (Object responseBodyErrorObject : responseBodyErrors) {
+                        JSONObject responseBodyError = (JSONObject) responseBodyErrorObject;
+                        responseBodyErrorCodes.add(Integer.valueOf(responseBodyError.get("code").toString()));
+                        responseBodyErrorMessages.add(responseBodyError.get("message").toString());
+                    }
+                    if (responseCode == 400) {
+                        throw new BadRequestException(responseBodyErrorCodes, responseBodyErrorMessages);
+                    } else if (responseCode == 401) {
+                        throw new ForbiddenException(responseBodyErrorCodes, responseBodyErrorMessages);
+                    } else if (responseCode == 404) {
+                        throw new NotFoundException(responseBodyErrorCodes, responseBodyErrorMessages);
+                    } else {
+                        throw new InternalServerErrorException(responseBodyErrorCodes, responseBodyErrorMessages);
+                    }
+                } catch (ParseException e) {
+                    if (responseCode == 400){
+                        throw new BadRequestException(responseBody);
+                    } else if (responseCode == 401) {
+                        throw new ForbiddenException(responseBody);
+                    } else if (responseCode == 404) {
+                        throw new NotFoundException(responseBody);
+                    } else {
+                        throw new InternalServerErrorException(responseBody);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            throw new InternalServerErrorException(e.getMessage());
+        } finally {
+            if (con != null) {
+                con.disconnect();
+            }
+        }
+    }
+
+}

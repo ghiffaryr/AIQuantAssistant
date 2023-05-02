@@ -1,0 +1,1101 @@
+{
+	"info": {
+		"_postman_id": "74bb9fe4-ca5d-4439-9ebc-6baa07eb8574",
+		"name": "Stock Forecaster",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25724909"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"address\": \"WWW\",\n  \"email\": \"employee2@domain.com\",\n  \"name\": \"Real Employee 2\",\n  \"password\": \"Password1#\",\n  \"phone\": \"0000000000000\",\n  \"role\": \"ROLE_EMPLOYEE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/register",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"password\": \"Password1#\",\n  \"username\": \"customer@domain.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/login",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2NzcyNDI4MjAsImV4cCI6MTY3NzMyOTIyMH0.tGJca56Rsh0GEF_-oGl7O-OXaS5gf3Gcq6CzP-CmMhATZCQzvaJtL5ZHfvoMZ-_lTeBMVirB0SmD1JkQyaiprw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/profile/manager@domain.com",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"profile",
+						"manager@domain.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnaGlmZmFyeXJAZG9tYWluLmNvbSIsImlhdCI6MTY3NzIzMjE5OCwiZXhwIjoxNjc3MzE4NTk4fQ.7EjKXujVuWSZruwJKR10s_HNtvKqdQISsAuY3g1CxJXL5ttuo4a40FEISRkBLPuda5YbxxPpnVBhSwMUhVsTSA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"address\": \"Alamat B\",\n  \"email\": \"ghiffaryr@domain.com\",\n  \"name\": \"Ghiffary Baru\",\n  \"password\": \"Password1#\",\n  \"phone\": \"08124125215\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/profile",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Product Category",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2NzczODc3MzgsImV4cCI6MTY3NzQ3NDEzOH0.wx-DR81KoDRJNkqcrssTIX79UfeX3n8_07AZUWXbEV0PdVoFJ5iEbMbphkS7g3NEm8L0QPrE8o3yB_W-EqUjOQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"categoryName\": \"Neural Prophet\",\n  \"categoryType\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/seller/category/new",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"seller",
+						"category",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View All Products By Category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/category/0?page=1&size=3",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"category",
+						"0"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Product Category",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2NzczODc3MzgsImV4cCI6MTY3NzQ3NDEzOH0.wx-DR81KoDRJNkqcrssTIX79UfeX3n8_07AZUWXbEV0PdVoFJ5iEbMbphkS7g3NEm8L0QPrE8o3yB_W-EqUjOQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"categoryName\": \"FB Prophet\",\n  \"categoryType\": \"1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/seller/category/1/edit",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"seller",
+						"category",
+						"1",
+						"edit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product Category",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2NzcyNTk1NDUsImV4cCI6MTY3NzM0NTk0NX0.7EYWJewhPTK5k0vbT4_V6aJlKPpcqxFB1t09aZ8lfET5XSqmWcTe0xQm9U5vnKJmt22iCaiJ6tJy-zp8m58NPw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/seller/category/3/delete",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"seller",
+						"category",
+						"3",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2NzczMjE4NjcsImV4cCI6MTY3NzQwODI2N30.fe7rfnepGVjEpa268b4_NY9dVaG87cpAuhTwc-JJipDg0QkDslbnzMm4ceEe5DOecRXmdHRmXjxM8_exmiubDA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"productId\": \"NP6M\",\n  \"categoryType\": 2,\n  \"productDescription\": \"Neural Prophet Stock Forecaster 6 Month Subscription\",\n  \"productIcon\": \"https://user-images.githubusercontent.com/21246060/111388960-6c367e80-866d-11eb-91c1-46f2c0d21879.PNG\",\n  \"productName\": \"Neural Prophet 6 Month\",\n  \"productPeriod\": 6,\n  \"productPrice\": 23,\n  \"productStatus\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/seller/product/new",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"seller",
+						"product",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2NzczMDc1MzcsImV4cCI6MTY3NzM5MzkzN30.0kTXLEcNNd0qGvbQQgwKpIKJENmy9krXZ6n6JDpChIytgow-XKzoZWm-JOWqjkIoTXJiGO3pGnFEdIeCKC5aUA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"categoryType\": 0,\n  \"productDescription\": \"Facebook Prophet Stock Forecaster 6 Month Subscription\",\n  \"productIcon\": \"https://www.google.com/url?sa=i&url=https%3A%2F%2Fid.m.wikipedia.org%2Fwiki%2FBerkas%3AFacebook_f_logo_%25282019%2529.svg&psig=AOvVaw0O5lTg3sETZlqmbQc7-01q&ust=1677394297834000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCOCrneyKsP0CFQAAAAAdAAAAABAE\",\n  \"productId\": \"FBP6M\",\n  \"productName\": \"Facebook Prophet 6 Month\",\n  \"productPeriod\": 6,\n  \"productPrice\": 41,\n  \"productStatus\": 0,\n  \"updateTime\": \"2023-02-25T06:55:49.120Z\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/seller/product/FBP6M/edit",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"seller",
+						"product",
+						"FBP6M",
+						"edit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2NzczMDc1MzcsImV4cCI6MTY3NzM5MzkzN30.0kTXLEcNNd0qGvbQQgwKpIKJENmy9krXZ6n6JDpChIytgow-XKzoZWm-JOWqjkIoTXJiGO3pGnFEdIeCKC5aUA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/seller/product/Random/delete",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"seller",
+						"product",
+						"Random",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View All Products",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2NzczMDc1MzcsImV4cCI6MTY3NzM5MzkzN30.0kTXLEcNNd0qGvbQQgwKpIKJENmy9krXZ6n6JDpChIytgow-XKzoZWm-JOWqjkIoTXJiGO3pGnFEdIeCKC5aUA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/product?page=1&size=9",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"product"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2NzczMDc1MzcsImV4cCI6MTY3NzM5MzkzN30.0kTXLEcNNd0qGvbQQgwKpIKJENmy9krXZ6n6JDpChIytgow-XKzoZWm-JOWqjkIoTXJiGO3pGnFEdIeCKC5aUA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/product/ARIMAX1M",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"product",
+						"ARIMAX1M"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add To Cart",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjc3Mzg4Nzc4LCJleHAiOjE2Nzc0NzUxNzh9.7937PLKiKleEA2czlsW91g22ECyk4_r85VXx8mKDig9NySDZN-SUTmCYsXeFP0Cjh62H2yJ4QXVtTBxTOs1AGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"productId\": \"NP1M\",\n  \"quantity\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/cart/add",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cart",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Product in Cart",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjc3MzExMTc4LCJleHAiOjE2NzczOTc1Nzh9.u2YHOpq2jE8sTtBvjM5Tk6LEz_tGOYCZHC59fCHt1AQdoqj6ExGUhmAgZ0imcutqKNw-9N0pCmhd2ObswBlexQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "2",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/cart/ARIMAX6M",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cart",
+						"ARIMAX6M"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Cart",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjc3Mzk3ODY2LCJleHAiOjE2Nzc0ODQyNjZ9.i_JiE6vK6S41RSRqyz1fkbw16o_l_vLBGC0fl8j7EyBqy3jPhVUKjgaV4skSH6ZSoi013MOruZdYgOn0zf2hiA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/cart",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Cart",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjc3MzExMTc4LCJleHAiOjE2NzczOTc1Nzh9.u2YHOpq2jE8sTtBvjM5Tk6LEz_tGOYCZHC59fCHt1AQdoqj6ExGUhmAgZ0imcutqKNw-9N0pCmhd2ObswBlexQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/cart/NP6M",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cart",
+						"NP6M"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Checkout Cart",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjc3Mzg4Nzc4LCJleHAiOjE2Nzc0NzUxNzh9.7937PLKiKleEA2czlsW91g22ECyk4_r85VXx8mKDig9NySDZN-SUTmCYsXeFP0Cjh62H2yJ4QXVtTBxTOs1AGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/cart/checkout",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cart",
+						"checkout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Merge Local Cart",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjc3MzExMTc4LCJleHAiOjE2NzczOTc1Nzh9.u2YHOpq2jE8sTtBvjM5Tk6LEz_tGOYCZHC59fCHt1AQdoqj6ExGUhmAgZ0imcutqKNw-9N0pCmhd2ObswBlexQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  {\n    \"categoryType\": 0,\n    \"count\": 1,\n    \"orderDetailId\": 6,\n    \"productDescription\": \"AutoTS Stock Forecaster 1 Month Subscription\",\n    \"productIcon\": \"https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png\",\n    \"productId\": \"AUTOTS1M\",\n    \"productName\": \"AutoTS 1 Month\",\n    \"productPeriod\": 1,\n    \"productPrice\": 7\n  }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/cart",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"cart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View All Orders",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbXBsb3llZUBkb21haW4uY29tIiwiaWF0IjoxNjc3MzkxMzMzLCJleHAiOjE2Nzc0Nzc3MzN9.Dqc6_BUBqBJUx-BbCE-1sonNJyuA7TvDP7c2yMwllxEvUOuxiUCdqLjmq5CLk0Qas7FqmRQhzP8y3k_HbErY2Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/order",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjc3Mzk3ODY2LCJleHAiOjE2Nzc0ODQyNjZ9.i_JiE6vK6S41RSRqyz1fkbw16o_l_vLBGC0fl8j7EyBqy3jPhVUKjgaV4skSH6ZSoi013MOruZdYgOn0zf2hiA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/order/10",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"order",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Finish Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbXBsb3llZUBkb21haW4uY29tIiwiaWF0IjoxNjc3Mzk2ODI2LCJleHAiOjE2Nzc0ODMyMjZ9.syhdk57HHshoNP-ZN2L6g6SxBtYDyROBAssCxTXGu4q7NTQCsRWLcjfB-ylofO40sxXubCEQKkICDjpMf_nJ1g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/order/finish/30",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"order",
+						"finish",
+						"30"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbXBsb3llZUBkb21haW4uY29tIiwiaWF0IjoxNjc3MzkxMzMzLCJleHAiOjE2Nzc0Nzc3MzN9.Dqc6_BUBqBJUx-BbCE-1sonNJyuA7TvDP7c2yMwllxEvUOuxiUCdqLjmq5CLk0Qas7FqmRQhzP8y3k_HbErY2Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/order/cancel/10",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"order",
+						"cancel",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View All Subscriptions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjc3Mzk3ODY2LCJleHAiOjE2Nzc0ODQyNjZ9.i_JiE6vK6S41RSRqyz1fkbw16o_l_vLBGC0fl8j7EyBqy3jPhVUKjgaV4skSH6ZSoi013MOruZdYgOn0zf2hiA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/subscription",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"subscription"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Subscription",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjc3Mzk3ODY2LCJleHAiOjE2Nzc0ODQyNjZ9.i_JiE6vK6S41RSRqyz1fkbw16o_l_vLBGC0fl8j7EyBqy3jPhVUKjgaV4skSH6ZSoi013MOruZdYgOn0zf2hiA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/subscription/26",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"subscription",
+						"26"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Subscription",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbXBsb3llZUBkb21haW4uY29tIiwiaWF0IjoxNjc3NDEwNTIzLCJleHAiOjE2Nzc0OTY5MjN9.m5mv-DLkwNuTkHttZoE4R9h2ZKeycnQ9YELg__pgi0zmdhOXq_nMOlwiOZdhCOg2KQjzxn7NRfjUiTiCoF_nQg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"categoryType\": 2,\n  \"expTime\": \"2023-11-26T10:32:09.982Z\",\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/seller/subscription/26/edit",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"seller",
+						"subscription",
+						"26",
+						"edit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Subscription",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjc3Mzk3ODY2LCJleHAiOjE2Nzc0ODQyNjZ9.i_JiE6vK6S41RSRqyz1fkbw16o_l_vLBGC0fl8j7EyBqy3jPhVUKjgaV4skSH6ZSoi013MOruZdYgOn0zf2hiA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/seller/subscription/26/delete",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"seller",
+						"subscription",
+						"26",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Subscription Predict (Direct Python)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"stock_code\":\"NVDA\",\n    \"training_window\":3,\n    \"model_choice\":\"autots\",\n    \"forecasting_horizon\":1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/predict",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"predict"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Subscription Predict (Java)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjc3NDEzODE3LCJleHAiOjE2Nzc1MDAyMTd9.W8tq4EcTmOAfG4R3aIicZIH9NqOk3vQ7iJzZWC3kJciUGbi53Q9jzOSA3c-F28Wso3aCCOD3hraVsCDsCRnyOA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"forecastingHorizon\": 1,\n  \"stockCode\": \"NVDA\",\n  \"trainingWindow\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/subscription/predict/0",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"subscription",
+						"predict",
+						"0"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

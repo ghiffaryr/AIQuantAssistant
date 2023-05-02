@@ -1,0 +1,34 @@
+.main-notfound {
+  width: 100%;
+  height: 100vh;
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/notfound.jpg?alt=media&token=88857484-5ef8-4bcd-9589-b052f83acfca");
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0;
+  color: white;
+}
+
+.notfound-content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.notfound-link {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.notfound-header {
+  text-align: center;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+}
+
+.link:hover {
+  color: burlywood;
+}
