@@ -81,7 +81,7 @@
 
 ## Database Schema
 
-![]()
+![](https://github.com/ghiffaryr/AIQuantAssistant/raw/main/docs/ERD.bmp)
 
 ## How to
 
