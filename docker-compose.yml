@@ -33,11 +33,11 @@ services:
     depends_on:
       db:
         condition: service_healthy
-  # frontend_web_store:
-  #   build: frontend_web_store
-  #   restart: always
-  #   ports:
-  #     - "3000:80"
-  #   depends_on:
-  #     backend_store:
-  #       condition: service_started
+  frontend_web_store:
+    build: frontend_web_store
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      backend_store:
+        condition: service_started
