@@ -11,13 +11,13 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Product findByProductCode(String productCode);
 
-    Page<Product> findAllByProductStatusOrderByProductCodeAsc(Integer productStatus, Pageable pageable);
+    Page<Product> findAllByProductStatusOrderByProductPeriodAsc(Integer productStatus, Pageable pageable);
 
-    Page<Product> findAllByProductCategoryCodeOrderByProductCodeAsc(String productCategoryCode, Pageable pageable);
+    Page<Product> findAllByProductCategoryCodeOrderByProductPeriodAsc(String productCategoryCode, Pageable pageable);
 
-    Page<Product> findAllByProductStatusAndProductCategoryCodeOrderByProductCodeAsc(Integer productStatus, String productCategoryCode, Pageable pageable);
+    Page<Product> findAllByProductStatusAndProductCategoryCodeOrderByProductPeriodAsc(Integer productStatus, String productCategoryCode, Pageable pageable);
 
-    Page<Product> findAllByOrderByProductCodeAsc(Pageable pageable);
+    Page<Product> findAllByOrderByProductPeriodAsc(Pageable pageable);
 
     @Query("select p from Product p where " +
             "p.productName like concat('%',:query, '%')" +

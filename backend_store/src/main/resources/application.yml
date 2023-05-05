@@ -16,6 +16,10 @@ spring:
   queries:
     user-query: select email, password, active from user where email=?
     role-query: select email, role from user where email=?
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
 
 server:
   servlet:
@@ -23,7 +27,9 @@ server:
   port: 8080
 
 jwtSecret: com.ghiffaryr.store
-jwtExpiration: 86400 # 24 hours
+jwtExpiration: 86400 # seconds or 1440 minutes or 24 hours
+
+corsExpiration: 3600 # seconds or 60 minutes or 1 hour
 
 model:
   predict:

@@ -13,14 +13,3 @@
   height: calc(100vh - 330px);
   margin: 0;
 }
-
-.homepage-footer .footer-item > a:hover {
-  color: white;
-}
-
-.homepage-footer {
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  margin: auto;
-}

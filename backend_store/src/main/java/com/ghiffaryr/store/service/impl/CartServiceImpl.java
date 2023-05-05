@@ -2,6 +2,7 @@ package com.ghiffaryr.store.service.impl;
 
 import com.ghiffaryr.store.dto.request.OrderDetailForm;
 import com.ghiffaryr.store.entity.*;
+import com.ghiffaryr.store.enums.ProductStatusEnum;
 import com.ghiffaryr.store.enums.ResultEnum;
 import com.ghiffaryr.store.exception.BadRequestException;
 import com.ghiffaryr.store.exception.InternalServerErrorException;
@@ -110,9 +111,12 @@ public class CartServiceImpl implements CartService {
         OrderMain orderMain = new OrderMain(user);
         orderMainRepository.save(orderMain);
         cart.getOrderDetails().forEach(orderDetailInFinalCart -> {
-            orderDetailInFinalCart.setCart(null);
-            orderDetailInFinalCart.setOrderMain(orderMain);
-            orderDetailRepository.save(orderDetailInFinalCart);
+            Product product = productService.find(orderDetailInFinalCart.getProductCode());
+            if (product.getProductStatus().equals(ProductStatusEnum.ONSALE.getCode())){
+                orderDetailInFinalCart.setCart(null);
+                orderDetailInFinalCart.setOrderMain(orderMain);
+                orderDetailRepository.save(orderDetailInFinalCart);
+            }
         });
     }
 }

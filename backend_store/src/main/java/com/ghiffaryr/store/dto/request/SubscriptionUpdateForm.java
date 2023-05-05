@@ -1,7 +1,6 @@
 package com.ghiffaryr.store.dto.request;
 
 import lombok.Data;
-
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;

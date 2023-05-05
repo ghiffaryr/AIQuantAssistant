@@ -31,7 +31,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"ghiffaryr@domain.com\",\n    \"password\": \"G\\\\1Qc&zv\"\n}",
+					"raw": "{\n    \"email\": \"manager@domain.com\",\n    \"password\": \"Password1#\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -422,6 +422,21 @@
 			"response": []
 		},
 		{
+			"name": "View Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": ""
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://0.0.0.0:8080/api/product/autots1m"
+			},
+			"response": []
+		},
+		{
 			"name": "View All On Sale Products",
 			"request": {
 				"auth": {
@@ -498,21 +513,6 @@
 						}
 					]
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "View Product",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": {
-						"token": ""
-					}
-				},
-				"method": "GET",
-				"header": [],
-				"url": "http://0.0.0.0:8080/api/product/autots1m"
 			},
 			"response": []
 		},
@@ -918,9 +918,37 @@
 						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjY3LCJleHAiOjE2ODMwMTkwNjd9.z4uPffML1i8P4ybiDYW8jOyqbFZLyT-uCOZ6k8a56COpDd_B273XgodxWVaXCURm4VsQt6qI8V8Eb96KLgU7UQ"
 					}
 				},
-				"method": "DELETE",
+				"method": "GET",
 				"header": [],
-				"url": "http://0.0.0.0:8080/api/seller/subscription/28/delete"
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/search?query=facebook&page=1&size=3",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"search"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "facebook"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "3"
+						}
+					]
+				}
 			},
 			"response": []
 		}

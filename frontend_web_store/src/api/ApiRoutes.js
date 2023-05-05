@@ -4,6 +4,11 @@ import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import NotFoundPage from "../pages/NotFoundPage";
+import CategoryPage from "../pages/CategoryPage";
+import RecoveryPage from "../pages/RecoveryPage";
+import ProductByCategoryPage from "../pages/ProductByCategoryPage";
+import CartPage from "../pages/CartPage";
+import CustomerAccess from "../components/protected/CustomerAccess";
 // import CartPage from '../pages/CartPage';
 // import UsersPage from '../pages/UsersPage';
 // import StorePage from '../pages/StorePage';
@@ -19,7 +24,15 @@ function ApiRoutes() {
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      {/* <Route path='/cart' element={<CartPage />} /> */}
+      <Route path="/recovery" element={<RecoveryPage />} />
+      <Route
+        path="/cart"
+        element={
+          <CustomerAccess>
+            <CartPage />
+          </CustomerAccess>
+        }
+      />
       {/* <Route element={<ProtectedRoutes />}>
                 {' '}
                 <Route path='/users' element={<UsersPage />} />
@@ -34,6 +47,8 @@ function ApiRoutes() {
             </Route> */}
       {/* <Route path='/books' element={<StorePage />} />
             <Route path='/books/:id' element={<DetailsPage />} /> */}
+      <Route path="/category" element={<CategoryPage />} />
+      <Route path="/category/:code" element={<ProductByCategoryPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

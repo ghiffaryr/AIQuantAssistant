@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Container from "react-bootstrap/esm/Container";
 import Form from "react-bootstrap/Form";
 import Toast from "react-bootstrap/Toast";
@@ -9,14 +10,13 @@ import Col from "react-bootstrap/Col";
 import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
-import { useState } from "react";
 import "../css/Register.css";
-import { BASE_URL } from "../env/Constants";
-import { useDispatch, useSelector } from "react-redux";
+import { API } from "../env/Constants";
 import { storage } from "../env/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import axios from "axios";
 
-function RegisterPage() {
+export default function RegisterPage() {
   const [inputs, setInputs] = useState({
     image: "",
     firstName: "",
@@ -27,123 +27,76 @@ function RegisterPage() {
     recoveryPhrase: "",
     phone: "",
     address: "",
-    gender: "",
+    gender: null,
     birthdate: "",
     role: "ROLE_CUSTOMER",
   });
-  const [show, setShow] = useState(false);
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [showRegisterToast, setShowRegisterToast] = useState(false);
+  const [errorRegister, setErrorRegister] = useState({});
   const [validated, setValidated] = useState(false);
   const navigate = useNavigate();
-
-  const dispatch = useDispatch();
-  const loggedIn = useSelector((state) => state.loggedIn);
-  //   let loggedIn = false;
-
-  if (
-    localStorage.getItem("user_email") &&
-    localStorage.getItem("user_token") &&
-    localStorage.getItem("token_type")
-  ) {
-    dispatch({ type: "loggedIn" });
-    // loggedIn = true;
-  }
 
   function handleChange(e) {
     setInputs({
       ...inputs,
-      [e.target.name]: e.target.value,
+      [e.target.name]:
+        e.target.name === "birthdate"
+          ? new Date(inputs.birthdate).toISOString()
+          : e.target.name === "gender" && e.target.value === "male"
+          ? true
+          : e.target.name === "gender" && e.target.value === "female"
+          ? false
+          : e.target.value,
     });
   }
 
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     const form = e.currentTarget;
-
-    console.log(
-      JSON.stringify({
-        ...Object.fromEntries(
-          Object.entries(inputs).filter(
-            ([key, value]) =>
-              key !== "firstName" &&
-              key !== "lastName" &&
-              key !== "coPassword" &&
-              key !== "birthdate" &&
-              key !== "gender" &&
-              value !== ""
-          )
-        ),
-        name: `${inputs.firstName} ${inputs.lastName}`,
-        birthdate: new Date(inputs.birthdate).toISOString(),
-        gender: inputs.gender === "male",
-      })
-    );
 
     setValidated(true);
     e.preventDefault();
     if (form.checkValidity()) {
-      fetch(`${BASE_URL}/api/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      try {
+        let { status, data } = await axios.post(`${API}/register`, {
           ...Object.fromEntries(
             Object.entries(inputs).filter(
               ([key, value]) =>
                 key !== "firstName" &&
                 key !== "lastName" &&
                 key !== "coPassword" &&
-                key !== "birthdate" &&
-                key !== "gender" &&
-                value !== ""
+                value !== "" &&
+                value !== null
             )
           ),
           name: `${inputs.firstName} ${inputs.lastName}`,
-          birthdate: new Date(inputs.birthdate).toISOString(),
-          gender: inputs.gender === "male",
-        }),
-      })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error(response.body);
-          }
-        })
-        .then((data) => {
-          if (data) {
-            setError(false);
-            setShow(true);
-            setTimeout(() => {
-              navigate("/login");
-            }, 3000);
-          }
-        })
-        .catch((error) => {
-          setError(true);
-          setErrorMessage(
-            `This is an HTTP error: The status is ${error.message}`
-          );
-          setInputs({
-            ...inputs,
-            password: "",
-            coPassword: "",
-            recoveryPhrase: "",
-          });
-          setShow(true);
         });
+
+        setErrorRegister({});
+        setShowRegisterToast(true);
+        setTimeout(() => {
+          navigate("/login");
+        }, 3000);
+      } catch (error) {
+        setInputs({
+          ...inputs,
+          password: "",
+          coPassword: "",
+          recoveryPhrase: "",
+        });
+        for (let errorObject of error.response.data.errors) {
+          setErrorRegister(errorObject);
+          setShowRegisterToast(true);
+        }
+      }
     }
-  }
+  };
 
   function upload(e) {
     e.preventDefault();
-    // console.log(e.target.files); -> FileList {0: File, length: 1}
     const fileName = e.target.files[0].name;
     const storageRef = ref(storage, `${fileName}`);
     uploadBytes(storageRef, e.target.files[0])
       .then((snapshot) => {
-        console.log("Upload success!");
         return getDownloadURL(storageRef);
       })
       .then((downloadURL) => {
@@ -153,7 +106,8 @@ function RegisterPage() {
         });
       })
       .catch((err) => {
-        alert("Error uploading file. Please try again.");
+        setErrorRegister({ code: 500, message: "Upload failed!" });
+        setShowRegisterToast(true);
       });
   }
 
@@ -162,7 +116,7 @@ function RegisterPage() {
       <NavbarComponent navStyle="simple" />
       <>
         <Container className="container register-main d-flex justify-content-center flex-column align-items-center my-5 pt-5">
-          {loggedIn ? (
+          {localStorage.getItem("user_token") ? (
             <>
               <h3 className="main-title">You are already registered.</h3>
               <LinkContainer to="/">
@@ -209,10 +163,10 @@ function RegisterPage() {
                   </Form.Label>
                   <Col sm="8">
                     <Form.Control
-                      aria-label="First name"
                       type="text"
                       name="firstName"
                       placeholder="First name"
+                      aria-label="First name"
                       value={inputs.firstName}
                       onChange={handleChange}
                       pattern="^[A-Za-z]{1,30}"
@@ -233,10 +187,10 @@ function RegisterPage() {
                   </Form.Label>
                   <Col sm="8">
                     <Form.Control
-                      aria-label="Last name"
                       type="text"
                       name="lastName"
                       placeholder="Last name"
+                      aria-label="Last name"
                       value={inputs.lastName}
                       onChange={handleChange}
                       pattern="^[A-Za-z]{1,30}"
@@ -259,6 +213,7 @@ function RegisterPage() {
                     <Form.Control
                       type="email"
                       placeholder="Email address"
+                      aria-label="Email address"
                       name="email"
                       value={inputs.email}
                       onChange={handleChange}
@@ -283,9 +238,10 @@ function RegisterPage() {
                       type="password"
                       name="password"
                       placeholder="Password"
+                      aria-label="Password"
                       value={inputs.password}
                       onChange={handleChange}
-                      pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
+                      pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^A-Za-z0-9]).{8,}$"
                       required
                     />
                     <Form.Control.Feedback type="invalid">
@@ -315,6 +271,7 @@ function RegisterPage() {
                       type="password"
                       name="coPassword"
                       placeholder="Confirm password"
+                      aria-label="Confirm password"
                       value={inputs.coPassword}
                       onChange={handleChange}
                       pattern={inputs.password}
@@ -335,9 +292,10 @@ function RegisterPage() {
                   </Form.Label>
                   <Col sm="8">
                     <Form.Control
-                      type="text"
+                      type="password"
                       name="recoveryPhrase"
                       placeholder="Recovery phrase"
+                      aria-label="Recovery phrase"
                       value={inputs.recoveryPhrase}
                       onChange={handleChange}
                       pattern="^(?!\s*$).+"
@@ -361,6 +319,7 @@ function RegisterPage() {
                       type="text"
                       name="phone"
                       placeholder="Phone"
+                      aria-label="Phone"
                       value={inputs.phone}
                       onChange={handleChange}
                       pattern="^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$"
@@ -383,6 +342,7 @@ function RegisterPage() {
                       type="text"
                       name="address"
                       placeholder="Address"
+                      aria-label="Address"
                       value={inputs.address}
                       onChange={handleChange}
                       pattern="^(?!\s*$).+"
@@ -434,6 +394,7 @@ function RegisterPage() {
                       type="date"
                       name="birthdate"
                       placeholder="Birth Date"
+                      aria-label="Birth Date"
                       onChange={handleChange}
                     />
                   </Col>
@@ -462,32 +423,37 @@ function RegisterPage() {
           )}
         </Container>
         <div className="register-footer">
-          <FooterComponent />
+          <FooterComponent position="absolute" />
         </div>
       </>
       <ToastContainer className="p-3 top-0 end-0">
-        <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>
-          {error ? (
+        <Toast
+          onClose={() => setShowRegisterToast(false)}
+          show={showRegisterToast}
+          delay={3000}
+          autohide
+        >
+          {Object.keys(errorRegister).length > 0 ? (
             <>
-              <Toast.Header>
+              <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
                   className="rounded me-2"
                   alt=""
                 />
-                <strong className="me-auto text-danger">Error!</strong>
+                <strong className="me-auto text-light">Error</strong>
               </Toast.Header>
-              <Toast.Body>{errorMessage}</Toast.Body>
+              <Toast.Body>{errorRegister.message}</Toast.Body>
             </>
           ) : (
             <>
-              <Toast.Header>
+              <Toast.Header className="bg-success">
                 <img
                   src="holder.js/20x20?text=%20"
                   className="rounded me-2"
                   alt=""
                 />
-                <strong className="me-auto text-success">Success!</strong>
+                <strong className="me-auto text-light">Success</strong>
               </Toast.Header>
               <Toast.Body>Successfully registered! Please log in!</Toast.Body>
             </>
@@ -497,5 +463,3 @@ function RegisterPage() {
     </>
   );
 }
-
-export default RegisterPage;

@@ -19,7 +19,7 @@ public class JwtProvider {
     @Value("${jwtSecret}")
     private String jwtSecret;
     @Value("${jwtExpiration}")
-    private int jwtExpiration;
+    private Long jwtExpiration;
 
     public String generate(Authentication authentication) {
 

@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/esm/Container";
 import Form from "react-bootstrap/Form";
 import Toast from "react-bootstrap/Toast";
@@ -5,37 +6,28 @@ import ToastContainer from "react-bootstrap/ToastContainer";
 import InputGroup from "react-bootstrap/InputGroup";
 import FooterComponent from "../components/FooterComponent";
 import NavbarComponent from "../components/NavbarComponent";
-import { FaUser } from "react-icons/fa";
-import { FaUnlock } from "react-icons/fa";
+import { FaUser, FaUnlock } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
-import { useState } from "react";
 import "../css/LoginPage.css";
-import { BASE_URL } from "../env/Constants";
-import { useDispatch, useSelector } from "react-redux";
+import { API } from "../env/Constants";
+import axios from "axios";
+import Row from "react-bootstrap/esm/Row";
+import Col from "react-bootstrap/esm/Col";
 
-function LoginPage() {
+export default function LoginPage() {
   const [inputs, setInputs] = useState({ email: "", password: "" });
-  const [show, setShow] = useState(false);
-  const [error, setError] = useState("");
+  const [showLoginToast, setShowLoginToast] = useState(false);
+  const [errorLogin, setErrorLogin] = useState({});
+  const [showMergeToServerCartToast, setShowMergeToServerCartToast] =
+    useState(false);
+  const [errorMergeToServerCart, setErrorMergeToServerCart] = useState({});
+  const [showGetServerCartToast, setShowGetServerCartToast] = useState(false);
+  const [errorGetServerCart, setErrorGetServerCart] = useState({});
   const [validated, setValidated] = useState(false);
+  const location = useLocation();
   const navigate = useNavigate();
-
-  const dispatch = useDispatch();
-  const loggedIn = useSelector((state) => state.loggedIn);
-  // let loggedIn = false;
-
-  if (
-    localStorage.getItem("user_email") &&
-    localStorage.getItem("user_name") &&
-    localStorage.getItem("user_role") &&
-    localStorage.getItem("user_token") &&
-    localStorage.getItem("token_type")
-  ) {
-    dispatch({ type: "loggedIn" });
-    // loggedIn = true;
-  }
 
   function handleChange(e) {
     setInputs({
@@ -44,67 +36,144 @@ function LoginPage() {
     });
   }
 
-  function handleSubmit(e) {
+  const getProfile = async () => {
+    try {
+      let { status, data } = await axios.get(`${API}/profile`);
+
+      // localStorage.setItem("userEmail", data.email);
+      localStorage.setItem("userName", data.name);
+      localStorage.setItem("userImage", data.image);
+      localStorage.setItem("userPhone", data.phone);
+      localStorage.setItem("userAddress", data.address);
+      localStorage.setItem("userGender", data.gender);
+      localStorage.setItem("userBirthdate", data.birthdate);
+      localStorage.setItem("userRole", data.role);
+      localStorage.setItem("userCreateTime", data.createTime);
+      localStorage.setItem("userUpdateTime", data.updateTime);
+      setErrorLogin({});
+      setShowLoginToast(true);
+    } catch (errorLogin) {
+      // localStorage.removeItem("userEmail");
+      localStorage.removeItem("userName");
+      localStorage.removeItem("userImage");
+      localStorage.removeItem("userPhone");
+      localStorage.removeItem("userAddress");
+      localStorage.removeItem("userGender");
+      localStorage.removeItem("userBirthdate");
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("userCreateTime");
+      localStorage.removeItem("userUpdateTime");
+      for (let errorLoginObject of errorLogin.response.data.errorLogins) {
+        setErrorLogin(errorLoginObject);
+        setShowLoginToast(true);
+      }
+    }
+  };
+
+  const handleLogin = async () => {
+    try {
+      let { status, data } = await axios.post(`${API}/login`, {
+        email: inputs.email,
+        password: inputs.password,
+      });
+
+      localStorage.setItem("userEmail", data.email);
+      localStorage.setItem("userToken", data.token);
+      localStorage.setItem("tokenType", data.type);
+      setErrorLogin({});
+      setShowLoginToast(true);
+      axios.defaults.headers.common = {
+        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        "Access-Control-Allow-Origin": "*",
+      };
+      await getProfile();
+      if (
+        localStorage.getItem("userRole") === "ROLE_CUSTOMER" &&
+        localStorage.getItem("cart")
+      ) {
+        await handleMergeToServerCart();
+      }
+      if (localStorage.getItem("userRole") === "ROLE_CUSTOMER") {
+        await handleGetServerCart();
+      }
+      setTimeout(() => {
+        if (location.state) {
+          navigate(`${location.state.from.pathname}`);
+        } else {
+          navigate("/");
+        }
+      }, 3000);
+    } catch (error) {
+      setInputs({ ...inputs, password: "" });
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("userToken");
+      localStorage.removeItem("tokenType");
+      for (let errorLoginObject of error.response.data.errorLogins) {
+        setErrorLogin(errorLoginObject);
+        setShowLoginToast(true);
+      }
+    }
+  };
+
+  const handleSubmit = async (e) => {
     const form = e.currentTarget;
 
     setValidated(true);
     e.preventDefault();
     if (form.checkValidity()) {
-      fetch(`${BASE_URL}/api/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: inputs.email,
-          password: inputs.password,
-        }),
-      })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error(response.status);
-          }
-        })
-        .then((data) => {
-          console.log(data);
-          if (data) {
-            setError(false);
-            localStorage.setItem("user_email", data.email);
-            localStorage.setItem("user_name", data.name);
-            localStorage.setItem("user_role", data.role);
-            localStorage.setItem("user_token", data.token);
-            localStorage.setItem("token_type", data.type);
-            setShow(true);
-            setTimeout(() => {
-              navigate("/");
-            }, 3000);
-          }
-        })
-        .catch((error) => {
-          setError(error);
-          setInputs({ ...inputs, password: "" });
-          localStorage.removeItem("user_email");
-          localStorage.removeItem("user_name");
-          localStorage.removeItem("user_role");
-          localStorage.removeItem("user_token");
-          localStorage.removeItem("token_type");
-          setShow(true);
-        });
+      await handleLogin();
     }
-  }
+  };
+
+  const handleMergeToServerCart = async () => {
+    try {
+      let { status, data } = await axios.post(
+        `${API}/cart`,
+        JSON.parse(localStorage.getItem("cart"))
+      );
+      setErrorMergeToServerCart({});
+      setShowMergeToServerCartToast(true);
+    } catch (error) {
+      for (let errorObject of error.response.data.errors) {
+        setErrorMergeToServerCart(errorObject);
+        setShowMergeToServerCartToast(true);
+      }
+    }
+  };
+
+  const handleGetServerCart = async () => {
+    try {
+      let { status, data } = await axios.get(`${API}/cart`);
+      let cart = [];
+      for (let orderDetail of data.orderDetails) {
+        cart.push({
+          orderDetailId: orderDetail.orderDetailId,
+          productCode: orderDetail.productCode,
+          productPrice: orderDetail.productPrice,
+          quantity: orderDetail.quantity,
+        });
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+      setErrorGetServerCart({});
+      setShowGetServerCartToast(false);
+    } catch (error) {
+      for (let errorLoginObject of error.response.data.errorLogins) {
+        setErrorGetServerCart(errorLoginObject);
+        setShowGetServerCartToast(true);
+      }
+    }
+  };
 
   return (
     <>
       <NavbarComponent navStyle="simple" />
       <>
         <Container className="container d-flex justify-content-center flex-column align-items-center mt-5 pt-5">
-          {loggedIn ? (
+          {localStorage.getItem("userToken") ? (
             <>
               <h3 className="main-title">You are logged in.</h3>
               <LinkContainer to="/">
-                <Button variant="outline-danger">Go to Home page</Button>
+                <Button variant="outline-primary">Go to Home Page</Button>
               </LinkContainer>
             </>
           ) : (
@@ -161,49 +230,117 @@ function LoginPage() {
                   >
                     Login
                   </Button>
-                  <Form.Text>
-                    You don't have an account?{" "}
-                    <LinkContainer
-                      to="/register"
-                      className="register-link text-primary"
-                    >
-                      <span>Register</span>
-                    </LinkContainer>
-                  </Form.Text>
+                  <Row>
+                    <Col xs={12}>
+                      <Form.Text>
+                        Forget your password?{" "}
+                        <LinkContainer
+                          to="/recovery"
+                          className="recovery-link text-primary"
+                        >
+                          <span>Recovery</span>
+                        </LinkContainer>
+                      </Form.Text>
+                    </Col>
+                    <Col xs={12}>
+                      <Form.Text>
+                        You don't have an account?{" "}
+                        <LinkContainer
+                          to="/register"
+                          className="register-link text-primary"
+                        >
+                          <span>Register</span>
+                        </LinkContainer>
+                      </Form.Text>
+                    </Col>
+                  </Row>
                 </div>
               </Form>
             </>
           )}
         </Container>
         <div className="login-footer">
-          <FooterComponent />
+          <FooterComponent position="absolute" />
         </div>
       </>
       <ToastContainer className="p-3 top-0 end-0">
-        <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>
-          {error ? (
+        <Toast
+          onClose={() => setShowLoginToast(false)}
+          show={showLoginToast}
+          delay={3000}
+          autohide
+        >
+          {Object.keys(errorLogin).length > 0 ? (
             <>
-              <Toast.Header>
+              <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
                   className="rounded me-2"
                   alt=""
                 />
-                <strong className="me-auto text-danger">Error!</strong>
+                <strong className="me-auto text-light">Error</strong>
               </Toast.Header>
-              <Toast.Body>
-                {error.message === "401"
-                  ? "The email or the password are incorrect! Please try again."
-                  : `This is an HTTP error: The status is ${error.message}`}
-              </Toast.Body>
+              <Toast.Body>{errorLogin.message}</Toast.Body>
             </>
           ) : (
-            <Toast.Body>Successfully logged in!</Toast.Body>
+            <>
+              <Toast.Header className="bg-success">
+                <img
+                  src="holder.js/20x20?text=%20"
+                  className="rounded me-2"
+                  alt=""
+                />
+                <strong className="me-auto text-light">Success</strong>
+              </Toast.Header>
+              <Toast.Body>Successfully logged in!</Toast.Body>
+            </>
+          )}
+        </Toast>
+      </ToastContainer>
+      <ToastContainer className="p-3 top-0 end-0">
+        <Toast
+          onClose={() => setShowMergeToServerCartToast(false)}
+          show={showMergeToServerCartToast}
+          delay={3000}
+          autohide
+        >
+          {Object.keys(errorMergeToServerCart).length > 0 && (
+            <>
+              <Toast.Header className="bg-danger">
+                <img
+                  src="holder.js/20x20?text=%20"
+                  className="rounded me-2"
+                  alt=""
+                />
+                <strong className="me-auto text-light">Error</strong>
+              </Toast.Header>
+              <Toast.Body>{errorMergeToServerCart.message}</Toast.Body>
+            </>
+          )}
+        </Toast>
+      </ToastContainer>
+      <ToastContainer className="p-3 top-0 end-0">
+        <Toast
+          onClose={() => setShowGetServerCartToast(false)}
+          show={showGetServerCartToast}
+          delay={3000}
+          autohide
+        >
+          {Object.keys(errorGetServerCart).length > 0 && (
+            <>
+              <Toast.Header className="bg-danger">
+                <img
+                  src="holder.js/20x20?text=%20"
+                  className="rounded me-2"
+                  alt=""
+                />
+                <strong className="me-auto text-light">Error</strong>
+              </Toast.Header>
+              <Toast.Body>{errorGetServerCart.message}</Toast.Body>
+            </>
           )}
         </Toast>
       </ToastContainer>
     </>
   );
 }
-
-export default LoginPage;

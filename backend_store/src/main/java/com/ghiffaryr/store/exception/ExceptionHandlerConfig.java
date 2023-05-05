@@ -1,7 +1,6 @@
 package com.ghiffaryr.store.exception;
 
 import com.ghiffaryr.store.enums.ResultEnum;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -10,6 +9,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -53,6 +53,13 @@ public class ExceptionHandlerConfig {
         List<Integer> codes = Collections.singletonList(ResultEnum.SERVER_INTERNAL_ERROR.getCode());
         List<String> messages = Collections.singletonList(ex.getMessage());
         return new ResponseEntity<>(makeResponse(codes, messages), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public final ResponseEntity<?> handleNoHandlerFoundException(NoHandlerFoundException ex) {
+        List<Integer> codes = Collections.singletonList(ResultEnum.SERVER_NOT_FOUND_ERROR.getCode());
+        List<String> messages = Collections.singletonList("The requested URL "+ex.getRequestURL()+" was not found on this server.");
+        return new ResponseEntity<>(makeResponse(codes, messages), new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(BadRequestException.class)
@@ -124,7 +131,7 @@ public class ExceptionHandlerConfig {
     }
 
     @ExceptionHandler(InternalServerErrorException.class)
-    public final ResponseEntity<?> handleCustomException(InternalServerErrorException ex) {
+    public final ResponseEntity<?> handleInternalServerErrorException(InternalServerErrorException ex) {
         List<Integer> codes;
         List<String> messages;
         if (ex.getCodes() != null ) {

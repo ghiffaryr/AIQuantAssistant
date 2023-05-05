@@ -5,6 +5,10 @@
   margin: auto;
 }
 
+.recovery-link:hover {
+  cursor: pointer;
+}
+
 .register-link:hover {
   cursor: pointer;
 }

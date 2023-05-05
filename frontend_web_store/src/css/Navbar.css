@@ -14,3 +14,12 @@
   display: flex;
   align-items: center;
 }
+
+.nav-tab-link {
+  color: #f8f9fa !important;
+}
+
+.nav-tab-link:hover {
+  border: 1px solid #f8f9fa !important;
+  color: #f8f9fa;
+}

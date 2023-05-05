@@ -41,7 +41,6 @@ public enum ResultEnum {
     ;
 
     private Integer code;
-
     private String message;
 
     ResultEnum(Integer code, String message) {

@@ -1,14 +1,13 @@
 $white: #ffffff;
-
-$theme-colors: (
-  "light": #f8f9fa,
-  "dark": #212529,
-  "primary": #3a5b9d,
-  "secondary": #414757,
-  "info": #a1b2c3,
-  "success": #198754,
-  "warning": #ffc107,
-  "danger": #dc3545,
-);
+$light: #f8f9fa;
+$dark: #212529;
+$primary: tomato;
+$secondary: #414757;
+$info: #1361c6;
+$success: #198754;
+$warning: #ffc107;
+$danger: #dc3545;
+$link-color: tomato;
+$link-decoration: none;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";

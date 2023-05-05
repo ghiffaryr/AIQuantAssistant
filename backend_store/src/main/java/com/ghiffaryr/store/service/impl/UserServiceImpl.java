@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService {
             oldUser.setEmail(userUpdateForm.getEmail());
         }
         if(userUpdateForm.getPassword() != null) {
-            if(!userUpdateForm.getPassword().matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")) throw new BadRequestException(ResultEnum.USER_PASSWORD_INVALID);
+            if(!userUpdateForm.getPassword().matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^A-Za-z0-9]).{8,}$")) throw new BadRequestException(ResultEnum.USER_PASSWORD_INVALID);
             oldUser.setPassword(passwordEncoder.encode(userUpdateForm.getPassword()));
         }
         if(userUpdateForm.getName() != null) oldUser.setName(userUpdateForm.getName());

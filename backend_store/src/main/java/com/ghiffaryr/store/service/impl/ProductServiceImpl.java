@@ -1,13 +1,11 @@
 package com.ghiffaryr.store.service.impl;
 
 import com.ghiffaryr.store.entity.Product;
-import com.ghiffaryr.store.entity.ProductCategory;
 import com.ghiffaryr.store.enums.ProductStatusEnum;
 import com.ghiffaryr.store.enums.ResultEnum;
 import com.ghiffaryr.store.exception.BadRequestException;
 import com.ghiffaryr.store.exception.ConflictException;
 import com.ghiffaryr.store.exception.NotFoundException;
-import com.ghiffaryr.store.repository.ProductCategoryRepository;
 import com.ghiffaryr.store.repository.ProductRepository;
 import com.ghiffaryr.store.service.ProductCategoryService;
 import com.ghiffaryr.store.service.ProductService;
@@ -37,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> findAll(Pageable pageable) {
-        Page<Product> productPage = productRepository.findAllByOrderByProductCodeAsc(pageable);
+        Page<Product> productPage = productRepository.findAllByOrderByProductPeriodAsc(pageable);
         if (productPage.getTotalElements() == 0){
             throw new NotFoundException(ResultEnum.PRODUCT_NOT_FOUND);
         }
@@ -46,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> findAllByProductStatus(Integer productStatus, Pageable pageable) {
-        Page<Product> productPage = productRepository.findAllByProductStatusOrderByProductCodeAsc(productStatus, pageable);
+        Page<Product> productPage = productRepository.findAllByProductStatusOrderByProductPeriodAsc(productStatus, pageable);
         if (productPage.getTotalElements() == 0){
             throw new NotFoundException(ResultEnum.PRODUCT_NOT_FOUND);
         }
@@ -55,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> findAllByProductCategoryCode(String productCategoryCode, Pageable pageable) {
-        Page<Product> productPage = productRepository.findAllByProductCategoryCodeOrderByProductCodeAsc(productCategoryCode, pageable);
+        Page<Product> productPage = productRepository.findAllByProductCategoryCodeOrderByProductPeriodAsc(productCategoryCode, pageable);
         if (productPage.getTotalElements() == 0){
             throw new NotFoundException(ResultEnum.PRODUCT_NOT_FOUND);
         }
@@ -64,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> findAllByProductStatusAndProductCategoryCode(Integer productStatus, String productCategoryCode, Pageable pageable) {
-        Page<Product> productPage = productRepository.findAllByProductStatusAndProductCategoryCodeOrderByProductCodeAsc(productStatus, productCategoryCode, pageable);
+        Page<Product> productPage = productRepository.findAllByProductStatusAndProductCategoryCodeOrderByProductPeriodAsc(productStatus, productCategoryCode, pageable);
         if (productPage.getTotalElements() == 0){
             throw new NotFoundException(ResultEnum.PRODUCT_NOT_FOUND);
         }

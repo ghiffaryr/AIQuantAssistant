@@ -1,0 +1,14 @@
+.recovery-footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  margin: auto;
+}
+
+.login-link:hover {
+  cursor: pointer;
+}
+
+.register-link:hover {
+  cursor: pointer;
+}
