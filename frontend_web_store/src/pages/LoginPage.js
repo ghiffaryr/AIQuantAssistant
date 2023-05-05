@@ -52,7 +52,7 @@ export default function LoginPage() {
       localStorage.setItem("userUpdateTime", data.updateTime);
       setErrorLogin({});
       setShowLoginToast(true);
-    } catch (errorLogin) {
+    } catch (error) {
       // localStorage.removeItem("userEmail");
       localStorage.removeItem("userName");
       localStorage.removeItem("userImage");
@@ -63,8 +63,8 @@ export default function LoginPage() {
       localStorage.removeItem("userRole");
       localStorage.removeItem("userCreateTime");
       localStorage.removeItem("userUpdateTime");
-      for (let errorLoginObject of errorLogin.response.data.errorLogins) {
-        setErrorLogin(errorLoginObject);
+      for (let errorObject of error.response.data.errors) {
+        setErrorLogin(errorObject);
         setShowLoginToast(true);
       }
     }
@@ -108,8 +108,8 @@ export default function LoginPage() {
       localStorage.removeItem("userEmail");
       localStorage.removeItem("userToken");
       localStorage.removeItem("tokenType");
-      for (let errorLoginObject of error.response.data.errorLogins) {
-        setErrorLogin(errorLoginObject);
+      for (let errorObject of error.response.data.errors) {
+        setErrorLogin(errorObject);
         setShowLoginToast(true);
       }
     }
@@ -157,8 +157,8 @@ export default function LoginPage() {
       setErrorGetServerCart({});
       setShowGetServerCartToast(false);
     } catch (error) {
-      for (let errorLoginObject of error.response.data.errorLogins) {
-        setErrorGetServerCart(errorLoginObject);
+      for (let errorObject of error.response.data.errors) {
+        setErrorGetServerCart(errorObject);
         setShowGetServerCartToast(true);
       }
     }
