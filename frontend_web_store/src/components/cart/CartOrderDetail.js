@@ -146,7 +146,7 @@ export default function CartOrderDetail({
   };
 
   useEffect(() => {
-    setInputs((state) => ({ quantity: quantity }));
+    setInputs({ quantity: quantity });
     getProduct(code);
   }, [code]);
 

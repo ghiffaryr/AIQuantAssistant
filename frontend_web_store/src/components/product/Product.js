@@ -48,11 +48,16 @@ export default function Product({
         let totalQuantity = 0;
         for (let i = 0; i < cart.length; i++) {
           if (cart[i].productCode === code) {
-            totalQuantity = cart[i].quantity + quantity;
+            totalQuantity = cart[i].quantity + Number(quantity);
             if (localStorage.getItem("userToken")) {
-              let { status, data } = await axios.post(
+              let { status, data } = await axios.put(
                 `${API}/cart/${code}/update`,
-                totalQuantity
+                totalQuantity,
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                }
               );
             }
             cart[i].productPrice = price;
@@ -73,15 +78,14 @@ export default function Product({
             quantity: quantity,
           });
         }
-        setCartOrderDetailCount(cartOrderDetailCount + totalQuantity);
         localStorage.setItem("cart", JSON.stringify(cart));
       } else {
         const cart = [
           { productCode: code, productPrice: price, quantity: quantity },
         ];
         localStorage.setItem("cart", JSON.stringify(cart));
-        setCartOrderDetailCount(cartOrderDetailCount + quantity);
       }
+      setCartOrderDetailCount(cartOrderDetailCount + Number(quantity));
       setErrorAddToCart({});
       setShowAddToCartToast(true);
     } catch (error) {
