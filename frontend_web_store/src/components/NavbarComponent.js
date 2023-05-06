@@ -96,10 +96,10 @@ function NavbarComponent(props) {
                         menuVariant="light"
                       >
                         <LinkContainer to="/profile">
-                          <NavDropdown.Item>Profile Settings</NavDropdown.Item>
+                          <NavDropdown.Item>Profile</NavDropdown.Item>
                         </LinkContainer>
-                        <LinkContainer to="/orders">
-                          <NavDropdown.Item>Order History</NavDropdown.Item>
+                        <LinkContainer to="/order">
+                          <NavDropdown.Item>Order</NavDropdown.Item>
                         </LinkContainer>
                         <NavDropdown.Item onClick={handleLogout}>
                           Logout

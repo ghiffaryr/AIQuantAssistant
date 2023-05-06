@@ -1,7 +1,7 @@
 package com.ghiffaryr.store.enums;
 
 public enum OrderStatusEnum implements CodeEnum {
-    NEW(0, "New Order"),
+    NEW(0, "New"),
     FINISHED(1, "Finished"),
     CANCELED(2, "Canceled")
     ;

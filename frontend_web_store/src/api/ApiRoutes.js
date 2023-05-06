@@ -11,6 +11,7 @@ import CartPage from "../pages/CartPage";
 import CustomerAccess from "../components/protected/CustomerAccess";
 import ProductPage from "../pages/ProductPage";
 import NewsPage from "../pages/NewsPage";
+import OrderPage from "../pages/OrderPage";
 // import CartPage from '../pages/CartPage';
 // import UsersPage from '../pages/UsersPage';
 // import StorePage from '../pages/StorePage';
@@ -53,6 +54,7 @@ function ApiRoutes() {
       <Route path="/category/:code" element={<ProductByCategoryPage />} />
       <Route path="/product" element={<ProductPage />} />
       <Route path="/news" element={<NewsPage />} />
+      <Route path="/order" element={<OrderPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
