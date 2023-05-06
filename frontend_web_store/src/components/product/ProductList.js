@@ -10,9 +10,9 @@ export default function ProductList({ products, getProducts }) {
         "
           id="products-row"
         >
-          {products.map((product) => (
+          {products.map((product, idx) => (
             <Product
-              key={product.productId}
+              key={idx}
               id={product.productId}
               code={product.productCode}
               name={product.productName}

@@ -40,9 +40,7 @@ export default function RegisterPage() {
     setInputs({
       ...inputs,
       [e.target.name]:
-        e.target.name === "birthdate"
-          ? new Date(inputs.birthdate).toISOString()
-          : e.target.name === "gender" && e.target.value === "male"
+        e.target.name === "gender" && e.target.value === "male"
           ? true
           : e.target.name === "gender" && e.target.value === "female"
           ? false
@@ -69,6 +67,7 @@ export default function RegisterPage() {
             )
           ),
           name: `${inputs.firstName} ${inputs.lastName}`,
+          birthdate: new Date(inputs.birthdate).toISOString(),
         });
 
         setErrorRegister({});
@@ -165,8 +164,8 @@ export default function RegisterPage() {
                     <Form.Control
                       type="text"
                       name="firstName"
-                      placeholder="First name"
-                      aria-label="First name"
+                      placeholder="First Name"
+                      aria-label="First Name"
                       value={inputs.firstName}
                       onChange={handleChange}
                       pattern="^[A-Za-z]{1,30}"
@@ -189,8 +188,8 @@ export default function RegisterPage() {
                     <Form.Control
                       type="text"
                       name="lastName"
-                      placeholder="Last name"
-                      aria-label="Last name"
+                      placeholder="Last Name"
+                      aria-label="Last Name"
                       value={inputs.lastName}
                       onChange={handleChange}
                       pattern="^[A-Za-z]{1,30}"
@@ -212,8 +211,8 @@ export default function RegisterPage() {
                   <Col sm="8">
                     <Form.Control
                       type="email"
-                      placeholder="Email address"
-                      aria-label="Email address"
+                      placeholder="Email Address"
+                      aria-label="Email Address"
                       name="email"
                       value={inputs.email}
                       onChange={handleChange}
@@ -270,8 +269,8 @@ export default function RegisterPage() {
                     <Form.Control
                       type="password"
                       name="coPassword"
-                      placeholder="Confirm password"
-                      aria-label="Confirm password"
+                      placeholder="Confirm Password"
+                      aria-label="Confirm Password"
                       value={inputs.coPassword}
                       onChange={handleChange}
                       pattern={inputs.password}
@@ -294,8 +293,8 @@ export default function RegisterPage() {
                     <Form.Control
                       type="password"
                       name="recoveryPhrase"
-                      placeholder="Recovery phrase"
-                      aria-label="Recovery phrase"
+                      placeholder="Recovery Phrase"
+                      aria-label="Recovery Phrase"
                       value={inputs.recoveryPhrase}
                       onChange={handleChange}
                       pattern="^(?!\s*$).+"
@@ -423,7 +422,7 @@ export default function RegisterPage() {
           )}
         </Container>
         <div className="register-footer">
-          <FooterComponent position="absolute" />
+          <FooterComponent />
         </div>
       </>
       <ToastContainer className="p-3 top-0 end-0">

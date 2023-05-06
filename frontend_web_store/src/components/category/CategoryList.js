@@ -10,9 +10,9 @@ export default function CategoryList({ categories, getCategories }) {
         "
           id="categories-row"
         >
-          {categories.map((category) => (
+          {categories.map((category, idx) => (
             <Category
-              key={category.productCategoryId}
+              key={idx}
               id={category.productCategoryId}
               code={category.productCategoryCode}
               name={category.productCategoryName}

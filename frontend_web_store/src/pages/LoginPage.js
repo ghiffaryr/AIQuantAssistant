@@ -260,7 +260,7 @@ export default function LoginPage() {
           )}
         </Container>
         <div className="login-footer">
-          <FooterComponent position="absolute" />
+          <FooterComponent />
         </div>
       </>
       <ToastContainer className="p-3 top-0 end-0">

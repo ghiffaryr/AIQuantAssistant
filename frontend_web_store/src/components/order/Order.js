@@ -69,7 +69,7 @@ export default function Order({
       let newOrders = orders;
       for (let order of newOrders) {
         if (order.orderId === orderId) {
-          order.orderStatus = 2;
+          order.orderStatus = 1;
         }
       }
       setOrders(newOrders);
@@ -106,7 +106,10 @@ export default function Order({
               {(localStorage.getItem("userRole") === "ROLE_EMPLOYEE" ||
                 localStorage.getItem("userRole") === "ROLE_MANAGER") && (
                 <div className="text-center mt-3">
-                  <Button variant="outline-success" onClick={handleFinishOrder}>
+                  <Button
+                    variant="outline-success"
+                    onClick={() => handleFinishOrder(orderId)}
+                  >
                     Finish Order
                   </Button>
                 </div>

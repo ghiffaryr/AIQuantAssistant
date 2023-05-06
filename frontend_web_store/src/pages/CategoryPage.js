@@ -7,13 +7,15 @@ import { API } from "../env/Constants";
 import CategoryList from "../components/category/CategoryList";
 import axios from "axios";
 import FooterComponent from "../components/FooterComponent";
+import { PaginationControl } from "react-bootstrap-pagination-control";
 
 export default function CategoryPage() {
   const [cartOrderDetailCount, setCartOrderDetailCount] = useState(0);
   const [showGetCategoriesToast, setShowGetCategoriesToast] = useState(false);
   const [errorGetCategories, setErrorGetCategories] = useState({});
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(3);
+  const [size, setSize] = useState(6);
+  const [totalPages, setTotalPages] = useState(1);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -25,7 +27,7 @@ export default function CategoryPage() {
       }
       setCartOrderDetailCount(Number(counter));
     }
-  });
+  }, [JSON.parse(localStorage.getItem("cart"))]);
 
   const getCategories = async () => {
     try {
@@ -33,6 +35,7 @@ export default function CategoryPage() {
         params: { page: page, size: size },
       });
       setCategories(data.content);
+      setTotalPages(data.totalPages);
       setErrorGetCategories({});
       setShowGetCategoriesToast(true);
     } catch (error) {
@@ -61,6 +64,16 @@ export default function CategoryPage() {
       <>
         <Breadcrumbs />
         <CategoryList categories={categories} getCategories={getCategories} />
+        <PaginationControl
+          page={page}
+          between={4}
+          total={totalPages}
+          limit={1}
+          changePage={(page) => {
+            setPage(page);
+          }}
+          ellipsis={1}
+        />
         <div className="category-footer">
           <FooterComponent />
         </div>

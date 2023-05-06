@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import loggedInReducer from "./loggedInReducer";
+import placeholderReducer from "./placeholderReducer";
 
 const reducers = combineReducers({
-  loggedIn: loggedInReducer,
+  placeholder: placeholderReducer,
 });
 
 export default reducers;
