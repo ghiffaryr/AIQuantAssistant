@@ -4,17 +4,19 @@ import ToastContainer from "react-bootstrap/esm/ToastContainer";
 import Breadcrumbs from "../components/Breadcrumbs";
 import NavbarComponent from "../components/NavbarComponent";
 import { API } from "../env/Constants";
-import CategoryList from "../components/category/CategoryList";
+import ProductList from "../components/product/ProductList";
 import axios from "axios";
 import FooterComponent from "../components/FooterComponent";
+import { PaginationControl } from "react-bootstrap-pagination-control";
 
-export default function CategoryPage() {
+export default function ProductPage() {
   const [cartOrderDetailCount, setCartOrderDetailCount] = useState(0);
-  const [showGetCategoriesToast, setShowGetCategoriesToast] = useState(false);
-  const [errorGetCategories, setErrorGetCategories] = useState({});
+  const [showGetProductsToast, setShowGetProductsToast] = useState(false);
+  const [errorGetProducts, setErrorGetProducts] = useState({});
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(3);
-  const [categories, setCategories] = useState([]);
+  const [size, setSize] = useState(6);
+  const [totalPages, setTotalPages] = useState(1);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart"));
@@ -27,29 +29,36 @@ export default function CategoryPage() {
     }
   });
 
-  const getCategories = async () => {
+  const getProducts = async () => {
     try {
-      let { status, data } = await axios.get(`${API}/category`, {
-        params: { page: page, size: size },
-      });
-      setCategories(data.content);
-      setErrorGetCategories({});
-      setShowGetCategoriesToast(true);
+      let { status, data } = await axios.get(
+        localStorage.getItem("userRole") === "ROLE_EMPLOYEE" ||
+          localStorage.getItem("userRole") === "ROLE_MANAGER"
+          ? `${API}/product`
+          : `${API}/product/onsale`,
+        {
+          params: { page: page, size: size },
+        }
+      );
+      setProducts(data.content);
+      setTotalPages(data.totalPages);
+      setErrorGetProducts({});
+      setShowGetProductsToast(true);
     } catch (error) {
       for (let errorObject of error.response.data.errors) {
-        setErrorGetCategories(errorObject);
-        setShowGetCategoriesToast(true);
+        setErrorGetProducts(errorObject);
+        setShowGetProductsToast(true);
       }
     }
   };
 
   useEffect(() => {
-    getCategories();
-  }, []);
+    getProducts();
+  }, [page]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      getCategories();
+      getProducts();
     }, 5000);
 
     return () => clearTimeout(timer);
@@ -60,18 +69,28 @@ export default function CategoryPage() {
       <NavbarComponent cartOrderDetailCount={cartOrderDetailCount} />
       <>
         <Breadcrumbs />
-        <CategoryList categories={categories} getCategories={getCategories} />
-        <div className="category-footer">
+        <ProductList products={products} getProducts={getProducts} />
+        <PaginationControl
+          page={page}
+          between={4}
+          total={totalPages}
+          limit={1}
+          changePage={(page) => {
+            setPage(page);
+          }}
+          ellipsis={1}
+        />
+        <div className="product-by-category-footer">
           <FooterComponent />
         </div>
         <ToastContainer className="p-3 top-0 end-0">
           <Toast
-            onClose={() => setShowGetCategoriesToast(false)}
-            show={showGetCategoriesToast}
+            onClose={() => setShowGetProductsToast(false)}
+            show={showGetProductsToast}
             delay={3000}
             autohide
           >
-            {Object.keys(errorGetCategories).length > 0 && (
+            {Object.keys(errorGetProducts).length > 0 && (
               <>
                 <Toast.Header className="bg-danger">
                   <img
@@ -81,7 +100,7 @@ export default function CategoryPage() {
                   />
                   <strong className="me-auto text-light">Error</strong>
                 </Toast.Header>
-                <Toast.Body>{errorGetCategories.message}</Toast.Body>
+                <Toast.Body>{errorGetProducts.message}</Toast.Body>
               </>
             )}
           </Toast>

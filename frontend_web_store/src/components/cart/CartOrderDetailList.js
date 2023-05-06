@@ -1,10 +1,7 @@
 import React from "react";
-import { useEffect } from "react";
 import CartOrderDetail from "./CartOrderDetail";
 
 export default function CartOrderDetailList({
-  cartOrderDetailCount,
-  setCartOrderDetailCount,
   cartOrderDetails,
   getCartOrderDetails,
   setCartOrderDetails,
@@ -15,8 +12,6 @@ export default function CartOrderDetailList({
         <div className="row row-cols-1 g-4" id="cart-order-details-row">
           {cartOrderDetails.map((cartOrderDetail, idx) => (
             <CartOrderDetail
-              cartOrderDetailCount={cartOrderDetailCount}
-              setCartOrderDetailCount={setCartOrderDetailCount}
               key={idx}
               id={cartOrderDetail.orderDetailId}
               code={cartOrderDetail.productCode}

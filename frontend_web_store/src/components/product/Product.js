@@ -1,18 +1,14 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useEffect } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/Form";
 import ToastContainer from "react-bootstrap/esm/ToastContainer";
 import Toast from "react-bootstrap/Toast";
-import { LinkContainer } from "react-router-bootstrap";
 import ProductStatusEnum from "../../enums/ProductStatusEnum";
 import { API } from "../../env/Constants";
 import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 
 export default function Product({
-  cartOrderDetailCount,
-  setCartOrderDetailCount,
   id,
   code,
   name,
@@ -85,7 +81,6 @@ export default function Product({
         ];
         localStorage.setItem("cart", JSON.stringify(cart));
       }
-      setCartOrderDetailCount(cartOrderDetailCount + Number(quantity));
       setErrorAddToCart({});
       setShowAddToCartToast(true);
     } catch (error) {

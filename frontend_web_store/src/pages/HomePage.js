@@ -15,7 +15,7 @@ export default function HomePage() {
     let counter = 0;
     if (cart) {
       for (let i = 0; i < cart.length; i++) {
-        counter = counter + cart[i].quantity;
+        counter = counter + Number(cart[i].quantity);
       }
       setCartOrderDetailCount(counter);
     }

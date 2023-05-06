@@ -10,8 +10,6 @@ import { API } from "../../env/Constants";
 import Button from "react-bootstrap/esm/Button";
 
 export default function CartOrderDetail({
-  cartOrderDetailCount,
-  setCartOrderDetailCount,
   id,
   code,
   price,
@@ -19,7 +17,7 @@ export default function CartOrderDetail({
   getCartOrderDetails,
   setCartOrderDetails,
 }) {
-  const [inputs, setInputs] = useState({ quantity: 1 });
+  const [inputs, setInputs] = useState({ quantity: Number(quantity) });
   const [validated, setValidated] = useState(false);
   const [product, setProduct] = useState({
     productId: null,
@@ -61,33 +59,29 @@ export default function CartOrderDetail({
           quantity: orderDetail.quantity,
         });
       }
-      if (orderDetail.productCode === code && inputs.quantity > 0) {
+      if (orderDetail.productCode === code && Number(inputs.quantity) > 0) {
         newCart.push({
           orderDetailsId: orderDetail.orderDetailId,
           productCode: orderDetail.productCode,
           productPrice: orderDetail.productPrice,
-          quantity: inputs.quantity,
+          quantity: Number(inputs.quantity),
         });
-        setCartOrderDetailCount(cartOrderDetailCount + inputs.quantity);
-      }
-      if (orderDetail.productCode === code && inputs.quantity === 0) {
-        setCartOrderDetailCount(cartOrderDetailCount - orderDetail.quantity);
       }
     }
     localStorage.setItem("cart", JSON.stringify(newCart));
     setCartOrderDetails(newCart);
   }
 
-  const handleServerChange = async (quantity) => {
+  const handleServerChange = async (newQuantity) => {
     try {
       axios.defaults.headers.common = {
         Authorization: `Bearer ${localStorage.getItem("userToken")}`,
         "Access-Control-Allow-Origin": "*",
       };
-      if (quantity > 0) {
+      if (newQuantity > 0) {
         let { status, data } = await axios.put(
           `${API}/cart/${code}/update`,
-          quantity,
+          newQuantity,
           {
             headers: {
               "Content-Type": "application/json",
@@ -95,7 +89,7 @@ export default function CartOrderDetail({
           }
         );
       }
-      if (quantity === 0) {
+      if (newQuantity === 0) {
         let { status, data } = await axios.delete(`${API}/cart/${code}/delete`);
       }
 
@@ -146,7 +140,6 @@ export default function CartOrderDetail({
   };
 
   useEffect(() => {
-    setInputs({ quantity: quantity });
     getProduct(code);
   }, [code]);
 

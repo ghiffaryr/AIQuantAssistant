@@ -1,12 +1,7 @@
 import React from "react";
 import Product from "./Product";
 
-export default function ProductList({
-  cartOrderDetailCount,
-  setCartOrderDetailCount,
-  products,
-  getProducts,
-}) {
+export default function ProductList({ products, getProducts }) {
   return (
     <>
       <div className="container mt-3 mb-3">
@@ -17,8 +12,6 @@ export default function ProductList({
         >
           {products.map((product) => (
             <Product
-              cartOrderDetailCount={cartOrderDetailCount}
-              setCartOrderDetailCount={setCartOrderDetailCount}
               key={product.productId}
               id={product.productId}
               code={product.productCode}

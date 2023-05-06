@@ -1,6 +1,5 @@
 import React from "react";
 import Button from "react-bootstrap/esm/Button";
-import ToastContainer from "react-bootstrap/esm/ToastContainer";
 import { LinkContainer } from "react-router-bootstrap";
 
 export default function Category({
@@ -32,7 +31,7 @@ export default function Category({
             </div>
             <div className="card-button align-self-center mt-3">
               <LinkContainer to={"/category/" + code}>
-                <Button variant="outline-primary">View products</Button>
+                <Button variant="outline-primary">View Products</Button>
               </LinkContainer>
             </div>
           </div>

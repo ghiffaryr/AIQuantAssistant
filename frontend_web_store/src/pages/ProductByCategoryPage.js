@@ -7,6 +7,7 @@ import { API } from "../env/Constants";
 import ProductList from "../components/product/ProductList";
 import axios from "axios";
 import FooterComponent from "../components/FooterComponent";
+import { PaginationControl } from "react-bootstrap-pagination-control";
 
 export default function ProductByCategoryPage() {
   const [cartOrderDetailCount, setCartOrderDetailCount] = useState(0);
@@ -16,19 +17,20 @@ export default function ProductByCategoryPage() {
     {}
   );
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(3);
+  const [size, setSize] = useState(6);
+  const [totalPages, setTotalPages] = useState(1);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart"));
-    let counter = 0;
+    let counter = Number(0);
     if (cart) {
       for (let i = 0; i < cart.length; i++) {
-        counter = counter + cart[i].quantity;
+        counter = Number(counter) + Number(cart[i].quantity);
       }
-      setCartOrderDetailCount(counter);
+      setCartOrderDetailCount(Number(counter));
     }
-  }, []);
+  });
 
   const getProductsByCategory = async () => {
     try {
@@ -45,6 +47,7 @@ export default function ProductByCategoryPage() {
         }
       );
       setProducts(data.page.content);
+      setTotalPages(data.totalPages);
       setErrorGetProductsByCategory({});
       setShowGetProductsByCategoryToast(true);
     } catch (error) {
@@ -57,7 +60,7 @@ export default function ProductByCategoryPage() {
 
   useEffect(() => {
     getProductsByCategory();
-  }, []);
+  }, [page]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -72,11 +75,16 @@ export default function ProductByCategoryPage() {
       <NavbarComponent cartOrderDetailCount={cartOrderDetailCount} />
       <>
         <Breadcrumbs />
-        <ProductList
-          cartOrderDetailCount={cartOrderDetailCount}
-          setCartOrderDetailCount={setCartOrderDetailCount}
-          products={products}
-          getProducts={getProductsByCategory}
+        <ProductList products={products} getProducts={getProductsByCategory} />
+        <PaginationControl
+          page={page}
+          between={4}
+          total={totalPages}
+          limit={1}
+          changePage={(page) => {
+            setPage(page);
+          }}
+          ellipsis={1}
         />
         <div className="product-by-category-footer">
           <FooterComponent />

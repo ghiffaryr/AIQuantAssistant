@@ -5,40 +5,36 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import NavbarComponent from "../components/NavbarComponent";
 import { API } from "../env/Constants";
 import axios from "axios";
-import CartOrderDetailList from "../components/cart/CartOrderDetailList";
+import OrderOrderDetailList from "../components/cart/OrderOrderDetailList";
 import FooterComponent from "../components/FooterComponent";
 import Button from "react-bootstrap/esm/Button";
 import { Link } from "react-router-dom";
 
-export default function CartPage() {
-  const [cartOrderDetailCount, setCartOrderDetailCount] = useState(0);
-  const [cartOrderDetailTotalPrice, setCartOrderDetailTotalPrice] = useState(0);
-  const [showGetCartOrderDetailsToast, setShowGetCartOrderDetailsToast] =
+export default function OrderPage() {
+  const [cartOrderDetailCount, setOrderOrderDetailCount] = useState(0);
+  const [showGetOrderOrderDetailsToast, setShowGetOrderOrderDetailsToast] =
     useState(false);
-  const [errorGetCartOrderDetails, setErrorGetCartOrderDetails] = useState({});
-  const [showCheckoutToast, setShowCheckoutToast] = useState(false);
-  const [errorCheckout, setErrorCheckout] = useState({});
+  const [errorGetOrderOrderDetails, setErrorGetOrderOrderDetails] = useState(
+    {}
+  );
+  const [showCancelOrderToast, setShowCancelOrderToast] = useState(false);
+  const [errorCancelOrder, setErrorCancelOrder] = useState({});
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(3);
-  const [cartOrderDetails, setCartOrderDetails] = useState([]);
+  const [cartOrderDetails, setOrderOrderDetails] = useState([]);
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart"));
     let counter = Number(0);
-    let totaler = Number(0);
     if (cart) {
       for (let i = 0; i < cart.length; i++) {
         counter = Number(counter) + Number(cart[i].quantity);
-        totaler =
-          Number(totaler) +
-          Number(cart[i].productPrice) * Number(cart[i].quantity);
       }
-      setCartOrderDetailCount(Number(counter));
-      setCartOrderDetailTotalPrice(Number(totaler));
+      setOrderOrderDetailCount(Number(counter));
     }
   });
 
-  const getCartOrderDetails = async () => {
+  const getOrderOrderDetails = async () => {
     try {
       axios.defaults.headers.common = {
         Authorization: `Bearer ${localStorage.getItem("userToken")}`,
@@ -46,37 +42,37 @@ export default function CartPage() {
       };
       let { status, data } = await axios.get(`${API}/cart`);
       localStorage.setItem("cart", JSON.stringify(data.orderDetails));
-      setCartOrderDetails(data.orderDetails);
-      setErrorGetCartOrderDetails({});
-      setShowGetCartOrderDetailsToast(true);
+      setOrderOrderDetails(data.orderDetails);
+      setErrorGetOrderOrderDetails({});
+      setShowGetOrderOrderDetailsToast(true);
     } catch (error) {
       for (let errorObject of error.response.data.errors) {
-        setErrorGetCartOrderDetails(errorObject);
-        setShowGetCartOrderDetailsToast(true);
+        setErrorGetOrderOrderDetails(errorObject);
+        setShowGetOrderOrderDetailsToast(true);
       }
     }
   };
 
-  const handleCheckout = async () => {
+  const handleCancelOrder = async () => {
     try {
       axios.defaults.headers.common = {
         Authorization: `Bearer ${localStorage.getItem("userToken")}`,
         "Access-Control-Allow-Origin": "*",
       };
       let { status, data } = await axios.post(`${API}/cart/checkout`);
-      setErrorCheckout({});
-      setShowCheckoutToast(true);
-      getCartOrderDetails();
+      setErrorCancelOrder({});
+      showCancelOrderToast(true);
+      getOrderOrderDetails();
     } catch (error) {
       for (let errorObject of error.response.data.errors) {
-        setErrorCheckout(errorObject);
-        setShowCheckoutToast(true);
+        setErrorCancelOrder(errorObject);
+        showCancelOrderToast(true);
       }
     }
   };
 
   useEffect(() => {
-    getCartOrderDetails();
+    getOrderOrderDetails();
   }, []);
 
   return (
@@ -89,16 +85,18 @@ export default function CartPage() {
           <div className="container mt-3 mb-3">
             <div className="row">
               <div className="col col-8">
-                <CartOrderDetailList
+                <OrderOrderDetailList
                   cartOrderDetails={cartOrderDetails}
-                  getCartOrderDetails={getCartOrderDetails}
-                  setCartOrderDetails={setCartOrderDetails}
+                  getOrderOrderDetails={getOrderOrderDetails}
+                  setOrderOrderDetails={setOrderOrderDetails}
                 />
               </div>
-              <div className="col col-4 flex-column">
-                <h3>Total price is ${cartOrderDetailTotalPrice}</h3>
-                <Button variant="outline-primary" onClick={handleCheckout}>
-                  Checkout
+              <div className="col col-2 ">
+                <Button
+                  variant="outline-primary"
+                  onClick={() => handleCancelOrder}
+                >
+                  CancelOrder
                 </Button>
               </div>
             </div>
@@ -106,7 +104,7 @@ export default function CartPage() {
         ) : (
           <div className="main-notfound">
             <div className="notfound-content">
-              <h3 className="notfound-header">There is no item in Cart.</h3>
+              <h3 className="notfound-header">There is no item in Order.</h3>
               <h4 className="notfound-link">
                 Explore interesting algorithm in the{" "}
                 <Link to="/category">Category Page</Link>
@@ -119,12 +117,12 @@ export default function CartPage() {
         </div>
         <ToastContainer className="p-3 top-0 end-0">
           <Toast
-            onClose={() => setShowGetCartOrderDetailsToast(false)}
-            show={showGetCartOrderDetailsToast}
+            onClose={() => setShowGetOrderOrderDetailsToast(false)}
+            show={showGetOrderOrderDetailsToast}
             delay={3000}
             autohide
           >
-            {Object.keys(errorGetCartOrderDetails).length > 0 && (
+            {Object.keys(errorGetOrderOrderDetails).length > 0 && (
               <>
                 <Toast.Header className="bg-danger">
                   <img
@@ -134,19 +132,19 @@ export default function CartPage() {
                   />
                   <strong className="me-auto text-light">Error</strong>
                 </Toast.Header>
-                <Toast.Body>{errorGetCartOrderDetails.message}</Toast.Body>
+                <Toast.Body>{errorGetOrderOrderDetails.message}</Toast.Body>
               </>
             )}
           </Toast>
         </ToastContainer>
         <ToastContainer className="p-3 top-0 end-0">
           <Toast
-            onClose={() => setShowGetCartOrderDetailsToast(false)}
-            show={showCheckoutToast}
+            onClose={() => setShowGetOrderOrderDetailsToast(false)}
+            show={showCancelOrderToast}
             delay={3000}
             autohide
           >
-            {Object.keys(errorCheckout).length > 0 ? (
+            {Object.keys(errorCancelOrder).length > 0 ? (
               <>
                 <Toast.Header className="bg-danger">
                   <img
@@ -156,7 +154,7 @@ export default function CartPage() {
                   />
                   <strong className="me-auto text-light">Error</strong>
                 </Toast.Header>
-                <Toast.Body>{errorCheckout.message}</Toast.Body>
+                <Toast.Body>{errorCancelOrder.message}</Toast.Body>
               </>
             ) : (
               <>
@@ -168,10 +166,7 @@ export default function CartPage() {
                   />
                   <strong className="me-auto text-light">Success</strong>
                 </Toast.Header>
-                <Toast.Body>
-                  Checkout success! Send payment through our bank account to
-                  finish your order.
-                </Toast.Body>
+                <Toast.Body>Cancel order success!</Toast.Body>
               </>
             )}
           </Toast>

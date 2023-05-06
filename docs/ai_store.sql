@@ -132,7 +132,7 @@ insert  into `product`(`product_id`,`create_time`,`product_category_code`,`produ
 DROP TABLE IF EXISTS `product_category`;
 
 CREATE TABLE `product_category` (
-  `product_category_id` int NOT NULL,
+  `product_category_id` bigint NOT NULL,
   `create_time` datetime DEFAULT NULL,
   `product_category_code` varchar(255) DEFAULT NULL,
   `product_category_description` varchar(255) DEFAULT NULL,

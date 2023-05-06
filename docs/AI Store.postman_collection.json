@@ -87,7 +87,7 @@
 				"auth": {
 					"type": "bearer",
 					"bearer": {
-						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnaGlmZmFyeXJAZG9tYWluLmNvbSIsImlhdCI6MTY4MjY1NzYwMywiZXhwIjoxNjgyNzQ0MDAzfQ.7AIuQesuKwLtoYOYOEVbFGu2uFCbCcXowU73PqLr5BoI-uGUTbXFOwnxao42ntz0U5c_UcrgtzRA5IAX1V5oxw"
+						"token": ""
 					}
 				},
 				"method": "PUT",
@@ -158,7 +158,31 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://0.0.0.0:8080/api/category"
+				"url": {
+					"raw": "http://0.0.0.0:8080/api/category?page=1&size=3",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"category"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "3"
+						}
+					]
+				}
 			},
 			"response": []
 		},
@@ -177,7 +201,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://0.0.0.0:8080/api/category/autots?page=1&size=3",
+					"raw": "http://0.0.0.0:8080/api/category/autots/product?page=1&size=3",
 					"protocol": "http",
 					"host": [
 						"0",
@@ -189,7 +213,8 @@
 					"path": [
 						"api",
 						"category",
-						"autots"
+						"autots",
+						"product"
 					],
 					"query": [
 						{
@@ -701,7 +726,7 @@
 				},
 				"method": "DELETE",
 				"header": [],
-				"url": "http://0.0.0.0:8080/api/cart/ /delete"
+				"url": "http://0.0.0.0:8080/api/cart/facebookprophet1m/delete"
 			},
 			"response": []
 		},
