@@ -10,9 +10,9 @@ export default function OrderList({ orders, getOrders, setOrders }) {
         "
           id="categories-row"
         >
-          {orders.map((order) => (
+          {orders.map((order, idx) => (
             <Order
-              key={order.orderId}
+              key={idx}
               orderId={order.orderId}
               orderDetails={order.orderDetails}
               userEmail={order.userEmail}
@@ -20,6 +20,7 @@ export default function OrderList({ orders, getOrders, setOrders }) {
               orderStatus={order.orderStatus}
               createTime={order.createTime}
               updateTime={order.updateTime}
+              orders={orders}
               getOrders={getOrders}
               setOrders={setOrders}
             />

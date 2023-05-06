@@ -96,7 +96,6 @@ export default function CartOrderDetail({
       setErrorUpdateCartOrderDetail({});
       setShowUpdateCartOrderDetailToast(true);
     } catch (error) {
-      console.log(error.response.data);
       for (let errorObject of error.response.data.errors) {
         setErrorUpdateCartOrderDetail(errorObject);
         setShowUpdateCartOrderDetailToast(true);

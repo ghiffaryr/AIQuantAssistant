@@ -9,13 +9,15 @@ import FooterComponent from "../components/FooterComponent";
 import Button from "react-bootstrap/esm/Button";
 import { Link } from "react-router-dom";
 import OrderList from "../components/order/OrderList";
+import { PaginationControl } from "react-bootstrap-pagination-control";
 
 export default function OrderPage() {
   const [cartOrderDetailCount, setCartOrderDetailCount] = useState(0);
   const [showGetOrdersToast, setShowGetOrdersToast] = useState(false);
   const [errorGetOrders, setErrorGetOrders] = useState({});
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(3);
+  const [size, setSize] = useState(6);
+  const [totalPages, setTotalPages] = useState(1);
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -35,8 +37,11 @@ export default function OrderPage() {
         Authorization: `Bearer ${localStorage.getItem("userToken")}`,
         "Access-Control-Allow-Origin": "*",
       };
-      let { status, data } = await axios.get(`${API}/order`);
+      let { status, data } = await axios.get(`${API}/order`, {
+        params: { page: page, size: size },
+      });
       setOrders(data.content);
+      setTotalPages(data.totalPages);
       setErrorGetOrders({});
       setShowGetOrdersToast(true);
     } catch (error) {
@@ -49,22 +54,28 @@ export default function OrderPage() {
 
   useEffect(() => {
     getOrders();
-  }, []);
+  }, [page]);
 
   return (
     <>
       <NavbarComponent cartOrderDetailCount={cartOrderDetailCount} />
       <>
         <Breadcrumbs />
-        <div className="container mt-3 mb-3">
-          <div className="row">
-            <OrderList
-              orders={orders}
-              getOrders={getOrders}
-              setOrders={setOrders}
-            />
-          </div>
-        </div>
+        <OrderList
+          orders={orders}
+          getOrders={getOrders}
+          setOrders={setOrders}
+        />
+        <PaginationControl
+          page={page}
+          between={4}
+          total={totalPages}
+          limit={1}
+          changePage={(page) => {
+            setPage(page);
+          }}
+          ellipsis={1}
+        />
         <div className="cart-footer">
           <FooterComponent />
         </div>
