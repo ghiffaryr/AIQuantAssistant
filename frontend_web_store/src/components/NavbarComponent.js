@@ -68,11 +68,6 @@ function NavbarComponent(props) {
                       News
                     </Button>
                   </LinkContainer>
-                  <LinkContainer to="/subscription" className="nav-tab-link">
-                    <Button variant="link" className="nav-item">
-                      Subscription
-                    </Button>
-                  </LinkContainer>
                 </Nav>
                 <Nav>
                   {localStorage.getItem("userRole") === "ROLE_EMPLOYEE" ||
@@ -110,9 +105,14 @@ function NavbarComponent(props) {
                         </LinkContainer>
                         {localStorage.getItem("userRole") ===
                           "ROLE_CUSTOMER" && (
-                          <LinkContainer to="/order">
-                            <NavDropdown.Item>Order</NavDropdown.Item>
-                          </LinkContainer>
+                          <>
+                            <LinkContainer to="/order">
+                              <NavDropdown.Item>Order</NavDropdown.Item>
+                            </LinkContainer>
+                            <LinkContainer to="/subscription">
+                              <NavDropdown.Item>Subscription</NavDropdown.Item>
+                            </LinkContainer>
+                          </>
                         )}
                         <NavDropdown.Item onClick={handleLogout}>
                           Logout

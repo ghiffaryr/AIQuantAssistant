@@ -4,7 +4,7 @@ import Category from "./Category";
 export default function CategoryList({ categories, getCategories }) {
   return (
     <>
-      <div className="container mt-3 mb-3">
+      <div className="container mb-3">
         <div
           className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4
         "

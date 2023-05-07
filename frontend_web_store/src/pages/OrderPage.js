@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Form from "react-bootstrap/Form";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/esm/ToastContainer";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -10,6 +11,7 @@ import Button from "react-bootstrap/esm/Button";
 import { Link } from "react-router-dom";
 import OrderList from "../components/order/OrderList";
 import { PaginationControl } from "react-bootstrap-pagination-control";
+import OrderStatusEnum from "../enums/OrderStatusEnum";
 
 export default function OrderPage() {
   const [cartOrderDetailCount, setCartOrderDetailCount] = useState(0);
@@ -19,6 +21,7 @@ export default function OrderPage() {
   const [size, setSize] = useState(6);
   const [totalPages, setTotalPages] = useState(1);
   const [orders, setOrders] = useState([]);
+  const [orderStatus, setOrderStatus] = useState(null);
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart"));
@@ -37,11 +40,23 @@ export default function OrderPage() {
         Authorization: `Bearer ${localStorage.getItem("userToken")}`,
         "Access-Control-Allow-Origin": "*",
       };
-      let { status, data } = await axios.get(`${API}/order`, {
-        params: { page: page, size: size },
-      });
-      setOrders(data.content);
-      setTotalPages(data.totalPages);
+      if (orderStatus) {
+        console.log(OrderStatusEnum[orderStatus].toLowerCase());
+        let { status, data } = await axios.get(
+          `${API}/order/${OrderStatusEnum[orderStatus].toLowerCase()}`,
+          {
+            params: { page: page, size: size },
+          }
+        );
+        setOrders(data.content);
+        setTotalPages(data.totalPages);
+      } else {
+        let { status, data } = await axios.get(`${API}/order`, {
+          params: { page: page, size: size },
+        });
+        setOrders(data.content);
+        setTotalPages(data.totalPages);
+      }
       setErrorGetOrders({});
       setShowGetOrdersToast(true);
     } catch (error) {
@@ -54,13 +69,32 @@ export default function OrderPage() {
 
   useEffect(() => {
     getOrders();
-  }, [page]);
+  }, [page, orderStatus]);
+
+  function handleOrderStatusChage(e) {
+    setOrderStatus(e.target.value);
+  }
 
   return (
     <>
       <NavbarComponent cartOrderDetailCount={cartOrderDetailCount} />
       <>
         <Breadcrumbs />
+        <div className="container mb-3">
+          <h5>Filter</h5>
+          <Form className="cart-order-detail-form w-100" noValidate>
+            <Form.Select
+              aria-label="Select Order Status"
+              onChange={handleOrderStatusChage}
+            >
+              <option>Select Order Status</option>
+              <option value={0}>New</option>
+              <option value={1}>Finished</option>
+              <option value={2}>Canceled</option>
+            </Form.Select>
+          </Form>
+        </div>
+
         <OrderList
           orders={orders}
           getOrders={getOrders}

@@ -100,7 +100,7 @@ export default function CartPage() {
 
         {cartOrderDetailCount > 0 ? (
           <>
-            <div className="container mt-3 mb-3">
+            <div className="container mb-3">
               <div className="row">
                 <div className="col col-8">
                   <CartOrderDetailList

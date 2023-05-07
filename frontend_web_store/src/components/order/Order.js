@@ -93,7 +93,7 @@ export default function Order({
             <div className="card-content">
               <div className="row row-cols-2">
                 <div className="col">
-                  <h5 className="card-title">Order ID {orderId}</h5>
+                  <h5 className="card-title">ID {orderId}</h5>
                   <h6 className="card-subtitle mb-2 text-muted">
                     {OrderStatusEnum[orderStatus]}
                   </h6>
