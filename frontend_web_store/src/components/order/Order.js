@@ -5,6 +5,7 @@ import Button from "react-bootstrap/esm/Button";
 import ToastContainer from "react-bootstrap/esm/ToastContainer";
 import OrderStatusEnum from "../../enums/OrderStatusEnum";
 import { API } from "../../env/Constants";
+import OrderOrderDetailList from "./OrderOrderDetailList";
 
 export default function Order({
   orderId,
@@ -43,6 +44,7 @@ export default function Order({
         }
       }
       setOrders(newOrders);
+      getOrders();
       setErrorCancelOrder({});
       setShowCancelOrderToast(true);
     } catch (error) {
@@ -73,6 +75,7 @@ export default function Order({
         }
       }
       setOrders(newOrders);
+      getOrders();
       setErrorFinishOrder({});
       setShowFinishOrderToast(true);
     } catch (error) {
@@ -88,32 +91,41 @@ export default function Order({
         <div className="card h-100">
           <div className="card-body d-flex flex-column justify-content-between">
             <div className="card-content">
-              <h5 className="card-title">Order ID {orderId}</h5>
-              <h6 className="card-subtitle mb-2 text-muted">
-                {OrderStatusEnum[orderStatus]}
-              </h6>
-              <p className="card-text">Total ${orderAmount}</p>
-            </div>
-            <div className="w-100 align-self-center mt-3">
-              <div className="text-center">
-                <Button
-                  variant="outline-danger"
-                  onClick={() => handleCancelOrder(orderId)}
-                >
-                  Cancel Order
-                </Button>
-              </div>
-              {(localStorage.getItem("userRole") === "ROLE_EMPLOYEE" ||
-                localStorage.getItem("userRole") === "ROLE_MANAGER") && (
-                <div className="text-center mt-3">
-                  <Button
-                    variant="outline-success"
-                    onClick={() => handleFinishOrder(orderId)}
-                  >
-                    Finish Order
-                  </Button>
+              <div className="row row-cols-2">
+                <div className="col">
+                  <h5 className="card-title">Order ID {orderId}</h5>
+                  <h6 className="card-subtitle mb-2 text-muted">
+                    {OrderStatusEnum[orderStatus]}
+                  </h6>
+                  <p className="card-text">Total ${orderAmount}</p>
                 </div>
-              )}
+                <div className="col">
+                  <div className="d-flex justify-content-end">
+                    {orderStatus === 0 && (
+                      <div className="ms-4">
+                        <Button
+                          variant="outline-danger"
+                          onClick={() => handleCancelOrder(orderId)}
+                        >
+                          Cancel Order
+                        </Button>
+                      </div>
+                    )}
+                    {(localStorage.getItem("userRole") === "ROLE_EMPLOYEE" ||
+                      localStorage.getItem("userRole") === "ROLE_MANAGER") && (
+                      <div className="ms-4">
+                        <Button
+                          variant="outline-success"
+                          onClick={() => handleFinishOrder(orderId)}
+                        >
+                          Finish Order
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <OrderOrderDetailList orderOrderDetails={orderDetails} />
             </div>
           </div>
           <div className="card-footer">

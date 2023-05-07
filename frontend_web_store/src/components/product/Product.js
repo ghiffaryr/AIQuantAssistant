@@ -20,6 +20,7 @@ export default function Product({
   createTime,
   updateTime,
   getProducts,
+  setCartOrderDetailCount,
 }) {
   const [inputs, setInputs] = useState({ quantity: 1 });
   const [validated, setValidated] = useState(false);
@@ -44,7 +45,7 @@ export default function Product({
         let totalQuantity = 0;
         for (let i = 0; i < cart.length; i++) {
           if (cart[i].productCode === code) {
-            totalQuantity = cart[i].quantity + Number(quantity);
+            totalQuantity = Number(cart[i].quantity) + Number(quantity);
             if (localStorage.getItem("userToken")) {
               let { status, data } = await axios.put(
                 `${API}/cart/${code}/update`,
@@ -60,24 +61,28 @@ export default function Product({
             cart[i].quantity = totalQuantity;
           }
         }
-        if (totalQuantity < 1) {
-          totalQuantity = quantity;
+        if (Number(totalQuantity) < 1) {
+          totalQuantity = Number(quantity);
           if (localStorage.getItem("userToken")) {
             let { status, data } = await axios.post(`${API}/cart/add`, {
               productCode: code,
-              quantity: quantity,
+              quantity: Number(quantity),
             });
           }
           cart.push({
             productCode: code,
             productPrice: price,
-            quantity: quantity,
+            quantity: Number(quantity),
           });
         }
         localStorage.setItem("cart", JSON.stringify(cart));
       } else {
         const cart = [
-          { productCode: code, productPrice: price, quantity: quantity },
+          {
+            productCode: code,
+            productPrice: price,
+            quantity: Number(quantity),
+          },
         ];
         localStorage.setItem("cart", JSON.stringify(cart));
       }
@@ -89,6 +94,11 @@ export default function Product({
         setShowAddToCartToast(true);
       }
     }
+    let counter = Number(0);
+    for (let i = 0; i < cart.length; i++) {
+      counter = Number(counter) + Number(cart[i].quantity);
+    }
+    setCartOrderDetailCount(Number(counter));
   };
 
   const handleSubmitAddToCart = async (e) => {

@@ -9,6 +9,8 @@ import com.ghiffaryr.store.exception.InternalServerErrorException;
 import com.ghiffaryr.store.exception.NotFoundException;
 import com.ghiffaryr.store.repository.*;
 import com.ghiffaryr.store.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,8 @@ import java.util.Set;
 
 @Service
 public class CartServiceImpl implements CartService {
+    private static final Logger logger = LoggerFactory.getLogger(CartServiceImpl.class);
+
     @Autowired
     OrderMainRepository orderMainRepository;
     @Autowired
@@ -67,6 +71,7 @@ public class CartServiceImpl implements CartService {
             });
             return cartRepository.save(finalCart);
         } catch (Exception e) {
+            logger.error(ResultEnum.CART_MERGE_FAILED.getMessage());
             throw new InternalServerErrorException(ResultEnum.CART_MERGE_FAILED);
         }
     }
@@ -90,10 +95,12 @@ public class CartServiceImpl implements CartService {
     public void delete(String productCode, String principalName) {
         Cart cart = get(principalName);
         if (cart.getOrderDetails().isEmpty()) {
+            logger.error(ResultEnum.CART_IS_EMPTY.getMessage());
             throw new BadRequestException(ResultEnum.CART_IS_EMPTY);
         }
         OrderDetail orderDetail = cart.getOrderDetails().stream().filter(orderDetailInFinalCart -> productCode.equals(orderDetailInFinalCart.getProductCode())).findFirst().orElse(null);
         if (orderDetail == null) {
+            logger.error(ResultEnum.ORDER_DETAIL_NOT_FOUND.getMessage());
             throw new NotFoundException(ResultEnum.ORDER_DETAIL_NOT_FOUND);
         }
         orderDetail.setCart(null);
@@ -105,6 +112,7 @@ public class CartServiceImpl implements CartService {
     public void checkout(String principalName) {
         Cart cart = get(principalName);
         if (cart.getOrderDetails().isEmpty()) {
+            logger.error(ResultEnum.CART_IS_EMPTY.getMessage());
             throw new BadRequestException(ResultEnum.CART_IS_EMPTY);
         }
         User user = cart.getUser();

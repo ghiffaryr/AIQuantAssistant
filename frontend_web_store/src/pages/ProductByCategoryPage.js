@@ -30,7 +30,7 @@ export default function ProductByCategoryPage() {
       }
       setCartOrderDetailCount(Number(counter));
     }
-  });
+  }, [JSON.parse(localStorage.getItem("cart"))]);
 
   const getProductsByCategory = async () => {
     try {
@@ -75,7 +75,11 @@ export default function ProductByCategoryPage() {
       <NavbarComponent cartOrderDetailCount={cartOrderDetailCount} />
       <>
         <Breadcrumbs />
-        <ProductList products={products} getProducts={getProductsByCategory} />
+        <ProductList
+          products={products}
+          getProducts={getProductsByCategory}
+          setCartOrderDetailCount={setCartOrderDetailCount}
+        />
         <PaginationControl
           page={page}
           between={4}

@@ -1,10 +1,13 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
-export default function CustomerAccess({ children }) {
+export default function UnauthenticatedAndCustomerAccess({ children }) {
   const location = useLocation();
 
-  if (localStorage.getItem("userRole") === "ROLE_CUSTOMER") {
+  if (
+    localStorage.getItem("userRole") === undefined ||
+    localStorage.getItem("userRole") === "ROLE_CUSTOMER"
+  ) {
     return children;
   }
 

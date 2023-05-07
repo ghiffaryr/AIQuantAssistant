@@ -14,7 +14,6 @@ export default function CartOrderDetail({
   code,
   price,
   quantity,
-  getCartOrderDetails,
   setCartOrderDetails,
 }) {
   const [inputs, setInputs] = useState({ quantity: Number(quantity) });
@@ -73,32 +72,36 @@ export default function CartOrderDetail({
   }
 
   const handleServerChange = async (newQuantity) => {
-    try {
-      axios.defaults.headers.common = {
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        "Access-Control-Allow-Origin": "*",
-      };
-      if (newQuantity > 0) {
-        let { status, data } = await axios.put(
-          `${API}/cart/${code}/update`,
-          newQuantity,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-      }
-      if (newQuantity === 0) {
-        let { status, data } = await axios.delete(`${API}/cart/${code}/delete`);
-      }
+    if (localStorage.getItem("userToken")) {
+      try {
+        axios.defaults.headers.common = {
+          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          "Access-Control-Allow-Origin": "*",
+        };
+        if (newQuantity > 0) {
+          let { status, data } = await axios.put(
+            `${API}/cart/${code}/update`,
+            newQuantity,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+        }
+        if (newQuantity === 0) {
+          let { status, data } = await axios.delete(
+            `${API}/cart/${code}/delete`
+          );
+        }
 
-      setErrorUpdateCartOrderDetail({});
-      setShowUpdateCartOrderDetailToast(true);
-    } catch (error) {
-      for (let errorObject of error.response.data.errors) {
-        setErrorUpdateCartOrderDetail(errorObject);
+        setErrorUpdateCartOrderDetail({});
         setShowUpdateCartOrderDetailToast(true);
+      } catch (error) {
+        for (let errorObject of error.response.data.errors) {
+          setErrorUpdateCartOrderDetail(errorObject);
+          setShowUpdateCartOrderDetailToast(true);
+        }
       }
     }
   };
@@ -119,10 +122,27 @@ export default function CartOrderDetail({
     }
   };
 
-  useEffect(() => {
+  function handleMinus() {
+    setInputs((state) => {
+      if (state.quantity > 0) {
+        return {
+          quantity: state.quantity - 1,
+        };
+      } else {
+        return state;
+      }
+    });
     handleLocalChange();
     handleServerChange(inputs.quantity);
-  }, [inputs]);
+  }
+
+  function handlePlus() {
+    setInputs((state) => ({
+      quantity: state.quantity + 1,
+    }));
+    handleLocalChange();
+    handleServerChange(inputs.quantity);
+  }
 
   const getProduct = async (code) => {
     try {
@@ -174,14 +194,7 @@ export default function CartOrderDetail({
                 <div className="container">
                   <div className="row mt-3">
                     <div className="col col-2 d-flex justify-content-center align-items-center">
-                      <Button
-                        variant="outline-primary"
-                        onClick={() =>
-                          setInputs((state) => ({
-                            quantity: state.quantity - 1,
-                          }))
-                        }
-                      >
+                      <Button variant="outline-primary" onClick={handleMinus}>
                         <FaMinus />
                       </Button>
                     </div>
@@ -209,14 +222,7 @@ export default function CartOrderDetail({
                       </Form>
                     </div>
                     <div className="col col-2 d-flex justify-content-center align-items-center">
-                      <Button
-                        variant="outline-primary"
-                        onClick={() =>
-                          setInputs((state) => ({
-                            quantity: state.quantity + 1,
-                          }))
-                        }
-                      >
+                      <Button variant="outline-primary" onClick={handlePlus}>
                         <FaPlus />
                       </Button>
                     </div>

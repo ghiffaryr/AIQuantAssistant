@@ -13,6 +13,7 @@ import ProductPage from "../pages/ProductPage";
 import NewsPage from "../pages/NewsPage";
 import OrderPage from "../pages/OrderPage";
 import SubscriptionPage from "../pages/SubscriptionPage";
+import UnauthenticatedAndCustomerAccess from "../components/protected/UnauthenticatedAndCustomerAccess";
 // import CartPage from '../pages/CartPage';
 // import UsersPage from '../pages/UsersPage';
 // import StorePage from '../pages/StorePage';
@@ -32,9 +33,9 @@ function ApiRoutes() {
       <Route
         path="/cart"
         element={
-          <CustomerAccess>
+          <UnauthenticatedAndCustomerAccess>
             <CartPage />
-          </CustomerAccess>
+          </UnauthenticatedAndCustomerAccess>
         }
       />
       {/* <Route element={<ProtectedRoutes />}>

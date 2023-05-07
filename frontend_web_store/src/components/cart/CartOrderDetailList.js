@@ -3,7 +3,6 @@ import CartOrderDetail from "./CartOrderDetail";
 
 export default function CartOrderDetailList({
   cartOrderDetails,
-  getCartOrderDetails,
   setCartOrderDetails,
 }) {
   return (
@@ -17,7 +16,6 @@ export default function CartOrderDetailList({
               code={cartOrderDetail.productCode}
               price={cartOrderDetail.productPrice}
               quantity={cartOrderDetail.quantity}
-              getCartOrderDetails={getCartOrderDetails}
               setCartOrderDetails={setCartOrderDetails}
             />
           ))}

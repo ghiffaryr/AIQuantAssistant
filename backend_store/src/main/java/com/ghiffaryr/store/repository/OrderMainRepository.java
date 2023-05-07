@@ -9,9 +9,9 @@ public interface OrderMainRepository extends JpaRepository<OrderMain, Integer> {
 
     OrderMain findByOrderId(Long orderId);
 
-    Page<OrderMain> findAllByUserEmailOrderByOrderStatusAscCreateTimeDesc(String userEmail, Pageable pageable);
+    Page<OrderMain> findAllByUserEmailOrderByCreateTimeDesc(String userEmail, Pageable pageable);
 
-    Page<OrderMain> findAllByOrderByOrderStatusAscCreateTimeDesc(Pageable pageable);
+    Page<OrderMain> findAllByOrderByCreateTimeDesc(Pageable pageable);
 
     Page<OrderMain> findAllByOrderStatusOrderByCreateTimeDesc(Integer orderStatus, Pageable pageable);
 

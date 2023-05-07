@@ -18,8 +18,6 @@ export default function CartPage() {
   const [errorGetCartOrderDetails, setErrorGetCartOrderDetails] = useState({});
   const [showCheckoutToast, setShowCheckoutToast] = useState(false);
   const [errorCheckout, setErrorCheckout] = useState({});
-  const [page, setPage] = useState(1);
-  const [size, setSize] = useState(3);
   const [cartOrderDetails, setCartOrderDetails] = useState([]);
 
   useEffect(() => {
@@ -36,24 +34,31 @@ export default function CartPage() {
       setCartOrderDetailCount(Number(counter));
       setCartOrderDetailTotalPrice(Number(totaler));
     }
-  });
+  }, [JSON.parse(localStorage.getItem("cart"))]);
 
   const getCartOrderDetails = async () => {
-    try {
-      axios.defaults.headers.common = {
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        "Access-Control-Allow-Origin": "*",
-      };
-      let { status, data } = await axios.get(`${API}/cart`);
-      localStorage.setItem("cart", JSON.stringify(data.orderDetails));
-      setCartOrderDetails(data.orderDetails);
-      setErrorGetCartOrderDetails({});
-      setShowGetCartOrderDetailsToast(true);
-    } catch (error) {
-      for (let errorObject of error.response.data.errors) {
-        setErrorGetCartOrderDetails(errorObject);
+    if (localStorage.getItem("userToken")) {
+      try {
+        axios.defaults.headers.common = {
+          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          "Access-Control-Allow-Origin": "*",
+        };
+        let { status, data } = await axios.get(`${API}/cart`);
+        let cart = data.orderDetails.sort(
+          (a, b) => a.orderDetailId - b.orderDetailId
+        );
+        localStorage.setItem("cart", JSON.stringify(cart));
+        setCartOrderDetails(cart);
+        setErrorGetCartOrderDetails({});
         setShowGetCartOrderDetailsToast(true);
+      } catch (error) {
+        for (let errorObject of error.response.data.errors) {
+          setErrorGetCartOrderDetails(errorObject);
+          setShowGetCartOrderDetailsToast(true);
+        }
       }
+    } else {
+      setCartOrderDetails(JSON.parse(localStorage.getItem("cart")));
     }
   };
 
@@ -79,6 +84,14 @@ export default function CartPage() {
     getCartOrderDetails();
   }, []);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      getCartOrderDetails();
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  });
+
   return (
     <>
       <NavbarComponent cartOrderDetailCount={cartOrderDetailCount} />
@@ -86,37 +99,43 @@ export default function CartPage() {
         <Breadcrumbs />
 
         {cartOrderDetailCount > 0 ? (
-          <div className="container mt-3 mb-3">
-            <div className="row">
-              <div className="col col-8">
-                <CartOrderDetailList
-                  cartOrderDetails={cartOrderDetails}
-                  getCartOrderDetails={getCartOrderDetails}
-                  setCartOrderDetails={setCartOrderDetails}
-                />
-              </div>
-              <div className="col col-4 flex-column">
-                <h3>Total price is ${cartOrderDetailTotalPrice}</h3>
-                <Button variant="outline-primary" onClick={handleCheckout}>
-                  Checkout
-                </Button>
+          <>
+            <div className="container mt-3 mb-3">
+              <div className="row">
+                <div className="col col-8">
+                  <CartOrderDetailList
+                    cartOrderDetails={cartOrderDetails}
+                    setCartOrderDetails={setCartOrderDetails}
+                  />
+                </div>
+                <div className="col col-4 flex-column">
+                  <h3>Total price is ${cartOrderDetailTotalPrice}</h3>
+                  <Button variant="outline-primary" onClick={handleCheckout}>
+                    Checkout
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
+            <div className="cart-footer">
+              <FooterComponent />
+            </div>
+          </>
         ) : (
-          <div className="main-notfound">
-            <div className="notfound-content">
-              <h3 className="notfound-header">There is no item in Cart.</h3>
-              <h4 className="notfound-link">
-                Explore interesting algorithm in the{" "}
-                <Link to="/category">Category Page</Link>
-              </h4>
+          <>
+            <div className="main-notfound-navbar-breadcrumbs">
+              <div className="notfound-content">
+                <h3 className="notfound-header">There is no item in Cart.</h3>
+                <h4 className="notfound-link">
+                  Explore interesting algorithms in{" "}
+                  <Link to="/category">Category Page</Link>
+                </h4>
+              </div>
             </div>
-          </div>
+            <div className="cart-footer">
+              <FooterComponent position="absolute" color="white" />
+            </div>
+          </>
         )}
-        <div className="cart-footer">
-          <FooterComponent />
-        </div>
         <ToastContainer className="p-3 top-0 end-0">
           <Toast
             onClose={() => setShowGetCartOrderDetailsToast(false)}
@@ -141,7 +160,7 @@ export default function CartPage() {
         </ToastContainer>
         <ToastContainer className="p-3 top-0 end-0">
           <Toast
-            onClose={() => setShowGetCartOrderDetailsToast(false)}
+            onClose={() => setShowCheckoutToast(false)}
             show={showCheckoutToast}
             delay={3000}
             autohide

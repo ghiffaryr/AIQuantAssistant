@@ -13,6 +13,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,9 +32,10 @@ import java.util.List;
 
 @Service
 public class ProductCategoryServiceImpl implements ProductCategoryService {
+    private static final Logger logger = LoggerFactory.getLogger(ProductCategoryServiceImpl.class);
+
     @Autowired
     ProductCategoryRepository productCategoryRepository;
-
     @Autowired
     SubscriptionService subscriptionService;
 
@@ -42,6 +45,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     public ProductCategory find(String productCategoryCode) {
         ProductCategory productCategory = productCategoryRepository.findByProductCategoryCode(productCategoryCode);
         if (productCategory == null){
+            logger.error(ResultEnum.CATEGORY_NOT_FOUND.getMessage());
             throw new NotFoundException(ResultEnum.CATEGORY_NOT_FOUND);
         }
         return productCategory;
@@ -51,6 +55,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     public Page<ProductCategory> findAll(Pageable pageable) {
         Page<ProductCategory> productCategory = productCategoryRepository.findAllByOrderByProductCategoryCodeAsc(pageable);
         if (productCategory.getTotalElements() == 0){
+            logger.error(ResultEnum.CATEGORY_NOT_FOUND.getMessage());
             throw new NotFoundException(ResultEnum.CATEGORY_NOT_FOUND);
         }
         return productCategory;
@@ -61,10 +66,12 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     public ProductCategory update(String productCategoryCode, ProductCategoryForm productCategoryForm) {
         ProductCategory oldProductCategory = productCategoryRepository.findByProductCategoryCode(productCategoryCode);
         if (oldProductCategory == null) {
+            logger.error(ResultEnum.CATEGORY_NOT_FOUND.getMessage());
             throw new NotFoundException(ResultEnum.CATEGORY_NOT_FOUND);
         }
         ProductCategory isCategoryCodeExist = productCategoryRepository.findByProductCategoryCode(productCategoryForm.getProductCategoryCode());
         if (isCategoryCodeExist != null) {
+            logger.error(ResultEnum.CATEGORY_EXISTS.getMessage());
             throw new ConflictException(ResultEnum.CATEGORY_EXISTS);
         }
         oldProductCategory.setProductCategoryCode(productCategoryForm.getProductCategoryCode());
@@ -79,6 +86,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     public ProductCategory create(ProductCategoryForm productCategoryForm) {
         ProductCategory isCategoryCodeExist = productCategoryRepository.findByProductCategoryCode(productCategoryForm.getProductCategoryCode());
         if (isCategoryCodeExist != null) {
+            logger.error(ResultEnum.CATEGORY_EXISTS.getMessage());
             throw new ConflictException(ResultEnum.CATEGORY_EXISTS);
         }
         ProductCategory newProductCategory = new ProductCategory();
@@ -109,6 +117,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         if (isCustomer){
             Subscription subscription = subscriptionService.findByUserEmailAndProductCategoryCode(authenticationEmail, productCategoryCode, true);
             if(subscription == null || subscription.getExpTime().isAfter(LocalDateTime.now())) {
+                logger.error(ResultEnum.SUBSCRIPTION_INACTIVE.getMessage());
                 throw new ForbiddenException(ResultEnum.SUBSCRIPTION_INACTIVE);
             }
         }
@@ -156,27 +165,36 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
                         responseBodyErrorMessages.add(responseBodyError.get("message").toString());
                     }
                     if (responseCode == 400) {
+                        logger.error(responseBodyErrorMessages.toString());
                         throw new BadRequestException(responseBodyErrorCodes, responseBodyErrorMessages);
                     } else if (responseCode == 401) {
+                        logger.error(responseBodyErrorMessages.toString());
                         throw new ForbiddenException(responseBodyErrorCodes, responseBodyErrorMessages);
                     } else if (responseCode == 404) {
+                        logger.error(responseBodyErrorMessages.toString());
                         throw new NotFoundException(responseBodyErrorCodes, responseBodyErrorMessages);
                     } else {
+                        logger.error(responseBodyErrorMessages.toString());
                         throw new InternalServerErrorException(responseBodyErrorCodes, responseBodyErrorMessages);
                     }
                 } catch (ParseException e) {
                     if (responseCode == 400){
+                        logger.error(responseBody);
                         throw new BadRequestException(responseBody);
                     } else if (responseCode == 401) {
+                        logger.error(responseBody);
                         throw new ForbiddenException(responseBody);
                     } else if (responseCode == 404) {
+                        logger.error(responseBody);
                         throw new NotFoundException(responseBody);
                     } else {
+                        logger.error(responseBody);
                         throw new InternalServerErrorException(responseBody);
                     }
                 }
             }
         } catch (IOException e) {
+            logger.error(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
         } finally {
             if (con != null) {

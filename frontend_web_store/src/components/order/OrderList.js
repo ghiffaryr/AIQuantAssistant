@@ -4,9 +4,9 @@ import Order from "./Order";
 export default function OrderList({ orders, getOrders, setOrders }) {
   return (
     <>
-      <div className="container mt-3 mb-3">
+      <div className="container mb-3">
         <div
-          className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4
+          className="row row-cols-1 g-4
         "
           id="categories-row"
         >

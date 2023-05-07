@@ -75,15 +75,25 @@ function NavbarComponent(props) {
                   </LinkContainer>
                 </Nav>
                 <Nav>
-                  <LinkContainer to="/cart" className="nav-tab-link">
-                    <Button variant="link" className="nav-item">
-                      <BsCartFill />
-                      Cart{" "}
-                      <Badge bg="secondary">
-                        {props.cartOrderDetailCount}
-                      </Badge>{" "}
-                    </Button>
-                  </LinkContainer>
+                  {localStorage.getItem("userRole") === "ROLE_EMPLOYEE" ||
+                  localStorage.getItem("userRole") === "ROLE_MANAGER" ? (
+                    <LinkContainer to="/order" className="nav-tab-link">
+                      <Button variant="link" className="nav-item">
+                        <BsCartFill />
+                        Order
+                      </Button>
+                    </LinkContainer>
+                  ) : (
+                    <LinkContainer to="/cart" className="nav-tab-link">
+                      <Button variant="link" className="nav-item">
+                        <BsCartFill />
+                        Cart{" "}
+                        <Badge bg="secondary">
+                          {props.cartOrderDetailCount}
+                        </Badge>{" "}
+                      </Button>
+                    </LinkContainer>
+                  )}
                   {localStorage.getItem("userToken") ? (
                     <Button variant="link" className="nav-item nav-tab-link">
                       <FaUser />
@@ -98,9 +108,12 @@ function NavbarComponent(props) {
                         <LinkContainer to="/profile">
                           <NavDropdown.Item>Profile</NavDropdown.Item>
                         </LinkContainer>
-                        <LinkContainer to="/order">
-                          <NavDropdown.Item>Order</NavDropdown.Item>
-                        </LinkContainer>
+                        {localStorage.getItem("userRole") ===
+                          "ROLE_CUSTOMER" && (
+                          <LinkContainer to="/order">
+                            <NavDropdown.Item>Order</NavDropdown.Item>
+                          </LinkContainer>
+                        )}
                         <NavDropdown.Item onClick={handleLogout}>
                           Logout
                         </NavDropdown.Item>

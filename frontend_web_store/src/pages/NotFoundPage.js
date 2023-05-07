@@ -1,6 +1,7 @@
 import React from "react";
 import "../css/NotFoundPage.css";
 import { Link } from "react-router-dom";
+import FooterComponent from "../components/FooterComponent";
 
 export default function NotFoundPage() {
   return (
@@ -14,6 +15,9 @@ export default function NotFoundPage() {
             Go back to <Link to="/">Home Page</Link>
           </h4>
         </div>
+      </div>
+      <div className="login-footer">
+        <FooterComponent position="absolute" color="white" />
       </div>
     </>
   );

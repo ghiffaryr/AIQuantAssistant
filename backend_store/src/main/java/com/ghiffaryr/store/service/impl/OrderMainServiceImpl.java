@@ -9,8 +9,9 @@ import com.ghiffaryr.store.exception.NotFoundException;
 import com.ghiffaryr.store.repository.*;
 import com.ghiffaryr.store.service.OrderMainService;
 import com.ghiffaryr.store.service.ProductService;
-import com.ghiffaryr.store.service.SubscriptionService;
 import com.ghiffaryr.store.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,8 @@ import java.time.LocalDateTime;
 
 @Service
 public class OrderMainServiceImpl implements OrderMainService {
+    private static final Logger logger = LoggerFactory.getLogger(OrderMainServiceImpl.class);
+
     @Autowired
     OrderMainRepository orderMainRepository;
     @Autowired
@@ -34,11 +37,12 @@ public class OrderMainServiceImpl implements OrderMainService {
     public Page<OrderMain> findAll(String authenticationEmail, Boolean isCustomer, Pageable pageable) {
         Page<OrderMain> orderMainPage;
         if (isCustomer) {
-            orderMainPage = orderMainRepository.findAllByUserEmailOrderByOrderStatusAscCreateTimeDesc(authenticationEmail, pageable);
+            orderMainPage = orderMainRepository.findAllByUserEmailOrderByCreateTimeDesc(authenticationEmail, pageable);
         } else {
-            orderMainPage  = orderMainRepository.findAllByOrderByOrderStatusAscCreateTimeDesc(pageable);
+            orderMainPage  = orderMainRepository.findAllByOrderByCreateTimeDesc(pageable);
         }
         if (orderMainPage.getTotalElements() == 0){
+            logger.error(ResultEnum.ORDER_NOT_FOUND.getMessage());
             throw new NotFoundException(ResultEnum.ORDER_NOT_FOUND);
         }
         return orderMainPage;
@@ -53,6 +57,7 @@ public class OrderMainServiceImpl implements OrderMainService {
             orderMainPage  = orderMainRepository.findAllByOrderStatusOrderByCreateTimeDesc(orderStatus, pageable);
         }
         if (orderMainPage.getTotalElements() == 0){
+            logger.error(ResultEnum.ORDER_NOT_FOUND.getMessage());
             throw new NotFoundException(ResultEnum.ORDER_NOT_FOUND);
         }
         return orderMainPage;
@@ -62,9 +67,11 @@ public class OrderMainServiceImpl implements OrderMainService {
     public OrderMain find(Long orderId, String authenticationEmail, Boolean isCustomer) {
         OrderMain orderMain = orderMainRepository.findByOrderId(orderId);
         if (orderMain == null) {
+            logger.error(ResultEnum.ORDER_NOT_FOUND.getMessage());
             throw new NotFoundException(ResultEnum.ORDER_NOT_FOUND);
         }
         if (isCustomer && !authenticationEmail.equals(orderMain.getUserEmail())) {
+            logger.error(ResultEnum.USER_NO_ACCESS.getMessage());
             throw new ForbiddenException(ResultEnum.USER_NO_ACCESS);
         }
         return orderMain;
@@ -75,6 +82,7 @@ public class OrderMainServiceImpl implements OrderMainService {
     public OrderMain finish(Long orderId) {
         OrderMain orderMain = orderMainRepository.findByOrderId(orderId);
         if(orderMain == null) {
+            logger.error(ResultEnum.ORDER_NOT_FOUND.getMessage());
             throw new NotFoundException(ResultEnum.ORDER_NOT_FOUND);
         }
         orderMain.setOrderStatus(OrderStatusEnum.FINISHED.getCode());
@@ -108,6 +116,7 @@ public class OrderMainServiceImpl implements OrderMainService {
     public OrderMain cancel(Long orderId, String authenticationEmail, Boolean isCustomer) {
         OrderMain orderMain = find(orderId, authenticationEmail, isCustomer);
         if (!orderMain.getOrderStatus().equals(OrderStatusEnum.NEW.getCode())) {
+            logger.error(ResultEnum.ORDER_STATUS_INVALID.getMessage());
             throw new BadRequestException(ResultEnum.ORDER_STATUS_INVALID);
         }
         orderMain.setOrderStatus(OrderStatusEnum.CANCELED.getCode());

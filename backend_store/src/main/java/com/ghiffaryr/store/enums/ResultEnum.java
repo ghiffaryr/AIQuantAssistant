@@ -37,7 +37,7 @@ public enum ResultEnum {
     USER_EMAIL_INVALID(83, "Invalid email address"),
     USER_PASSWORD_INVALID(84, "Password must be at least 8 characters long containing at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character"),
     USER_NO_ACCESS(85, "User has no right to access!"),
-    USER_RECOVERY_PHRASE_WRONG(86, "Wrong user recovery phrase!")
+    USER_RECOVERY_PHRASE_WRONG(86, "Wrong email or recovery phrase!")
     ;
 
     private Integer code;

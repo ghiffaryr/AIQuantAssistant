@@ -16,6 +16,8 @@ import com.ghiffaryr.store.security.utils.PasswordUtils;
 import com.ghiffaryr.store.service.UserService;
 import com.ghiffaryr.store.dto.request.UserLoginForm;
 import com.ghiffaryr.store.dto.response.UserLoginResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,6 +32,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @DependsOn("passwordEncoder")
 public class UserServiceImpl implements UserService {
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Autowired
     PasswordEncoder passwordEncoder;
     @Autowired
@@ -43,6 +47,7 @@ public class UserServiceImpl implements UserService {
     public User find(String email) {
         User user = userRepository.findByEmail(email);
         if (user == null){
+            logger.error(ResultEnum.USER_NOT_FOUND.getMessage());
             throw new NotFoundException(ResultEnum.USER_NOT_FOUND);
         }
         return user;
@@ -85,6 +90,7 @@ public class UserServiceImpl implements UserService {
     public ProfileResponse register(UserRegisterForm userRegisterForm) {
         User oldUser = userRepository.findByEmail(userRegisterForm.getEmail());
         if (oldUser != null) {
+            logger.error(ResultEnum.USER_EXISTS.getMessage());
             throw new ConflictException(ResultEnum.USER_EXISTS);
         }
         User newUser = new User();
@@ -107,23 +113,30 @@ public class UserServiceImpl implements UserService {
     public ProfileResponse update(UserUpdateForm userUpdateForm, String principalName) {
         User isEmailExist = userRepository.findByEmail(userUpdateForm.getEmail());
         if (isEmailExist != null && !principalName.equals(userUpdateForm.getEmail())) {
+            logger.error(ResultEnum.USER_EMAIL_USED.getMessage());
             throw new ConflictException(ResultEnum.USER_EMAIL_USED);
         }
         User oldUser = userRepository.findByEmail(principalName);
-        if(userUpdateForm.getEmail() != null) {
-            if(!userUpdateForm.getEmail().matches("([a-zA-Z0-9]+(?:[._+-][a-zA-Z0-9]+)*)@([a-zA-Z0-9]+(?:[.-][a-zA-Z0-9]+)*[.][a-zA-Z]{2,})")) throw new BadRequestException(ResultEnum.USER_EMAIL_INVALID);
+        if (userUpdateForm.getEmail() != null) {
+            if (!userUpdateForm.getEmail().matches("([a-zA-Z0-9]+(?:[._+-][a-zA-Z0-9]+)*)@([a-zA-Z0-9]+(?:[.-][a-zA-Z0-9]+)*[.][a-zA-Z]{2,})")) {
+                logger.error(ResultEnum.USER_EMAIL_INVALID.getMessage());
+                throw new BadRequestException(ResultEnum.USER_EMAIL_INVALID);
+            }
             oldUser.setEmail(userUpdateForm.getEmail());
         }
-        if(userUpdateForm.getPassword() != null) {
-            if(!userUpdateForm.getPassword().matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^A-Za-z0-9]).{8,}$")) throw new BadRequestException(ResultEnum.USER_PASSWORD_INVALID);
+        if (userUpdateForm.getPassword() != null) {
+            if (!userUpdateForm.getPassword().matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^A-Za-z0-9]).{8,}$")) {
+                logger.error(ResultEnum.USER_PASSWORD_INVALID.getMessage());
+                throw new BadRequestException(ResultEnum.USER_PASSWORD_INVALID);
+            }
             oldUser.setPassword(passwordEncoder.encode(userUpdateForm.getPassword()));
         }
-        if(userUpdateForm.getName() != null) oldUser.setName(userUpdateForm.getName());
-        if(userUpdateForm.getImage() != null) oldUser.setImage(userUpdateForm.getImage());
-        if(userUpdateForm.getPhone() != null) oldUser.setPhone(userUpdateForm.getPhone());
-        if(userUpdateForm.getAddress() != null) oldUser.setAddress(userUpdateForm.getAddress());
-        if(userUpdateForm.getGender() != null) oldUser.setGender(userUpdateForm.getGender());
-        if(userUpdateForm.getBirthdate() != null) oldUser.setBirthdate(userUpdateForm.getBirthdate());
+        if (userUpdateForm.getName() != null) oldUser.setName(userUpdateForm.getName());
+        if (userUpdateForm.getImage() != null) oldUser.setImage(userUpdateForm.getImage());
+        if (userUpdateForm.getPhone() != null) oldUser.setPhone(userUpdateForm.getPhone());
+        if (userUpdateForm.getAddress() != null) oldUser.setAddress(userUpdateForm.getAddress());
+        if (userUpdateForm.getGender() != null) oldUser.setGender(userUpdateForm.getGender());
+        if (userUpdateForm.getBirthdate() != null) oldUser.setBirthdate(userUpdateForm.getBirthdate());
         userRepository.save(oldUser);
 
         return profile(oldUser.getEmail());
@@ -134,6 +147,7 @@ public class UserServiceImpl implements UserService {
     public UserRecoveryResponse recovery(UserRecoveryForm userRecoveryForm) {
         User oldUser = find(userRecoveryForm.getEmail());
         if (!oldUser.getRecoveryPhrase().equals(userRecoveryForm.getRecoveryPhrase())){
+            logger.error(ResultEnum.USER_RECOVERY_PHRASE_WRONG.getMessage());
             throw new BadRequestException(ResultEnum.USER_RECOVERY_PHRASE_WRONG);
         }
         String generatedPassword = PasswordUtils.generatePassword(8);

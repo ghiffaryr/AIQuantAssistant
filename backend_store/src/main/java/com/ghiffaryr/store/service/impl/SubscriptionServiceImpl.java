@@ -7,6 +7,8 @@ import com.ghiffaryr.store.exception.NotFoundException;
 import com.ghiffaryr.store.repository.SubscriptionRepository;
 import com.ghiffaryr.store.service.SubscriptionService;
 import com.ghiffaryr.store.dto.request.SubscriptionUpdateForm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SubscriptionServiceImpl implements SubscriptionService {
+    private static final Logger logger = LoggerFactory.getLogger(SubscriptionServiceImpl.class);
 
     @Autowired
     SubscriptionRepository subscriptionRepository;
@@ -23,9 +26,11 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     public Subscription find(Long subscriptionId, String authenticationEmail, Boolean isCustomer) {
         Subscription subscription = subscriptionRepository.findBySubscriptionId(subscriptionId);
         if (subscription == null) {
+            logger.error(ResultEnum.SUBSCRIPTION_NOT_FOUND.getMessage());
             throw new NotFoundException(ResultEnum.SUBSCRIPTION_NOT_FOUND);
         }
         if (isCustomer && !authenticationEmail.equals(subscription.getUserEmail())) {
+            logger.error(ResultEnum.USER_NO_ACCESS.getMessage());
             throw new ForbiddenException(ResultEnum.USER_NO_ACCESS);
         }
         return subscription;
@@ -35,9 +40,11 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     public Subscription findByUserEmailAndProductCategoryCode(String userEmail, String productCategoryCode, Boolean isCustomer) {
         Subscription subscription = subscriptionRepository.findByUserEmailAndProductCategoryCode(userEmail, productCategoryCode);
         if (subscription == null) {
+            logger.error(ResultEnum.SUBSCRIPTION_NOT_FOUND.getMessage());
             throw new NotFoundException(ResultEnum.SUBSCRIPTION_NOT_FOUND);
         }
         if (isCustomer && !userEmail.equals(subscription.getUserEmail())) {
+            logger.error(ResultEnum.USER_NO_ACCESS.getMessage());
             throw new ForbiddenException(ResultEnum.USER_NO_ACCESS);
         }
         return subscription;
@@ -52,6 +59,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
             subscriptionPage  = subscriptionRepository.findAll(pageable);
         }
         if (subscriptionPage.getTotalElements() == 0){
+            logger.error(ResultEnum.SUBSCRIPTION_NOT_FOUND.getMessage());
             throw new NotFoundException(ResultEnum.SUBSCRIPTION_NOT_FOUND);
         }
         return subscriptionPage;
@@ -67,6 +75,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
             subscriptionPage  = subscriptionRepository.findActiveAllByOrderByExpTimeDesc(pageable);
         }
         if (subscriptionPage.getTotalElements() == 0){
+            logger.error(ResultEnum.SUBSCRIPTION_NOT_FOUND.getMessage());
             throw new NotFoundException(ResultEnum.SUBSCRIPTION_NOT_FOUND);
         }
         return subscriptionPage;
@@ -77,7 +86,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     @Transactional
     public Subscription update(Long subscriptionId, SubscriptionUpdateForm subscriptionUpdateForm) {
         Subscription oldSubscription = subscriptionRepository.findBySubscriptionId(subscriptionId);
-        if(oldSubscription == null) {
+        if (oldSubscription == null) {
+            logger.error(ResultEnum.SUBSCRIPTION_NOT_FOUND.getMessage());
             throw new NotFoundException(ResultEnum.SUBSCRIPTION_NOT_FOUND);
         }
         oldSubscription.setProductCategoryCode(subscriptionUpdateForm.getProductCategoryCode());
