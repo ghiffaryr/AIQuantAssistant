@@ -48,7 +48,7 @@
 				"auth": {
 					"type": "bearer",
 					"bearer": {
-						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbXBsb3llZUBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjg5LCJleHAiOjE2ODMwMTkwODl9.pYeEh7HxkR9fRpwU7IXwqB6NL3jxNZy_fm-MZUEat29HerqJnriuldSt-QUR8IcNiCEoV5OzhxhJce-qyzLSqw"
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjgzMjA4OTgzLCJleHAiOjE2ODMyOTUzODN9.WYYCiQIa-UaVK5VXYsbuLtWlGXXs9Jl4AyvDXxXMUhi2ooWEDFEpB97PPnFxAqswtzbMUagW0LUqmmA4dQoyLw"
 					}
 				},
 				"method": "GET",
@@ -63,14 +63,14 @@
 				"auth": {
 					"type": "bearer",
 					"bearer": {
-						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnaGlmZmFyeXJAZG9tYWluLmNvbSIsImlhdCI6MTY4MjY4NzU5MSwiZXhwIjoxNjgyNzczOTkxfQ.bw0pjHh39NaI3jFroY4035Fi0SaNqoipZVj8NviOKK76H__PbGmqIr4BRn8ZeeS-cGypUUgu252Y97JKV_V_IA"
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnaGlmZmFyeXJAZG9tYWluLmNvbSIsImlhdCI6MTY4MzMxMjQ3NiwiZXhwIjoxNjgzMzk4ODc2fQ.OkJLl2wkVo49cVwYVBhXesGTNtcEaCfoBO6EyinkHcHsdkQIroB5z2pNvLVhpz4LSnt4kqBcJHfV_21RH3BMAQ"
 					}
 				},
 				"method": "PATCH",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"address\": \"New World\"\n}",
+					"raw": "{\n  \"password\": \"Password1#\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -116,15 +116,6 @@
 				},
 				"method": "PATCH",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"address\": \"Alamat B\",\n  \"email\": \"ghiffaryr@domain.com\",\n  \"name\": \"Ghiffary Baru\",\n  \"password\": \"Password1#\",\n  \"phone\": \"08124125215\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": "http://0.0.0.0:8080/api/profile/deactivate"
 			},
 			"response": []
@@ -634,7 +625,7 @@
 				"auth": {
 					"type": "bearer",
 					"bearer": {
-						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjY3LCJleHAiOjE2ODMwMTkwNjd9.z4uPffML1i8P4ybiDYW8jOyqbFZLyT-uCOZ6k8a56COpDd_B273XgodxWVaXCURm4VsQt6qI8V8Eb96KLgU7UQ"
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnaGlmZmFyeXJAZG9tYWluLmNvbSIsImlhdCI6MTY4MzI2MzU2MCwiZXhwIjoxNjgzMzQ5OTYwfQ.2osecKQ2Ip3sS3SC5T52QtnIYyvk07wgHL8eIF4LsENHy6BD-Q1Q7jKbb-jRAbAGnVoelPoZV7-tF9w4XE8QAA"
 					}
 				},
 				"method": "POST",
@@ -682,7 +673,7 @@
 				"auth": {
 					"type": "bearer",
 					"bearer": {
-						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnaGlmZmFyeXJAZG9tYWluLmNvbSIsImlhdCI6MTY4Mjk0MDMyNywiZXhwIjoxNjgzMDI2NzI3fQ.0UdFzIpeCyoy7TiaW3hg8EaC1-SiH9GVj5sqHttmsWcnTm-auGYp3jPIt0vDy5oknYcrVtEMbfPo13M-ILxPfQ"
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnaGlmZmFyeXJAZG9tYWluLmNvbSIsImlhdCI6MTY4MzI2MzU2MCwiZXhwIjoxNjgzMzQ5OTYwfQ.2osecKQ2Ip3sS3SC5T52QtnIYyvk07wgHL8eIF4LsENHy6BD-Q1Q7jKbb-jRAbAGnVoelPoZV7-tF9w4XE8QAA"
 					}
 				},
 				"method": "GET",
@@ -736,7 +727,7 @@
 				"auth": {
 					"type": "bearer",
 					"bearer": {
-						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnaGlmZmFyeXJAZG9tYWluLmNvbSIsImlhdCI6MTY4Mjk0MDMyNywiZXhwIjoxNjgzMDI2NzI3fQ.0UdFzIpeCyoy7TiaW3hg8EaC1-SiH9GVj5sqHttmsWcnTm-auGYp3jPIt0vDy5oknYcrVtEMbfPo13M-ILxPfQ"
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnaGlmZmFyeXJAZG9tYWluLmNvbSIsImlhdCI6MTY4MzMxMDc3MywiZXhwIjoxNjgzMzk3MTczfQ.s9VIY7g9UiTiYmz_ulPPzuIsyKZ2ELO7QzrY74UxvCuJ4vVQ5uprsCueOljeSUGr0vpvSW1A5yxFbyJb--nVyw"
 					}
 				},
 				"method": "POST",
@@ -751,7 +742,7 @@
 				"auth": {
 					"type": "bearer",
 					"bearer": {
-						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlbXBsb3llZUBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjg5LCJleHAiOjE2ODMwMTkwODl9.pYeEh7HxkR9fRpwU7IXwqB6NL3jxNZy_fm-MZUEat29HerqJnriuldSt-QUR8IcNiCEoV5OzhxhJce-qyzLSqw"
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2ODMyODc3MDcsImV4cCI6MTY4MzM3NDEwN30.RWDiAgsdVLAqLfer55eVOPViHSlfHfm_PRfas1OO_nIEFZ6jtVA5-kKWI95r5xRgnMEFKr3CBtVarxP4ytmKog"
 					}
 				},
 				"method": "GET",
@@ -856,7 +847,7 @@
 				"auth": {
 					"type": "bearer",
 					"bearer": {
-						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjdXN0b21lckBkb21haW4uY29tIiwiaWF0IjoxNjgyOTMyNjY3LCJleHAiOjE2ODMwMTkwNjd9.z4uPffML1i8P4ybiDYW8jOyqbFZLyT-uCOZ6k8a56COpDd_B273XgodxWVaXCURm4VsQt6qI8V8Eb96KLgU7UQ"
+						"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQGRvbWFpbi5jb20iLCJpYXQiOjE2ODMzNDE4OTgsImV4cCI6MTY4MzQyODI5OH0.LRG0rKrPT8xIdO6OUdIdMGbGjTjUGSewzYfTjq6EAYGsYTIG7-c2FYNFAA6DVHgXA9YeaiNzCi9uKMWW8cvSng"
 					}
 				},
 				"method": "GET",

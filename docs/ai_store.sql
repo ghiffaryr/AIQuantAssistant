@@ -32,7 +32,8 @@ CREATE TABLE `cart` (
 
 insert  into `cart`(`cart_id`,`user_id`) values 
 (26,1),
-(21,2);
+(21,2),
+(62,61);
 
 /*Table structure for table `hibernate_sequence` */
 
@@ -45,7 +46,7 @@ CREATE TABLE `hibernate_sequence` (
 /*Data for the table `hibernate_sequence` */
 
 insert  into `hibernate_sequence`(`next_val`) values 
-(30);
+(80);
 
 /*Table structure for table `order_detail` */
 
@@ -71,7 +72,39 @@ insert  into `order_detail`(`order_detail_id`,`product_code`,`product_price`,`qu
 (20,'autots3m',20.00,1,NULL,25),
 (22,'facebookprophet1m',6.00,2,NULL,25),
 (23,'neuralprophet1m',6.00,1,NULL,25),
-(24,'autots12m',70.00,1,NULL,25);
+(24,'autots12m',70.00,1,NULL,25),
+(25,'neuralprophet1m',6.00,1,NULL,28),
+(26,'autots3m',20.00,1,NULL,28),
+(27,'facebookprophet1m',6.00,1,NULL,28),
+(29,'facebookprophet3m',17.00,1,NULL,32),
+(30,'neuralprophet3m',17.00,1,NULL,32),
+(31,'autots6m',37.00,1,NULL,32),
+(33,'facebookprophet12m',60.00,1,NULL,34),
+(35,'facebookprophet3m',17.00,1,NULL,36),
+(37,'facebookprophet1m',6.00,1,NULL,38),
+(39,'facebookprophet1m',6.00,1,NULL,40),
+(41,'facebookprophet1m',6.00,1,NULL,42),
+(43,'neuralprophet1m',6.00,1,NULL,44),
+(45,'facebookprophet1m',6.00,1,NULL,48),
+(46,'neuralprophet1m',6.00,1,NULL,48),
+(47,'autots3m',20.00,1,NULL,48),
+(49,'facebookprophet3m',17.00,1,NULL,50),
+(51,'facebookprophet1m',6.00,1,NULL,52),
+(53,'facebookprophet1m',6.00,1,NULL,54),
+(55,'facebookprophet1m',6.00,1,NULL,56),
+(57,'neuralprophet1m',6.00,1,NULL,58),
+(59,'autots3m',20.00,1,NULL,60),
+(63,'autots3m',20.00,1,NULL,67),
+(64,'autots6m',37.00,1,NULL,67),
+(65,'autots12m',70.00,2,NULL,67),
+(66,'facebookprophet1m',6.00,11,NULL,67),
+(71,'autots3m',20.00,1,NULL,74),
+(72,'autots6m',37.00,1,NULL,74),
+(73,'facebookprophet1m',6.00,1,NULL,74),
+(75,'autots6m',37.00,2,NULL,79),
+(76,'autots3m',20.00,2,NULL,79),
+(77,'facebookprophet1m',6.00,4,NULL,79),
+(78,'facebookprophet1m',6.00,4,NULL,79);
 
 /*Table structure for table `order_main` */
 
@@ -90,7 +123,25 @@ CREATE TABLE `order_main` (
 /*Data for the table `order_main` */
 
 insert  into `order_main`(`order_id`,`create_time`,`order_amount`,`order_status`,`update_time`,`user_email`) values 
-(25,'2023-05-01 16:26:20',108.00,1,'2023-05-02 02:24:07','customer@domain.com');
+(25,'2023-05-01 16:26:20',108.00,1,'2023-05-02 02:24:07','customer@domain.com'),
+(28,'2023-05-06 00:51:51',32.00,0,'2023-05-06 00:51:51','ghiffaryr@domain.com'),
+(32,'2023-05-06 00:55:00',71.00,0,'2023-05-06 00:55:00','ghiffaryr@domain.com'),
+(34,'2023-05-06 00:57:03',60.00,0,'2023-05-06 00:57:03','ghiffaryr@domain.com'),
+(36,'2023-05-06 00:57:51',17.00,0,'2023-05-06 00:57:51','ghiffaryr@domain.com'),
+(38,'2023-05-06 01:00:28',6.00,0,'2023-05-06 01:00:28','ghiffaryr@domain.com'),
+(40,'2023-05-06 01:02:04',6.00,0,'2023-05-06 01:02:04','ghiffaryr@domain.com'),
+(42,'2023-05-06 01:03:38',6.00,0,'2023-05-06 01:03:38','ghiffaryr@domain.com'),
+(44,'2023-05-06 01:04:05',6.00,0,'2023-05-06 01:04:05','ghiffaryr@domain.com'),
+(48,'2023-05-06 01:06:04',32.00,0,'2023-05-06 01:06:04','ghiffaryr@domain.com'),
+(50,'2023-05-06 01:16:36',17.00,0,'2023-05-06 01:16:36','ghiffaryr@domain.com'),
+(52,'2023-05-06 01:17:22',6.00,0,'2023-05-06 01:17:22','ghiffaryr@domain.com'),
+(54,'2023-05-06 01:19:51',6.00,0,'2023-05-06 01:19:51','ghiffaryr@domain.com'),
+(56,'2023-05-06 01:20:12',6.00,1,'2023-05-06 03:35:27','ghiffaryr@domain.com'),
+(58,'2023-05-06 01:20:48',6.00,2,'2023-05-06 02:43:54','ghiffaryr@domain.com'),
+(60,'2023-05-06 01:21:24',20.00,2,'2023-05-06 02:26:20','ghiffaryr@domain.com'),
+(67,'2023-05-06 03:31:45',263.00,1,'2023-05-06 03:34:58','newuser@domain.com'),
+(74,'2023-05-06 04:06:51',63.00,2,'2023-05-06 04:07:20','newuser@domain.com'),
+(79,'2023-05-06 05:11:06',162.00,2,'2023-05-06 17:35:28','newuser@domain.com');
 
 /*Table structure for table `product` */
 
@@ -124,7 +175,7 @@ insert  into `product`(`product_id`,`create_time`,`product_category_code`,`produ
 (15,'2023-04-28 14:02:09','neuralprophet','neuralprophet3m','High performance AI quant assistant backed by AR-Net','https://user-images.githubusercontent.com/21246060/111388960-6c367e80-866d-11eb-91c1-46f2c0d21879.PNG','Stock Market AI Assistant 3 Month Subscription',3,17.00,1,'2023-04-28 14:02:09'),
 (16,'2023-04-28 14:02:26','neuralprophet','neuralprophet6m','High performance AI quant assistant backed by AR-Net','https://user-images.githubusercontent.com/21246060/111388960-6c367e80-866d-11eb-91c1-46f2c0d21879.PNG','Stock Market AI Assistant 6 Month Subscription',6,31.00,1,'2023-04-28 14:02:26'),
 (17,'2023-04-28 14:39:45','autots','autots12m','High performance AI quant assistant backed by ensemble method','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','Stock Market AI Assistant 12 Month Subscription',12,70.00,1,'2023-05-01 12:11:31'),
-(18,'2023-04-28 14:40:24','facebookprophet','facebookprophet12m','High performance AI quant assistant backed by facebook regression model','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Stock Market AI Assistant 12 Month Subscription',12,60.00,0,'2023-04-28 14:40:24'),
+(18,'2023-04-28 14:40:24','facebookprophet','facebookprophet12m','High performance AI quant assistant backed by facebook regression model','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Stock Market AI Assistant 12 Month Subscription',12,60.00,1,'2023-04-28 14:40:24'),
 (19,'2023-04-28 14:41:35','neuralprophet','neuralprophet12m','High performance AI quant assistant backed by AR-Net','https://user-images.githubusercontent.com/21246060/111388960-6c367e80-866d-11eb-91c1-46f2c0d21879.PNG','Stock Market AI Assistant 12 Month Subscription',12,60.00,0,'2023-04-28 14:39:45');
 
 /*Table structure for table `product_category` */
@@ -166,7 +217,10 @@ CREATE TABLE `subscription` (
 insert  into `subscription`(`subscription_id`,`exp_time`,`product_category_code`,`user_email`) values 
 (27,'2023-07-02 02:24:06','facebookprophet','customer@domain.com'),
 (28,'2023-11-02 02:36:53','autots','customer@domain.com'),
-(29,'2023-06-02 02:24:07','neuralprophet','customer@domain.com');
+(29,'2023-06-02 02:24:07','neuralprophet','customer@domain.com'),
+(68,'2028-11-06 03:34:57','autots','newuser@domain.com'),
+(69,'2025-03-06 03:34:58','facebookprophet','newuser@domain.com'),
+(70,'2023-07-06 03:35:26','facebookprophet','ghiffaryr@domain.com');
 
 /*Table structure for table `user` */
 
@@ -193,10 +247,11 @@ CREATE TABLE `user` (
 /*Data for the table `user` */
 
 insert  into `user`(`id`,`active`,`address`,`birthdate`,`create_time`,`email`,`gender`,`image`,`name`,`password`,`phone`,`recovery_phrase`,`role`,`update_time`) values 
-(1,'','New World','2023-04-27 09:35:45','2023-04-28 13:00:40','ghiffaryr@domain.com','','https://upload.wikimedia.org/wikipedia/id/5/5c/Spongebob-squarepants.png','Ghiffary Rifqialdi','$2a$10$Ur60PKRH8Qxpy8XMgw9/ee1A8dUh3CtF5TAl8jjUytjIfO6PMWtli','+628999999999','what zit tooya','ROLE_CUSTOMER','2023-05-01 11:25:18'),
+(1,'','New World','2023-04-27 09:35:45','2023-04-28 13:00:40','ghiffaryr@domain.com','','https://upload.wikimedia.org/wikipedia/id/5/5c/Spongebob-squarepants.png','Ghiffary Rifqialdi','$2a$10$wznJaLuLD/Btbn82f/V2wuO9OKAOGZsTv9h0Io/7uGWDnxmmf1z.2','+628999999999','what zit tooya','ROLE_CUSTOMER','2023-05-05 18:48:46'),
 (2,'',NULL,NULL,'2023-04-28 13:01:00','customer@domain.com',NULL,NULL,'Real Customer','$2a$10$Q9ImyIHm0erCwE3dkHOUXeJxitweUWAFxHrjIrzGW1zYynDeIXX6i',NULL,'what zit tooya','ROLE_CUSTOMER','2023-04-28 13:01:00'),
 (3,'',NULL,NULL,'2023-04-28 13:01:09','employee@domain.com',NULL,NULL,'Real Employee','$2a$10$UQdoVXowcZsnUnD.OmnPW.WOGSh1GxfM/h7ZvPzwaF99cqEpSUGge',NULL,'what zit tooya','ROLE_EMPLOYEE','2023-04-28 13:01:09'),
-(4,'',NULL,NULL,'2023-04-28 13:01:14','manager@domain.com',NULL,NULL,'Real Manager','$2a$10$PInEh3xY7xQDl6yv38ZTr.rgnrbiodGcz9Vf59RgAPN8QdEIvSji.',NULL,'what zit tooya','ROLE_MANAGER','2023-04-28 13:01:14');
+(4,'',NULL,NULL,'2023-04-28 13:01:14','manager@domain.com',NULL,NULL,'Real Manager','$2a$10$PInEh3xY7xQDl6yv38ZTr.rgnrbiodGcz9Vf59RgAPN8QdEIvSji.',NULL,'what zit tooya','ROLE_MANAGER','2023-04-28 13:01:14'),
+(61,'',NULL,NULL,'2023-05-06 03:29:37','newuser@domain.com','','https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/customer2.jpeg?alt=media&token=e89540b5-b966-41d0-b3ea-87bcbaf3ad7e','New User','$2a$10$sf4G0DgTeWryhMrk.skfK.H0kPMCwHPP3LmQo9EiPQuqAMU.JrGNO',NULL,'$2a$10$QDOMJDkFP8dVR/expB9A2e0N4jPyBP6RcXBCS9zSZnQD0q9Q/hU3C','ROLE_CUSTOMER','2023-05-06 03:29:37');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
