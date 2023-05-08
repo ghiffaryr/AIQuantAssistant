@@ -141,7 +141,7 @@ export default function Product({
             overflow="hidden"
           />
           <div className="card-body d-flex flex-column justify-content-between">
-            <div className="card-content">
+            <div className="card-description">
               <h5 className="card-title">{name}</h5>
               <h6 className="card-subtitle mb-2 text-muted">{code}</h6>
               <p className="card-text">{description}</p>
@@ -151,7 +151,7 @@ export default function Product({
                 {period} {period < 2 ? "month" : "months"}
               </p>
             </div>
-            <div className="w-100 align-self-center mt-3">
+            <div className="card-form w-100 align-self-center mt-3">
               <Form
                 className="cart-form"
                 noValidate

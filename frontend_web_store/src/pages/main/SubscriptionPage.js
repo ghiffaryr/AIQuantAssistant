@@ -7,6 +7,7 @@ import FooterComponent from "../../components/basic/FooterComponent";
 import NavbarComponent from "../../components/basic/NavbarComponent";
 import SubscriptionList from "../../components/subscription/SubscriptionList";
 import { API } from "../../env/Constants";
+import { PaginationControl } from "react-bootstrap-pagination-control";
 
 export default function SubscriptionPage() {
   const [showGetServerCartToast, setShowGetServerCartToast] = useState(false);
@@ -100,10 +101,25 @@ export default function SubscriptionPage() {
       <NavbarComponent cartOrderDetailCount={cartOrderDetailCount} />
       <>
         <Breadcrumbs />
+        <div className="container mb-4 d-flex align-items-center">
+          <small>
+            <span className="text-danger">*</span> Search for Stock Code at
+            Yahoo Finance
+          </small>
+        </div>
         <SubscriptionList
           subscriptions={subscriptions}
-          getSubscriptions={getSubscriptions}
           setSubscriptions={setSubscriptions}
+        />
+        <PaginationControl
+          page={page}
+          between={4}
+          total={totalPages}
+          limit={1}
+          changePage={(page) => {
+            setPage(page);
+          }}
+          ellipsis={1}
         />
         <div className="subscription-footer">
           <FooterComponent />
@@ -126,6 +142,26 @@ export default function SubscriptionPage() {
               <strong className="me-auto text-light">Error</strong>
             </Toast.Header>
             <Toast.Body>{errorGetServerCart.message}</Toast.Body>
+          </Toast>
+        )}
+      </ToastContainer>
+      <ToastContainer className="position-fixed p-3 top-0 end-0">
+        {Object.keys(errorGetSubscriptions).length > 0 && (
+          <Toast
+            onClose={() => setShowGetSubscriptionsToast(false)}
+            show={showGetSubscriptionsToast}
+            delay={3000}
+            autohide
+          >
+            <Toast.Header className="bg-danger">
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto text-light">Error</strong>
+            </Toast.Header>
+            <Toast.Body>{errorGetSubscriptions.message}</Toast.Body>
           </Toast>
         )}
       </ToastContainer>

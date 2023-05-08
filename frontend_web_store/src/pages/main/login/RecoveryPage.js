@@ -84,9 +84,9 @@ export default function RecoveryPage() {
             </>
           ) : (
             <>
-              <h1 className="main-title">Recover your account</h1>
+              <h1 className="main-title mb-4">Recover your account</h1>
               <Form
-                className="login-form mt-4"
+                className="login-form"
                 noValidate
                 validated={validated}
                 onSubmit={handleSubmit}

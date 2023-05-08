@@ -1,25 +1,28 @@
 import React, { useState } from "react";
-import Container from "react-bootstrap/esm/Container";
+import NavbarComponent from "../../components/basic/NavbarComponent";
 import Form from "react-bootstrap/Form";
 import Toast from "react-bootstrap/Toast";
-import ToastContainer from "react-bootstrap/ToastContainer";
-import FooterComponent from "../../../components/basic/FooterComponent";
-import NavbarComponent from "../../../components/basic/NavbarComponent";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { LinkContainer } from "react-router-bootstrap";
-import { useNavigate } from "react-router-dom";
-import Button from "react-bootstrap/esm/Button";
-import "../../../css/pages/main/login/Register.css";
-import { API } from "../../../env/Constants";
-import { storage } from "../../../env/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import axios from "axios";
+import { API } from "../../env/Constants";
+import { storage } from "../../env/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { BsQuestionCircleFill } from "react-icons/bs";
+import Button from "react-bootstrap/esm/Button";
+import { useEffect } from "react";
+import Breadcrumbs from "../../components/basic/Breadcrumbs";
+import FooterComponent from "../../components/basic/FooterComponent";
+import ToastContainer from "react-bootstrap/esm/ToastContainer";
+import { useNavigate } from "react-router-dom";
+import "../../css/pages/main/ProfilePage.css";
 
-export default function RegisterPage() {
+export default function ProfilePage() {
+  const [showGetServerCartToast, setShowGetServerCartToast] = useState(false);
+  const [errorGetServerCart, setErrorGetServerCart] = useState({});
+  const [cartOrderDetailCount, setCartOrderDetailCount] = useState(0);
   const [inputs, setInputs] = useState({
     image: "",
     firstName: "",
@@ -27,17 +30,104 @@ export default function RegisterPage() {
     email: "",
     password: "",
     coPassword: "",
-    recoveryPhrase: "",
     phone: "",
     address: "",
     gender: null,
     birthdate: "",
     role: "ROLE_CUSTOMER",
   });
-  const [showRegisterToast, setShowRegisterToast] = useState(false);
-  const [errorRegister, setErrorRegister] = useState({});
+  const [showGetProfileToast, setShowGetProfileToast] = useState(false);
+  const [errorGetProfile, setErrorGetProfile] = useState({});
+  const [showUpdateProfileToast, setShowUpdateProfileToast] = useState(false);
+  const [errorUpdateProfile, setErrorUpdateProfile] = useState({});
   const [validated, setValidated] = useState(false);
+  const [showDeactivateAccountToast, setShowDeactivateAccountToast] =
+    useState(false);
+  const [errorDeactivateAccount, setErrorDeactivateAccount] = useState({});
   const navigate = useNavigate();
+
+  const getServerCart = async () => {
+    if (localStorage.getItem("userRole") === "ROLE_CUSTOMER") {
+      axios.defaults.headers.common = {
+        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        "Access-Control-Allow-Origin": "*",
+      };
+      try {
+        let { status, data } = await axios.get(`${API}/cart`);
+        let cart = [];
+        for (let orderDetail of data.orderDetails) {
+          cart.push({
+            orderDetailId: orderDetail.orderDetailId,
+            productCode: orderDetail.productCode,
+            productPrice: orderDetail.productPrice,
+            quantity: orderDetail.quantity,
+          });
+        }
+        localStorage.setItem("cart", JSON.stringify(cart));
+        setErrorGetServerCart({});
+        setShowGetServerCartToast(false);
+      } catch (error) {
+        for (let errorObject of error.response.data.errors) {
+          setErrorGetServerCart(errorObject);
+          setShowGetServerCartToast(true);
+        }
+      }
+    }
+  };
+
+  const getProfile = async (e) => {
+    try {
+      axios.defaults.headers.common = {
+        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        "Access-Control-Allow-Origin": "*",
+      };
+      let { status, data } = await axios.get(`${API}/profile`);
+      setInputs({
+        ...inputs,
+        image: data.image,
+        firstName: data.name.split(" ")[0],
+        lastName: data.name.split(" ")[1],
+        email: data.email,
+        phone: data.phone,
+        address: data.address,
+        gender: data.gender,
+        birthdate: data.birthdate,
+        role: data.role,
+      });
+      setErrorGetProfile({});
+      setShowGetProfileToast(true);
+    } catch (error) {
+      for (let errorObject of error.response.data.errors) {
+        setErrorGetProfile(errorObject);
+        setShowGetProfileToast(true);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getServerCart();
+    getProfile();
+  }, []);
+
+  //   useEffect(() => {
+  //     const timer = setTimeout(() => {
+  //       getServerCart();
+  //       getProfile();
+  //     }, 5000);
+
+  //     return () => clearTimeout(timer);
+  //   });
+
+  useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem("cart"));
+    let counter = Number(0);
+    if (cart) {
+      for (let i = 0; i < cart.length; i++) {
+        counter = Number(counter) + Number(cart[i].quantity);
+      }
+      setCartOrderDetailCount(Number(counter));
+    }
+  });
 
   function handleChange(e) {
     setInputs({
@@ -51,14 +141,18 @@ export default function RegisterPage() {
     });
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmitUpdateProfile = async (e) => {
     const form = e.currentTarget;
 
     setValidated(true);
     e.preventDefault();
     if (form.checkValidity()) {
       try {
-        let { status, data } = await axios.post(`${API}/register`, {
+        axios.defaults.headers.common = {
+          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          "Access-Control-Allow-Origin": "*",
+        };
+        let { status, data } = await axios.patch(`${API}/profile/update`, {
           ...Object.fromEntries(
             Object.entries(inputs).filter(
               ([key, value]) =>
@@ -72,22 +166,17 @@ export default function RegisterPage() {
           name: `${inputs.firstName} ${inputs.lastName}`,
           birthdate: new Date(inputs.birthdate).toISOString(),
         });
-
-        setErrorRegister({});
-        setShowRegisterToast(true);
-        setTimeout(() => {
-          navigate("/login");
-        }, 3000);
+        setErrorUpdateProfile({});
+        setShowUpdateProfileToast(true);
       } catch (error) {
         setInputs({
           ...inputs,
           password: "",
           coPassword: "",
-          recoveryPhrase: "",
         });
         for (let errorObject of error.response.data.errors) {
-          setErrorRegister(errorObject);
-          setShowRegisterToast(true);
+          setErrorUpdateProfile(errorObject);
+          setShowUpdateProfileToast(true);
         }
       }
     }
@@ -108,36 +197,92 @@ export default function RegisterPage() {
         });
       })
       .catch((err) => {
-        setErrorRegister({ code: 500, message: "Upload failed!" });
-        setShowRegisterToast(true);
+        setErrorGetProfile({ code: 500, message: "Upload failed!" });
+        setShowGetProfileToast(true);
       });
   }
 
+  const handleDeactivateAccount = async (e) => {
+    try {
+      axios.defaults.headers.common = {
+        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        "Access-Control-Allow-Origin": "*",
+      };
+      let { status, data } = await axios.patch(`${API}/profile/deactivate`);
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("userToken");
+      localStorage.removeItem("tokenType");
+      localStorage.removeItem("userName");
+      localStorage.removeItem("userImage");
+      localStorage.removeItem("userPhone");
+      localStorage.removeItem("userAddress");
+      localStorage.removeItem("userGender");
+      localStorage.removeItem("userBirthdate");
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("userCreateTime");
+      localStorage.removeItem("userUpdateTime");
+      localStorage.removeItem("cart");
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+      setErrorDeactivateAccount({});
+      setShowDeactivateAccountToast(true);
+    } catch (error) {
+      for (let errorObject of error.response.data.errors) {
+        setErrorDeactivateAccount(errorObject);
+        setShowDeactivateAccountToast(true);
+      }
+    }
+  };
+
   return (
     <>
-      <NavbarComponent navStyle="simple" />
+      <NavbarComponent cartOrderDetailCount={cartOrderDetailCount} />
       <>
-        <Container className="container register-main d-flex justify-content-center flex-column align-items-center my-5 pt-5">
-          {localStorage.getItem("user_token") ? (
-            <>
-              <h3 className="main-title">You are already registered.</h3>
-              <LinkContainer to="/">
-                <Button variant="outline-danger">Go back to Home page</Button>
-              </LinkContainer>
-            </>
-          ) : (
-            <>
-              <h1 className="main-title mb-4">Register a new account</h1>
+        <Breadcrumbs />
+        <div className="container mb-3">
+          <div
+            className="row g-5 d-flex align-items-center justify-content-center"
+            id="profile-row"
+          >
+            <div className="col col-12 col-md-5 col-lg-4 d-flex align-items-center justify-content-center">
+              <img
+                className="img-fluid rounded-5"
+                src={inputs.image}
+                alt="Profile Picture"
+              />
+            </div>
+            <div className="col col-12 col-md-7 col-lg-8">
               <Form
-                className="login-form"
+                className="profile-form"
                 noValidate
                 validated={validated}
-                onSubmit={handleSubmit}
+                onSubmit={handleSubmitUpdateProfile}
               >
                 <Form.Group
                   as={Row}
                   className="mb-3"
                   controlId="validationCustom01"
+                >
+                  <Form.Label column sm="4">
+                    Profile Picture Link
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      name="image"
+                      type="text"
+                      onChange={handleChange}
+                      value={inputs.image}
+                      placeholder="Profile Picture Link"
+                      aria-label="Profile Picture Link"
+                      aria-describedby="basic-addon1"
+                    />
+                  </Col>
+                </Form.Group>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="validationCustom02"
                 >
                   <Form.Label column sm="4">
                     Profile Picture
@@ -157,7 +302,7 @@ export default function RegisterPage() {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom02"
+                  controlId="validationCustom03"
                 >
                   <Form.Label column sm="4">
                     <div className="d-inline-flex">
@@ -183,7 +328,7 @@ export default function RegisterPage() {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom03"
+                  controlId="validationCustom04"
                 >
                   <Form.Label column sm="4">
                     Last Name&nbsp;<span className="text-danger">*</span>
@@ -207,7 +352,7 @@ export default function RegisterPage() {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom04"
+                  controlId="validationCustom05"
                 >
                   <Form.Label column sm="4">
                     Email Address&nbsp;<span className="text-danger">*</span>
@@ -231,7 +376,7 @@ export default function RegisterPage() {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom05"
+                  controlId="validationCustom06"
                 >
                   <Form.Label column sm="4">
                     <div className="d-inline-flex">
@@ -303,7 +448,7 @@ export default function RegisterPage() {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom06"
+                  controlId="validationCustom07"
                 >
                   <Form.Label column sm="4">
                     Confirm Password <span className="text-danger">*</span>
@@ -321,30 +466,6 @@ export default function RegisterPage() {
                     />
                     <Form.Control.Feedback type="invalid">
                       Passwords don't match.
-                    </Form.Control.Feedback>
-                  </Col>
-                </Form.Group>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="validationCustom07"
-                >
-                  <Form.Label column sm="4">
-                    Recovery Phrase <span className="text-danger">*</span>
-                  </Form.Label>
-                  <Col sm="8">
-                    <Form.Control
-                      type="password"
-                      name="recoveryPhrase"
-                      placeholder="Recovery Phrase"
-                      aria-label="Recovery Phrase"
-                      value={inputs.recoveryPhrase}
-                      onChange={handleChange}
-                      pattern="^(?!\s*$).+"
-                      required
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      Recovery phrase cannot be blank.
                     </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
@@ -411,6 +532,7 @@ export default function RegisterPage() {
                       type={"radio"}
                       id="inline-radio-gender-male"
                       onChange={handleChange}
+                      checked={inputs.gender === true}
                     />
                     <Form.Check
                       inline
@@ -420,6 +542,7 @@ export default function RegisterPage() {
                       type={"radio"}
                       id="inline-radio-gender-female"
                       onChange={handleChange}
+                      checked={inputs.gender === false}
                     />
                   </Col>
                 </Form.Group>
@@ -438,6 +561,9 @@ export default function RegisterPage() {
                       placeholder="Birth Date"
                       aria-label="Birth Date"
                       onChange={handleChange}
+                      value={
+                        inputs.birthdate && inputs.birthdate.substring(0, 10)
+                      }
                     />
                   </Col>
                 </Form.Group>
@@ -447,32 +573,33 @@ export default function RegisterPage() {
                     variant="outline-primary"
                     className="w-50 mt-3"
                   >
-                    Register
+                    Update
                   </Button>
-                  <br />
-                  <Form.Text>
-                    Already have an account?{" "}
-                    <LinkContainer
-                      to="/login"
-                      className="login-link text-primary"
-                    >
-                      <span>Login</span>
-                    </LinkContainer>
-                  </Form.Text>
+                  <Row>
+                    <Col xs={12}>
+                      <Form.Text>
+                        Deactivate your account?{" "}
+                        <a
+                          className="deactivate-link text-danger"
+                          onClick={handleDeactivateAccount}
+                        >
+                          <span>Deactivate</span>
+                        </a>
+                      </Form.Text>
+                    </Col>
+                  </Row>
                 </div>
               </Form>
-            </>
-          )}
-        </Container>
-        <div className="register-footer">
-          <FooterComponent />
+            </div>
+          </div>
         </div>
+        <FooterComponent />
       </>
       <ToastContainer className="position-fixed p-3 top-0 end-0">
-        {Object.keys(errorRegister).length > 0 ? (
+        {Object.keys(errorGetServerCart).length > 0 && (
           <Toast
-            onClose={() => setShowRegisterToast(false)}
-            show={showRegisterToast}
+            onClose={() => setShowGetServerCartToast(false)}
+            show={showGetServerCartToast}
             delay={3000}
             autohide
           >
@@ -484,12 +611,52 @@ export default function RegisterPage() {
               />
               <strong className="me-auto text-light">Error</strong>
             </Toast.Header>
-            <Toast.Body>{errorRegister.message}</Toast.Body>
+            <Toast.Body>{errorGetServerCart.message}</Toast.Body>
+          </Toast>
+        )}
+      </ToastContainer>
+      <ToastContainer className="position-fixed p-3 top-0 end-0">
+        {Object.keys(errorGetProfile).length > 0 && (
+          <Toast
+            onClose={() => setShowGetProfileToast(false)}
+            show={showGetProfileToast}
+            delay={3000}
+            autohide
+          >
+            <Toast.Header className="bg-danger">
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto text-light">Error</strong>
+            </Toast.Header>
+            <Toast.Body>{errorGetProfile.message}</Toast.Body>
+          </Toast>
+        )}
+      </ToastContainer>
+      <ToastContainer className="position-fixed p-3 top-0 end-0">
+        {Object.keys(errorUpdateProfile).length > 0 ? (
+          <Toast
+            onClose={() => setShowUpdateProfileToast(false)}
+            show={showUpdateProfileToast}
+            delay={3000}
+            autohide
+          >
+            <Toast.Header className="bg-danger">
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto text-light">Error</strong>
+            </Toast.Header>
+            <Toast.Body>{errorUpdateProfile.message}</Toast.Body>
           </Toast>
         ) : (
           <Toast
-            onClose={() => setShowRegisterToast(false)}
-            show={showRegisterToast}
+            onClose={() => setShowUpdateProfileToast(false)}
+            show={showUpdateProfileToast}
             delay={3000}
             autohide
           >
@@ -501,7 +668,44 @@ export default function RegisterPage() {
               />
               <strong className="me-auto text-light">Success</strong>
             </Toast.Header>
-            <Toast.Body>Successfully registered! Please log in!</Toast.Body>
+            <Toast.Body>Update profile success!</Toast.Body>
+          </Toast>
+        )}
+      </ToastContainer>
+      <ToastContainer className="position-fixed p-3 top-0 end-0">
+        {Object.keys(errorDeactivateAccount).length > 0 ? (
+          <Toast
+            onClose={() => setShowDeactivateAccountToast(false)}
+            show={showDeactivateAccountToast}
+            delay={3000}
+            autohide
+          >
+            <Toast.Header className="bg-danger">
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto text-light">Error</strong>
+            </Toast.Header>
+            <Toast.Body>{errorDeactivateAccount.message}</Toast.Body>
+          </Toast>
+        ) : (
+          <Toast
+            onClose={() => setShowDeactivateAccountToast(false)}
+            show={showDeactivateAccountToast}
+            delay={3000}
+            autohide
+          >
+            <Toast.Header className="bg-success">
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto text-light">Success</strong>
+            </Toast.Header>
+            <Toast.Body>Deactivate account success!</Toast.Body>
           </Toast>
         )}
       </ToastContainer>

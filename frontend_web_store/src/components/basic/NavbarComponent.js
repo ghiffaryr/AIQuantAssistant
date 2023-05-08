@@ -65,7 +65,7 @@ function NavbarComponent(props) {
                   </LinkContainer>
                   <LinkContainer to="/news" className="nav-tab-link">
                     <Button variant="link" className="nav-item">
-                      News
+                      Yahoo Finance
                     </Button>
                   </LinkContainer>
                 </Nav>

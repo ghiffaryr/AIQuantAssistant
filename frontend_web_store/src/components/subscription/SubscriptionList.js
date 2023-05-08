@@ -1,16 +1,12 @@
 import React from "react";
 import Subscription from "./Subscription";
 
-export default function SubscriptionList({
-  subscriptions,
-  getSubscriptions,
-  setSubscriptions,
-}) {
+export default function SubscriptionList({ subscriptions, setSubscriptions }) {
   return (
     <>
-      <div className="container mt-3 mb-3">
+      <div className="container mb-3">
         <div
-          className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4
+          className="row row-cols-1 g-4
         "
           id="subscriptions-row"
         >
@@ -21,7 +17,6 @@ export default function SubscriptionList({
               productCategoryCode={subscription.productCategoryCode}
               userEmail={subscription.userEmail}
               expTime={subscription.expTime}
-              getSubscriptions={getSubscriptions}
               setSubscriptions={setSubscriptions}
             />
           ))}

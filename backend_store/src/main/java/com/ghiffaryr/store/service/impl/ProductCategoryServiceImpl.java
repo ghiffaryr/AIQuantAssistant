@@ -116,7 +116,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
         if (isCustomer){
             Subscription subscription = subscriptionService.findByUserEmailAndProductCategoryCode(authenticationEmail, productCategoryCode, true);
-            if(subscription == null || subscription.getExpTime().isAfter(LocalDateTime.now())) {
+            if(subscription == null || !subscription.getExpTime().isAfter(LocalDateTime.now())) {
                 logger.error(ResultEnum.SUBSCRIPTION_INACTIVE.getMessage());
                 throw new ForbiddenException(ResultEnum.SUBSCRIPTION_INACTIVE);
             }

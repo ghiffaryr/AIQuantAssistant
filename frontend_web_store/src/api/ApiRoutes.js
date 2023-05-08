@@ -13,13 +13,8 @@ import NewsPage from "../pages/main/NewsPage";
 import OrderPage from "../pages/main/OrderPage";
 import SubscriptionPage from "../pages/main/SubscriptionPage";
 import UnauthenticatedAndCustomerAccess from "../components/protected/UnauthenticatedAndCustomerAccess";
-// import CartPage from '../pages/CartPage';
-// import UsersPage from '../pages/UsersPage';
-// import StorePage from '../pages/StorePage';
-// import DetailsPage from '../pages/DetailsPage';
-// import ProfilePage from '../pages/ProfilePage';
-// import OrdersPage from '../pages/OrdersPage';
-// import ProtectedRoutes from '../pages/ProtectedRoutes';
+import ProfilePage from "../pages/main/ProfilePage";
+import AuthenticatedAccess from "../components/protected/AuthenticatedAccess";
 
 function ApiRoutes() {
   const location = useLocation();
@@ -37,16 +32,34 @@ function ApiRoutes() {
           </UnauthenticatedAndCustomerAccess>
         }
       />
-      {/* <Route element={<ProtectedRoutes />}>
-                {' '}
-                <Route path='/profile' element={<ProfilePage />} />
-            </Route> */}
+      <Route
+        path="/profile"
+        element={
+          <AuthenticatedAccess>
+            <ProfilePage />
+          </AuthenticatedAccess>
+        }
+      />
       <Route path="/category" element={<CategoryPage />} />
       <Route path="/category/:code" element={<ProductByCategoryPage />} />
       <Route path="/product" element={<ProductPage />} />
       <Route path="/news" element={<NewsPage />} />
-      <Route path="/order" element={<OrderPage />} />
-      <Route path="/subscription" element={<SubscriptionPage />} />
+      <Route
+        path="/order"
+        element={
+          <AuthenticatedAccess>
+            <OrderPage />
+          </AuthenticatedAccess>
+        }
+      />
+      <Route
+        path="/subscription"
+        element={
+          <AuthenticatedAccess>
+            <SubscriptionPage />
+          </AuthenticatedAccess>
+        }
+      />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

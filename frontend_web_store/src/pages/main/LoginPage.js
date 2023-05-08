@@ -178,9 +178,9 @@ export default function LoginPage() {
             </>
           ) : (
             <>
-              <h1 className="main-title">Login to your account</h1>
+              <h1 className="main-title mb-4">Login to your account</h1>
               <Form
-                className="login-form mt-4"
+                className="login-form"
                 noValidate
                 validated={validated}
                 onSubmit={handleSubmit}

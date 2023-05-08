@@ -160,7 +160,7 @@ export default function CartOrderDetail({
             </div>
             <div className="col col-8">
               <div className="card-body d-flex flex-column justify-content-between">
-                <div className="card-content">
+                <div className="card-description">
                   <h5 className="card-title">{product.productName}</h5>
                   <h6 className="card-subtitle mb-2 text-muted">{code}</h6>
                   <p className="card-text">{product.productDescription}</p>
@@ -173,7 +173,7 @@ export default function CartOrderDetail({
                     {product.productPeriod < 2 ? "month" : "months"}
                   </p>
                 </div>
-                <div className="container">
+                <div className="card-form container">
                   <div className="row mt-3">
                     <div className="col col-2 d-flex justify-content-center align-items-center">
                       <Button

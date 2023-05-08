@@ -73,7 +73,11 @@ def predict():
         try:
             forecasting_horizon = request_body["forecasting_horizon"]
         except:
-            forecasting_horizon = 1        
+            forecasting_horizon = 1
+        
+        # Special case
+        if training_window < 3 and model_choice == "autots":
+            return json.dumps({"errors": [{"code":"400", "message":"Training window must be greater or equal to 3 (month) for AutoTS!"}]}), 400
         
         if model_choice.lower() == "autots":
             try:
