@@ -5,7 +5,7 @@ export default function UnauthenticatedAndCustomerAccess({ children }) {
   const location = useLocation();
 
   if (
-    localStorage.getItem("userRole") === undefined ||
+    !localStorage.getItem("userRole") ||
     localStorage.getItem("userRole") === "ROLE_CUSTOMER"
   ) {
     return children;

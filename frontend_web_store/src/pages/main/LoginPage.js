@@ -4,14 +4,14 @@ import Form from "react-bootstrap/Form";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
 import InputGroup from "react-bootstrap/InputGroup";
-import FooterComponent from "../components/FooterComponent";
-import NavbarComponent from "../components/NavbarComponent";
+import FooterComponent from "../../components/basic/FooterComponent";
+import NavbarComponent from "../../components/basic/NavbarComponent";
 import { FaUser, FaUnlock } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
-import "../css/LoginPage.css";
-import { API } from "../env/Constants";
+import "../../css/pages/main/LoginPage.css";
+import { API } from "../../env/Constants";
 import axios from "axios";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
@@ -70,7 +70,46 @@ export default function LoginPage() {
     }
   };
 
-  const handleLogin = async () => {
+  const mergeToServerCart = async () => {
+    try {
+      let { status, data } = await axios.post(
+        `${API}/cart`,
+        JSON.parse(localStorage.getItem("cart"))
+      );
+      setErrorMergeToServerCart({});
+      setShowMergeToServerCartToast(true);
+    } catch (error) {
+      for (let errorObject of error.response.data.errors) {
+        setErrorMergeToServerCart(errorObject);
+        setShowMergeToServerCartToast(true);
+      }
+    }
+  };
+
+  const getServerCart = async () => {
+    try {
+      let { status, data } = await axios.get(`${API}/cart`);
+      let cart = [];
+      for (let orderDetail of data.orderDetails) {
+        cart.push({
+          orderDetailId: orderDetail.orderDetailId,
+          productCode: orderDetail.productCode,
+          productPrice: orderDetail.productPrice,
+          quantity: orderDetail.quantity,
+        });
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+      setErrorGetServerCart({});
+      setShowGetServerCartToast(false);
+    } catch (error) {
+      for (let errorObject of error.response.data.errors) {
+        setErrorGetServerCart(errorObject);
+        setShowGetServerCartToast(true);
+      }
+    }
+  };
+
+  const login = async () => {
     try {
       let { status, data } = await axios.post(`${API}/login`, {
         email: inputs.email,
@@ -91,10 +130,10 @@ export default function LoginPage() {
         localStorage.getItem("userRole") === "ROLE_CUSTOMER" &&
         localStorage.getItem("cart")
       ) {
-        await handleMergeToServerCart();
+        await mergeToServerCart();
       }
       if (localStorage.getItem("userRole") === "ROLE_CUSTOMER") {
-        await handleGetServerCart();
+        await getServerCart();
       }
       setTimeout(() => {
         if (location.state) {
@@ -121,46 +160,7 @@ export default function LoginPage() {
     setValidated(true);
     e.preventDefault();
     if (form.checkValidity()) {
-      await handleLogin();
-    }
-  };
-
-  const handleMergeToServerCart = async () => {
-    try {
-      let { status, data } = await axios.post(
-        `${API}/cart`,
-        JSON.parse(localStorage.getItem("cart"))
-      );
-      setErrorMergeToServerCart({});
-      setShowMergeToServerCartToast(true);
-    } catch (error) {
-      for (let errorObject of error.response.data.errors) {
-        setErrorMergeToServerCart(errorObject);
-        setShowMergeToServerCartToast(true);
-      }
-    }
-  };
-
-  const handleGetServerCart = async () => {
-    try {
-      let { status, data } = await axios.get(`${API}/cart`);
-      let cart = [];
-      for (let orderDetail of data.orderDetails) {
-        cart.push({
-          orderDetailId: orderDetail.orderDetailId,
-          productCode: orderDetail.productCode,
-          productPrice: orderDetail.productPrice,
-          quantity: orderDetail.quantity,
-        });
-      }
-      localStorage.setItem("cart", JSON.stringify(cart));
-      setErrorGetServerCart({});
-      setShowGetServerCartToast(false);
-    } catch (error) {
-      for (let errorObject of error.response.data.errors) {
-        setErrorGetServerCart(errorObject);
-        setShowGetServerCartToast(true);
-      }
+      await login();
     }
   };
 
@@ -263,83 +263,82 @@ export default function LoginPage() {
           <FooterComponent />
         </div>
       </>
-      <ToastContainer className="p-3 top-0 end-0">
-        <Toast
-          onClose={() => setShowLoginToast(false)}
-          show={showLoginToast}
-          delay={3000}
-          autohide
-        >
-          {Object.keys(errorLogin).length > 0 ? (
-            <>
-              <Toast.Header className="bg-danger">
-                <img
-                  src="holder.js/20x20?text=%20"
-                  className="rounded me-2"
-                  alt=""
-                />
-                <strong className="me-auto text-light">Error</strong>
-              </Toast.Header>
-              <Toast.Body>{errorLogin.message}</Toast.Body>
-            </>
-          ) : (
-            <>
-              <Toast.Header className="bg-success">
-                <img
-                  src="holder.js/20x20?text=%20"
-                  className="rounded me-2"
-                  alt=""
-                />
-                <strong className="me-auto text-light">Success</strong>
-              </Toast.Header>
-              <Toast.Body>Successfully logged in!</Toast.Body>
-            </>
-          )}
-        </Toast>
+      <ToastContainer className="position-fixed p-3 top-0 end-0">
+        {Object.keys(errorLogin).length > 0 ? (
+          <Toast
+            onClose={() => setShowLoginToast(false)}
+            show={showLoginToast}
+            delay={3000}
+            autohide
+          >
+            <Toast.Header className="bg-danger">
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto text-light">Error</strong>
+            </Toast.Header>
+            <Toast.Body>{errorLogin.message}</Toast.Body>
+          </Toast>
+        ) : (
+          <Toast
+            onClose={() => setShowLoginToast(false)}
+            show={showLoginToast}
+            delay={3000}
+            autohide
+          >
+            <Toast.Header className="bg-success">
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto text-light">Success</strong>
+            </Toast.Header>
+            <Toast.Body>Successfully logged in!</Toast.Body>
+          </Toast>
+        )}
       </ToastContainer>
-      <ToastContainer className="p-3 top-0 end-0">
-        <Toast
-          onClose={() => setShowMergeToServerCartToast(false)}
-          show={showMergeToServerCartToast}
-          delay={3000}
-          autohide
-        >
-          {Object.keys(errorMergeToServerCart).length > 0 && (
-            <>
-              <Toast.Header className="bg-danger">
-                <img
-                  src="holder.js/20x20?text=%20"
-                  className="rounded me-2"
-                  alt=""
-                />
-                <strong className="me-auto text-light">Error</strong>
-              </Toast.Header>
-              <Toast.Body>{errorMergeToServerCart.message}</Toast.Body>
-            </>
-          )}
-        </Toast>
+      <ToastContainer className="position-fixed p-3 top-0 end-0">
+        {Object.keys(errorMergeToServerCart).length > 0 && (
+          <Toast
+            onClose={() => setShowMergeToServerCartToast(false)}
+            show={showMergeToServerCartToast}
+            delay={3000}
+            autohide
+          >
+            <Toast.Header className="bg-danger">
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto text-light">Error</strong>
+            </Toast.Header>
+            <Toast.Body>{errorMergeToServerCart.message}</Toast.Body>
+          </Toast>
+        )}
       </ToastContainer>
-      <ToastContainer className="p-3 top-0 end-0">
-        <Toast
-          onClose={() => setShowGetServerCartToast(false)}
-          show={showGetServerCartToast}
-          delay={3000}
-          autohide
-        >
-          {Object.keys(errorGetServerCart).length > 0 && (
-            <>
-              <Toast.Header className="bg-danger">
-                <img
-                  src="holder.js/20x20?text=%20"
-                  className="rounded me-2"
-                  alt=""
-                />
-                <strong className="me-auto text-light">Error</strong>
-              </Toast.Header>
-              <Toast.Body>{errorGetServerCart.message}</Toast.Body>
-            </>
-          )}
-        </Toast>
+      <ToastContainer className="position-fixed p-3 top-0 end-0">
+        {Object.keys(errorGetServerCart).length > 0 && (
+          <Toast
+            onClose={() => setShowGetServerCartToast(false)}
+            show={showGetServerCartToast}
+            delay={3000}
+            autohide
+          >
+            <Toast.Header className="bg-danger">
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto text-light">Error</strong>
+            </Toast.Header>
+            <Toast.Body>{errorGetServerCart.message}</Toast.Body>
+          </Toast>
+        )}
       </ToastContainer>
     </>
   );

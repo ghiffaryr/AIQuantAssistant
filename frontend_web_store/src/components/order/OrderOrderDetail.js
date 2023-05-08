@@ -10,8 +10,6 @@ import { API } from "../../env/Constants";
 import Button from "react-bootstrap/esm/Button";
 
 export default function OrderOrderDetail({ id, code, price, quantity }) {
-  const [inputs, setInputs] = useState({ quantity: Number(quantity) });
-  const [validated, setValidated] = useState(false);
   const [product, setProduct] = useState({
     productId: null,
     productCode: "",
@@ -74,15 +72,15 @@ export default function OrderOrderDetail({ id, code, price, quantity }) {
           </div>
         </div>
       </div>
-      <ToastContainer className="p-3 top-0 end-0">
-        <Toast
-          onClose={() => setShowGetProductToast(false)}
-          show={showGetProductToast}
-          delay={3000}
-          autohide
-        >
+      <>
+        <ToastContainer className="position-fixed p-3 top-0 end-0">
           {Object.keys(errorGetProduct).length > 0 && (
-            <>
+            <Toast
+              onClose={() => setShowGetProductToast(false)}
+              show={showGetProductToast}
+              delay={3000}
+              autohide
+            >
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -92,10 +90,10 @@ export default function OrderOrderDetail({ id, code, price, quantity }) {
                 <strong className="me-auto text-light">Error</strong>
               </Toast.Header>
               <Toast.Body>{errorGetProduct.message}</Toast.Body>
-            </>
+            </Toast>
           )}
-        </Toast>
-      </ToastContainer>
+        </ToastContainer>
+      </>
     </>
   );
 }

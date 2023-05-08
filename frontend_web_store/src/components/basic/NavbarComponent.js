@@ -12,7 +12,7 @@ import { BsCartFill } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import { AiOutlineStock } from "react-icons/ai";
 import { useNavigate } from "react-router";
-import "../css/Navbar.css";
+import "../../css/components/basic/Navbar.css";
 
 function NavbarComponent(props) {
   const [show, setShow] = useState(false);
@@ -132,19 +132,26 @@ function NavbarComponent(props) {
           )}
         </Container>
       </Navbar>
-      <ToastContainer className="p-3 top-0 end-0">
-        <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>
-          <Toast.Header className="bg-info">
-            <img
-              src="holder.js/20x20?text=%20"
-              className="rounded me-2"
-              alt=""
-            />
-            <strong className="me-auto text-light">Info</strong>
-          </Toast.Header>
-          <Toast.Body>You've been logged out!</Toast.Body>
-        </Toast>
-      </ToastContainer>
+      <>
+        <ToastContainer className="position-fixed p-3 top-0 end-0">
+          <Toast
+            onClose={() => setShow(false)}
+            show={show}
+            delay={3000}
+            autohide
+          >
+            <Toast.Header className="bg-info">
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto text-light">Info</strong>
+            </Toast.Header>
+            <Toast.Body>You've been logged out!</Toast.Body>
+          </Toast>
+        </ToastContainer>
+      </>
     </>
   );
 }

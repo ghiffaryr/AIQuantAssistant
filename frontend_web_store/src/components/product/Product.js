@@ -19,7 +19,6 @@ export default function Product({
   status,
   createTime,
   updateTime,
-  getProducts,
   setCartOrderDetailCount,
 }) {
   const [inputs, setInputs] = useState({ quantity: 1 });
@@ -34,64 +33,83 @@ export default function Product({
     });
   }
 
-  const handleAddToCart = async (code, price, quantity) => {
+  const handleAddToCart = async (quantity) => {
     let cart = JSON.parse(localStorage.getItem("cart"));
-    try {
-      axios.defaults.headers.common = {
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        "Access-Control-Allow-Origin": "*",
-      };
-      if (cart) {
-        let totalQuantity = 0;
-        for (let i = 0; i < cart.length; i++) {
-          if (cart[i].productCode === code) {
-            totalQuantity = Number(cart[i].quantity) + Number(quantity);
-            if (localStorage.getItem("userToken")) {
-              let { status, data } = await axios.put(
-                `${API}/cart/${code}/update`,
-                totalQuantity,
-                {
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                }
-              );
+    let newCart = cart;
+    let isOrderDetailFound = false;
+    if (cart) {
+      let newQuantity = 0;
+      for (let i = 0; i < newCart.length; i++) {
+        if (newCart[i].productCode === code) {
+          newCart[i].productPrice = price;
+          newQuantity = Number(newCart[i].quantity) + Number(quantity);
+          newCart[i].quantity = newQuantity;
+          isOrderDetailFound = true;
+          break;
+        }
+      }
+      if (isOrderDetailFound) {
+        if (localStorage.getItem("userToken")) {
+          axios.defaults.headers.common = {
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            "Access-Control-Allow-Origin": "*",
+          };
+          try {
+            let { status, data } = await axios.put(
+              `${API}/cart/${code}/update`,
+              newQuantity,
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+            setErrorAddToCart({});
+            setShowAddToCartToast(true);
+          } catch (error) {
+            for (let errorObject of error.response.data.errors) {
+              setErrorAddToCart(errorObject);
+              setShowAddToCartToast(true);
             }
-            cart[i].productPrice = price;
-            cart[i].quantity = totalQuantity;
           }
         }
-        if (Number(totalQuantity) < 1) {
-          totalQuantity = Number(quantity);
-          if (localStorage.getItem("userToken")) {
-            let { status, data } = await axios.post(`${API}/cart/add`, {
-              productCode: code,
-              quantity: Number(quantity),
-            });
-          }
-          cart.push({
+      }
+      if (!isOrderDetailFound) {
+        newCart.push({
+          productCode: code,
+          productPrice: price,
+          quantity: Number(quantity),
+        });
+      }
+    } else {
+      newCart = [
+        {
+          productCode: code,
+          productPrice: price,
+          quantity: Number(quantity),
+        },
+      ];
+    }
+    localStorage.setItem("cart", JSON.stringify(newCart));
+    if (!cart || !isOrderDetailFound) {
+      if (localStorage.getItem("userToken")) {
+        axios.defaults.headers.common = {
+          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          "Access-Control-Allow-Origin": "*",
+        };
+        try {
+          let { status, data } = await axios.post(`${API}/cart/add`, {
             productCode: code,
-            productPrice: price,
             quantity: Number(quantity),
           });
+          setErrorAddToCart({});
+          setShowAddToCartToast(true);
+        } catch (error) {
+          for (let errorObject of error.response.data.errors) {
+            setErrorAddToCart(errorObject);
+            setShowAddToCartToast(true);
+          }
         }
-        localStorage.setItem("cart", JSON.stringify(cart));
-      } else {
-        const cart = [
-          {
-            productCode: code,
-            productPrice: price,
-            quantity: Number(quantity),
-          },
-        ];
-        localStorage.setItem("cart", JSON.stringify(cart));
-      }
-      setErrorAddToCart({});
-      setShowAddToCartToast(true);
-    } catch (error) {
-      for (let errorObject of error.response.data.errors) {
-        setErrorAddToCart(errorObject);
-        setShowAddToCartToast(true);
       }
     }
     let counter = Number(0);
@@ -107,7 +125,7 @@ export default function Product({
     setValidated(true);
     e.preventDefault();
     if (form.checkValidity()) {
-      handleAddToCart(code, price, inputs.quantity);
+      await handleAddToCart(e.target[0].value);
     }
   };
 
@@ -150,6 +168,7 @@ export default function Product({
                     name="quantity"
                     value={inputs.quantity}
                     onChange={handleChange}
+                    onWheel={(e) => e.target.blur()}
                     placeholder="Quantity"
                     min={1}
                     required
@@ -173,15 +192,15 @@ export default function Product({
           </div>
         </div>
       </div>
-      <ToastContainer className="p-3 top-0 end-0">
-        <Toast
-          onClose={() => setShowAddToCartToast(false)}
-          show={showAddToCartToast}
-          delay={3000}
-          autohide
-        >
+      <>
+        <ToastContainer className="position-fixed p-3 top-0 end-0">
           {Object.keys(errorAddToCart).length > 0 ? (
-            <>
+            <Toast
+              onClose={() => setShowAddToCartToast(false)}
+              show={showAddToCartToast}
+              delay={3000}
+              autohide
+            >
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -191,9 +210,14 @@ export default function Product({
                 <strong className="me-auto text-light">Error</strong>
               </Toast.Header>
               <Toast.Body>{errorAddToCart.message}</Toast.Body>
-            </>
+            </Toast>
           ) : (
-            <>
+            <Toast
+              onClose={() => setShowAddToCartToast(false)}
+              show={showAddToCartToast}
+              delay={3000}
+              autohide
+            >
               <Toast.Header className="bg-success">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -203,10 +227,10 @@ export default function Product({
                 <strong className="me-auto text-light">Success</strong>
               </Toast.Header>
               <Toast.Body>Add to Cart success!</Toast.Body>
-            </>
+            </Toast>
           )}
-        </Toast>
-      </ToastContainer>
+        </ToastContainer>
+      </>
     </>
   );
 }

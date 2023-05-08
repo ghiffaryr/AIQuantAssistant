@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/esm/ToastContainer";
-import Breadcrumbs from "../components/Breadcrumbs";
-import NavbarComponent from "../components/NavbarComponent";
-import { API } from "../env/Constants";
-import ProductList from "../components/product/ProductList";
+import Breadcrumbs from "../../../components/basic/Breadcrumbs";
+import NavbarComponent from "../../../components/basic/NavbarComponent";
+import { API } from "../../../env/Constants";
+import ProductList from "../../../components/product/ProductList";
 import axios from "axios";
-import FooterComponent from "../components/FooterComponent";
+import FooterComponent from "../../../components/basic/FooterComponent";
 import { PaginationControl } from "react-bootstrap-pagination-control";
 
-export default function ProductPage() {
+export default function ProductByCategoryPage() {
   const [cartOrderDetailCount, setCartOrderDetailCount] = useState(0);
-  const [showGetProductsToast, setShowGetProductsToast] = useState(false);
-  const [errorGetProducts, setErrorGetProducts] = useState({});
+  const [showGetProductsByCategoryToast, setShowGetProductsByCategoryToast] =
+    useState(false);
+  const [errorGetProductsByCategory, setErrorGetProductsByCategory] = useState(
+    {}
+  );
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(6);
   const [totalPages, setTotalPages] = useState(1);
@@ -29,36 +32,39 @@ export default function ProductPage() {
     }
   }, [JSON.parse(localStorage.getItem("cart"))]);
 
-  const getProducts = async () => {
+  const getProductsByCategory = async () => {
     try {
+      const productCategoryCode = window.location.pathname.substring(
+        window.location.pathname.lastIndexOf("/") + 1
+      );
       let { status, data } = await axios.get(
         localStorage.getItem("userRole") === "ROLE_EMPLOYEE" ||
           localStorage.getItem("userRole") === "ROLE_MANAGER"
-          ? `${API}/product`
-          : `${API}/product/onsale`,
+          ? `${API}/category/${productCategoryCode}/product`
+          : `${API}/category/${productCategoryCode}/product/onsale`,
         {
           params: { page: page, size: size },
         }
       );
-      setProducts(data.content);
+      setProducts(data.page.content);
       setTotalPages(data.totalPages);
-      setErrorGetProducts({});
-      setShowGetProductsToast(true);
+      setErrorGetProductsByCategory({});
+      setShowGetProductsByCategoryToast(true);
     } catch (error) {
       for (let errorObject of error.response.data.errors) {
-        setErrorGetProducts(errorObject);
-        setShowGetProductsToast(true);
+        setErrorGetProductsByCategory(errorObject);
+        setShowGetProductsByCategoryToast(true);
       }
     }
   };
 
   useEffect(() => {
-    getProducts();
+    getProductsByCategory();
   }, [page]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      getProducts();
+      getProductsByCategory();
     }, 5000);
 
     return () => clearTimeout(timer);
@@ -71,7 +77,6 @@ export default function ProductPage() {
         <Breadcrumbs />
         <ProductList
           products={products}
-          getProducts={getProducts}
           setCartOrderDetailCount={setCartOrderDetailCount}
         />
         <PaginationControl
@@ -84,33 +89,30 @@ export default function ProductPage() {
           }}
           ellipsis={1}
         />
-
         <div className="product-by-category-footer">
           <FooterComponent />
         </div>
-        <ToastContainer className="p-3 top-0 end-0">
+      </>
+      <ToastContainer className="position-fixed p-3 top-0 end-0">
+        {Object.keys(errorGetProductsByCategory).length > 0 && (
           <Toast
-            onClose={() => setShowGetProductsToast(false)}
-            show={showGetProductsToast}
+            onClose={() => setShowGetProductsByCategoryToast(false)}
+            show={showGetProductsByCategoryToast}
             delay={3000}
             autohide
           >
-            {Object.keys(errorGetProducts).length > 0 && (
-              <>
-                <Toast.Header className="bg-danger">
-                  <img
-                    src="holder.js/20x20?text=%20"
-                    className="rounded me-2"
-                    alt=""
-                  />
-                  <strong className="me-auto text-light">Error</strong>
-                </Toast.Header>
-                <Toast.Body>{errorGetProducts.message}</Toast.Body>
-              </>
-            )}
+            <Toast.Header className="bg-danger">
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto text-light">Error</strong>
+            </Toast.Header>
+            <Toast.Body>{errorGetProductsByCategory.message}</Toast.Body>
           </Toast>
-        </ToastContainer>
-      </>
+        )}
+      </ToastContainer>
     </>
   );
 }

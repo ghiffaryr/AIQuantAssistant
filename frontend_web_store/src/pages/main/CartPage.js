@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/esm/ToastContainer";
-import Breadcrumbs from "../components/Breadcrumbs";
-import NavbarComponent from "../components/NavbarComponent";
-import { API } from "../env/Constants";
+import Breadcrumbs from "../../components/basic/Breadcrumbs";
+import NavbarComponent from "../../components/basic/NavbarComponent";
+import { API } from "../../env/Constants";
 import axios from "axios";
-import CartOrderDetailList from "../components/cart/CartOrderDetailList";
-import FooterComponent from "../components/FooterComponent";
+import CartOrderDetailList from "../../components/cart/CartOrderDetailList";
+import FooterComponent from "../../components/basic/FooterComponent";
 import Button from "react-bootstrap/esm/Button";
 import { Link } from "react-router-dom";
 
@@ -34,7 +34,7 @@ export default function CartPage() {
       setCartOrderDetailCount(Number(counter));
       setCartOrderDetailTotalPrice(Number(totaler));
     }
-  }, [JSON.parse(localStorage.getItem("cart"))]);
+  });
 
   const getCartOrderDetails = async () => {
     if (localStorage.getItem("userToken")) {
@@ -53,6 +53,9 @@ export default function CartPage() {
         setShowGetCartOrderDetailsToast(true);
       } catch (error) {
         for (let errorObject of error.response.data.errors) {
+          if (errorObject.code === 20) {
+            setCartOrderDetails([]);
+          }
           setErrorGetCartOrderDetails(errorObject);
           setShowGetCartOrderDetailsToast(true);
         }
@@ -61,6 +64,18 @@ export default function CartPage() {
       setCartOrderDetails(JSON.parse(localStorage.getItem("cart")));
     }
   };
+
+  useEffect(() => {
+    getCartOrderDetails();
+  }, []);
+
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     getCartOrderDetails();
+  //   }, 5000);
+
+  //   return () => clearTimeout(timer);
+  // });
 
   const handleCheckout = async () => {
     try {
@@ -80,24 +95,11 @@ export default function CartPage() {
     }
   };
 
-  useEffect(() => {
-    getCartOrderDetails();
-  }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      getCartOrderDetails();
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  });
-
   return (
     <>
       <NavbarComponent cartOrderDetailCount={cartOrderDetailCount} />
       <>
         <Breadcrumbs />
-
         {cartOrderDetailCount > 0 ? (
           <>
             <div className="container mb-3">
@@ -109,7 +111,7 @@ export default function CartPage() {
                   />
                 </div>
                 <div className="col col-4 flex-column">
-                  <h3>Total price is ${cartOrderDetailTotalPrice}</h3>
+                  <h3>Total amount is ${cartOrderDetailTotalPrice}</h3>
                   <Button variant="outline-primary" onClick={handleCheckout}>
                     Checkout
                   </Button>
@@ -129,6 +131,9 @@ export default function CartPage() {
                   Explore interesting algorithms in{" "}
                   <Link to="/category">Category Page</Link>
                 </h4>
+                <h4 className="notfound-link">
+                  Go to <Link to="/order">Order Page</Link>
+                </h4>
               </div>
             </div>
             <div className="cart-footer">
@@ -136,66 +141,67 @@ export default function CartPage() {
             </div>
           </>
         )}
-        <ToastContainer className="p-3 top-0 end-0">
+      </>
+      <ToastContainer className="position-fixed p-3 top-0 end-0">
+        {Object.keys(errorGetCartOrderDetails).length > 0 && (
           <Toast
             onClose={() => setShowGetCartOrderDetailsToast(false)}
             show={showGetCartOrderDetailsToast}
             delay={3000}
             autohide
           >
-            {Object.keys(errorGetCartOrderDetails).length > 0 && (
-              <>
-                <Toast.Header className="bg-danger">
-                  <img
-                    src="holder.js/20x20?text=%20"
-                    className="rounded me-2"
-                    alt=""
-                  />
-                  <strong className="me-auto text-light">Error</strong>
-                </Toast.Header>
-                <Toast.Body>{errorGetCartOrderDetails.message}</Toast.Body>
-              </>
-            )}
+            <Toast.Header className="bg-danger">
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto text-light">Error</strong>
+            </Toast.Header>
+            <Toast.Body>{errorGetCartOrderDetails.message}</Toast.Body>
           </Toast>
-        </ToastContainer>
-        <ToastContainer className="p-3 top-0 end-0">
+        )}
+      </ToastContainer>
+      <ToastContainer className="position-fixed p-3 top-0 end-0">
+        {Object.keys(errorCheckout).length > 0 ? (
           <Toast
             onClose={() => setShowCheckoutToast(false)}
             show={showCheckoutToast}
             delay={3000}
             autohide
           >
-            {Object.keys(errorCheckout).length > 0 ? (
-              <>
-                <Toast.Header className="bg-danger">
-                  <img
-                    src="holder.js/20x20?text=%20"
-                    className="rounded me-2"
-                    alt=""
-                  />
-                  <strong className="me-auto text-light">Error</strong>
-                </Toast.Header>
-                <Toast.Body>{errorCheckout.message}</Toast.Body>
-              </>
-            ) : (
-              <>
-                <Toast.Header className="bg-success">
-                  <img
-                    src="holder.js/20x20?text=%20"
-                    className="rounded me-2"
-                    alt=""
-                  />
-                  <strong className="me-auto text-light">Success</strong>
-                </Toast.Header>
-                <Toast.Body>
-                  Checkout success! Send payment through our bank account to
-                  finish your order.
-                </Toast.Body>
-              </>
-            )}
+            <Toast.Header className="bg-danger">
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto text-light">Error</strong>
+            </Toast.Header>
+            <Toast.Body>{errorCheckout.message}</Toast.Body>
           </Toast>
-        </ToastContainer>
-      </>
+        ) : (
+          <Toast
+            onClose={() => setShowCheckoutToast(false)}
+            show={showCheckoutToast}
+            delay={3000}
+            autohide
+          >
+            <Toast.Header className="bg-success">
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto text-light">Success</strong>
+            </Toast.Header>
+            <Toast.Body>
+              Checkout success! Send payment through our bank account to finish
+              your order.
+            </Toast.Body>
+          </Toast>
+        )}
+      </ToastContainer>
     </>
   );
 }

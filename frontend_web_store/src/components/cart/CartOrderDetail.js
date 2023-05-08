@@ -16,7 +16,6 @@ export default function CartOrderDetail({
   quantity,
   setCartOrderDetails,
 }) {
-  const [inputs, setInputs] = useState({ quantity: Number(quantity) });
   const [validated, setValidated] = useState(false);
   const [product, setProduct] = useState({
     productId: null,
@@ -39,14 +38,7 @@ export default function CartOrderDetail({
     {}
   );
 
-  function handleInputChange(e) {
-    setInputs({
-      ...inputs,
-      [e.target.name]: e.target.value,
-    });
-  }
-
-  function handleLocalChange() {
+  function handleQuantityLocalChange(quantity) {
     let oldCart = JSON.parse(localStorage.getItem("cart"));
     let newCart = [];
     for (let orderDetail of oldCart) {
@@ -58,12 +50,12 @@ export default function CartOrderDetail({
           quantity: orderDetail.quantity,
         });
       }
-      if (orderDetail.productCode === code && Number(inputs.quantity) > 0) {
+      if (orderDetail.productCode === code && Number(quantity) > 0) {
         newCart.push({
           orderDetailsId: orderDetail.orderDetailId,
           productCode: orderDetail.productCode,
           productPrice: orderDetail.productPrice,
-          quantity: Number(inputs.quantity),
+          quantity: Number(quantity),
         });
       }
     }
@@ -71,17 +63,17 @@ export default function CartOrderDetail({
     setCartOrderDetails(newCart);
   }
 
-  const handleServerChange = async (newQuantity) => {
+  const handleQuantityServerChange = async (quantity) => {
     if (localStorage.getItem("userToken")) {
       try {
         axios.defaults.headers.common = {
           Authorization: `Bearer ${localStorage.getItem("userToken")}`,
           "Access-Control-Allow-Origin": "*",
         };
-        if (newQuantity > 0) {
+        if (Number(quantity) > 0) {
           let { status, data } = await axios.put(
             `${API}/cart/${code}/update`,
-            newQuantity,
+            Number(quantity),
             {
               headers: {
                 "Content-Type": "application/json",
@@ -89,12 +81,11 @@ export default function CartOrderDetail({
             }
           );
         }
-        if (newQuantity === 0) {
+        if (Number(quantity) === 0) {
           let { status, data } = await axios.delete(
             `${API}/cart/${code}/delete`
           );
         }
-
         setErrorUpdateCartOrderDetail({});
         setShowUpdateCartOrderDetailToast(true);
       } catch (error) {
@@ -106,10 +97,9 @@ export default function CartOrderDetail({
     }
   };
 
-  const handleChange = async (e) => {
-    handleInputChange(e);
-    handleLocalChange();
-    await handleServerChange(e.target.value);
+  const handleQuantityChange = async (quantity) => {
+    await handleQuantityServerChange(quantity);
+    handleQuantityLocalChange(quantity);
   };
 
   const handleSubmitCartOrderDetail = async (e) => {
@@ -118,31 +108,23 @@ export default function CartOrderDetail({
     setValidated(true);
     e.preventDefault();
     if (form.checkValidity()) {
-      await handleChange(e);
+      await handleQuantityChange(e.target[0].value);
     }
   };
 
-  function handleMinus() {
-    setInputs((state) => {
-      if (state.quantity > 0) {
-        return {
-          quantity: state.quantity - 1,
-        };
-      } else {
-        return state;
-      }
-    });
-    handleLocalChange();
-    handleServerChange(inputs.quantity);
-  }
+  const handleQuantityMinus = async () => {
+    if (Number(quantity) > 0) {
+      let newQuantity = Number(quantity) - Number(1);
+      await handleQuantityChange(newQuantity);
+    } else {
+      await handleQuantityChange(quantity);
+    }
+  };
 
-  function handlePlus() {
-    setInputs((state) => ({
-      quantity: state.quantity + 1,
-    }));
-    handleLocalChange();
-    handleServerChange(inputs.quantity);
-  }
+  const handleQuantityPlus = async () => {
+    let newQuantity = Number(quantity) + Number(1);
+    await handleQuantityChange(newQuantity);
+  };
 
   const getProduct = async (code) => {
     try {
@@ -194,7 +176,10 @@ export default function CartOrderDetail({
                 <div className="container">
                   <div className="row mt-3">
                     <div className="col col-2 d-flex justify-content-center align-items-center">
-                      <Button variant="outline-primary" onClick={handleMinus}>
+                      <Button
+                        variant="outline-primary"
+                        onClick={handleQuantityMinus}
+                      >
                         <FaMinus />
                       </Button>
                     </div>
@@ -212,8 +197,9 @@ export default function CartOrderDetail({
                           <Form.Control
                             type="number"
                             name="quantity"
-                            value={inputs.quantity}
-                            onChange={handleChange}
+                            value={Number(quantity)}
+                            onChange={handleQuantityChange}
+                            onWheel={(e) => e.target.blur()}
                             placeholder="Quantity"
                             min={0}
                             required
@@ -222,7 +208,10 @@ export default function CartOrderDetail({
                       </Form>
                     </div>
                     <div className="col col-2 d-flex justify-content-center align-items-center">
-                      <Button variant="outline-primary" onClick={handlePlus}>
+                      <Button
+                        variant="outline-primary"
+                        onClick={handleQuantityPlus}
+                      >
                         <FaPlus />
                       </Button>
                     </div>
@@ -233,15 +222,15 @@ export default function CartOrderDetail({
           </div>
         </div>
       </div>
-      <ToastContainer className="p-3 top-0 end-0">
-        <Toast
-          onClose={() => setShowGetProductToast(false)}
-          show={showGetProductToast}
-          delay={3000}
-          autohide
-        >
+      <>
+        <ToastContainer className="position-fixed p-3 top-0 end-0">
           {Object.keys(errorGetProduct).length > 0 && (
-            <>
+            <Toast
+              onClose={() => setShowGetProductToast(false)}
+              show={showGetProductToast}
+              delay={3000}
+              autohide
+            >
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -251,19 +240,17 @@ export default function CartOrderDetail({
                 <strong className="me-auto text-light">Error</strong>
               </Toast.Header>
               <Toast.Body>{errorGetProduct.message}</Toast.Body>
-            </>
+            </Toast>
           )}
-        </Toast>
-      </ToastContainer>
-      <ToastContainer className="p-3 top-0 end-0">
-        <Toast
-          onClose={() => setShowGetProductToast(false)}
-          show={showUpdateCartOrderDetailToast}
-          delay={3000}
-          autohide
-        >
+        </ToastContainer>
+        <ToastContainer className="position-fixed p-3 top-0 end-0">
           {Object.keys(errorUpdateCartOrderDetail).length > 0 && (
-            <>
+            <Toast
+              onClose={() => setShowGetProductToast(false)}
+              show={showUpdateCartOrderDetailToast}
+              delay={3000}
+              autohide
+            >
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -273,10 +260,10 @@ export default function CartOrderDetail({
                 <strong className="me-auto text-light">Error</strong>
               </Toast.Header>
               <Toast.Body>{errorUpdateCartOrderDetail.message}</Toast.Body>
-            </>
+            </Toast>
           )}
-        </Toast>
-      </ToastContainer>
+        </ToastContainer>
+      </>
     </>
   );
 }

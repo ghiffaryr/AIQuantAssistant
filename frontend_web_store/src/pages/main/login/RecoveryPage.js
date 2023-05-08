@@ -4,14 +4,14 @@ import Form from "react-bootstrap/Form";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
 import InputGroup from "react-bootstrap/InputGroup";
-import FooterComponent from "../components/FooterComponent";
-import NavbarComponent from "../components/NavbarComponent";
+import FooterComponent from "../../../components/basic/FooterComponent";
+import NavbarComponent from "../../../components/basic/NavbarComponent";
 import { FaUser } from "react-icons/fa";
 import { VscSymbolKey } from "react-icons/vsc";
 import { LinkContainer } from "react-router-bootstrap";
 import Button from "react-bootstrap/esm/Button";
-import "../css/RecoveryPage.css";
-import { API } from "../env/Constants";
+import "../../../css/pages/main/login/RecoveryPage.css";
+import { API } from "../../../env/Constants";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import axios from "axios";
@@ -164,27 +164,25 @@ export default function RecoveryPage() {
           <FooterComponent position="absolute" />
         </div>
       </>
-      <ToastContainer className="p-3 top-0 end-0">
-        <Toast
-          onClose={() => setShowRecoveryToast(false)}
-          show={showRecoveryToast}
-          delay={3000}
-          autohide
-        >
-          {Object.keys(errorRecovery).length > 0 && (
-            <>
-              <Toast.Header className="bg-danger">
-                <img
-                  src="holder.js/20x20?text=%20"
-                  className="rounded me-2"
-                  alt=""
-                />
-                <strong className="me-auto text-light">Error</strong>
-              </Toast.Header>
-              <Toast.Body>{errorRecovery.message}</Toast.Body>
-            </>
-          )}
-        </Toast>
+      <ToastContainer className="position-fixed p-3 top-0 end-0">
+        {Object.keys(errorRecovery).length > 0 && (
+          <Toast
+            onClose={() => setShowRecoveryToast(false)}
+            show={showRecoveryToast}
+            delay={3000}
+            autohide
+          >
+            <Toast.Header className="bg-danger">
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto text-light">Error</strong>
+            </Toast.Header>
+            <Toast.Body>{errorRecovery.message}</Toast.Body>
+          </Toast>
+        )}
       </ToastContainer>
     </>
   );

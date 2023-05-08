@@ -3,16 +3,16 @@ import Container from "react-bootstrap/esm/Container";
 import Form from "react-bootstrap/Form";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
-import FooterComponent from "../components/FooterComponent";
-import NavbarComponent from "../components/NavbarComponent";
+import FooterComponent from "../../../components/basic/FooterComponent";
+import NavbarComponent from "../../../components/basic/NavbarComponent";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
-import "../css/Register.css";
-import { API } from "../env/Constants";
-import { storage } from "../env/firebase";
+import "../../../css/pages/main/login/Register.css";
+import { API } from "../../../env/Constants";
+import { storage } from "../../../env/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import axios from "axios";
 
@@ -425,39 +425,42 @@ export default function RegisterPage() {
           <FooterComponent />
         </div>
       </>
-      <ToastContainer className="p-3 top-0 end-0">
-        <Toast
-          onClose={() => setShowRegisterToast(false)}
-          show={showRegisterToast}
-          delay={3000}
-          autohide
-        >
-          {Object.keys(errorRegister).length > 0 ? (
-            <>
-              <Toast.Header className="bg-danger">
-                <img
-                  src="holder.js/20x20?text=%20"
-                  className="rounded me-2"
-                  alt=""
-                />
-                <strong className="me-auto text-light">Error</strong>
-              </Toast.Header>
-              <Toast.Body>{errorRegister.message}</Toast.Body>
-            </>
-          ) : (
-            <>
-              <Toast.Header className="bg-success">
-                <img
-                  src="holder.js/20x20?text=%20"
-                  className="rounded me-2"
-                  alt=""
-                />
-                <strong className="me-auto text-light">Success</strong>
-              </Toast.Header>
-              <Toast.Body>Successfully registered! Please log in!</Toast.Body>
-            </>
-          )}
-        </Toast>
+      <ToastContainer className="position-fixed p-3 top-0 end-0">
+        {Object.keys(errorRegister).length > 0 ? (
+          <Toast
+            onClose={() => setShowRegisterToast(false)}
+            show={showRegisterToast}
+            delay={3000}
+            autohide
+          >
+            <Toast.Header className="bg-danger">
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto text-light">Error</strong>
+            </Toast.Header>
+            <Toast.Body>{errorRegister.message}</Toast.Body>
+          </Toast>
+        ) : (
+          <Toast
+            onClose={() => setShowRegisterToast(false)}
+            show={showRegisterToast}
+            delay={3000}
+            autohide
+          >
+            <Toast.Header className="bg-success">
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto text-light">Success</strong>
+            </Toast.Header>
+            <Toast.Body>Successfully registered! Please log in!</Toast.Body>
+          </Toast>
+        )}
       </ToastContainer>
     </>
   );

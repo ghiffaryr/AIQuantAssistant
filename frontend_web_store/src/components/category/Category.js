@@ -10,7 +10,6 @@ export default function Category({
   image,
   createTime,
   updateTime,
-  getCategories,
 }) {
   return (
     <>

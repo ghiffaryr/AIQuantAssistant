@@ -1,7 +1,7 @@
 import React from "react";
 import Order from "./Order";
 
-export default function OrderList({ orders, getOrders, setOrders }) {
+export default function OrderList({ orders, setOrders }) {
   return (
     <>
       <div className="container mb-3">
@@ -13,15 +13,14 @@ export default function OrderList({ orders, getOrders, setOrders }) {
           {orders.map((order, idx) => (
             <Order
               key={idx}
-              orderId={order.orderId}
-              orderDetails={order.orderDetails}
+              id={order.orderId}
+              details={order.orderDetails}
               userEmail={order.userEmail}
-              orderAmount={order.orderAmount}
-              orderStatus={order.orderStatus}
+              amount={order.orderAmount}
+              status={order.orderStatus}
               createTime={order.createTime}
               updateTime={order.updateTime}
               orders={orders}
-              getOrders={getOrders}
               setOrders={setOrders}
             />
           ))}

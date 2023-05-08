@@ -17,13 +17,10 @@ export default function SubscriptionList({
           {subscriptions.map((subscription, idx) => (
             <Subscription
               key={idx}
-              id={subscription.productCategoryId}
-              code={subscription.productCategoryCode}
-              name={subscription.productCategoryName}
-              description={subscription.productCategoryDescription}
-              image={subscription.productCategoryImage}
-              createTime={subscription.createTime}
-              updateTime={subscription.updateTime}
+              id={subscription.subscriptionId}
+              productCategoryCode={subscription.productCategoryCode}
+              userEmail={subscription.userEmail}
+              expTime={subscription.expTime}
               getSubscriptions={getSubscriptions}
               setSubscriptions={setSubscriptions}
             />

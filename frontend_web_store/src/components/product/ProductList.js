@@ -1,11 +1,7 @@
 import React from "react";
 import Product from "./Product";
 
-export default function ProductList({
-  products,
-  getProducts,
-  setCartOrderDetailCount,
-}) {
+export default function ProductList({ products, setCartOrderDetailCount }) {
   return (
     <>
       <div className="container mb-3">
@@ -27,7 +23,6 @@ export default function ProductList({
               status={product.productStatus}
               createTime={product.createTime}
               updateTime={product.updateTime}
-              getProducts={product.getProducts}
               setCartOrderDetailCount={setCartOrderDetailCount}
             />
           ))}

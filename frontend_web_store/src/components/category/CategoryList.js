@@ -1,7 +1,7 @@
 import React from "react";
 import Category from "./Category";
 
-export default function CategoryList({ categories, getCategories }) {
+export default function CategoryList({ categories }) {
   return (
     <>
       <div className="container mb-3">
@@ -20,7 +20,6 @@ export default function CategoryList({ categories, getCategories }) {
               image={category.productCategoryImage}
               createTime={category.createTime}
               updateTime={category.updateTime}
-              getCategories={getCategories}
             />
           ))}
         </div>
