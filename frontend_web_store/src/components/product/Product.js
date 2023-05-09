@@ -7,9 +7,11 @@ import Toast from "react-bootstrap/Toast";
 import ProductStatusEnum from "../../enums/ProductStatusEnum";
 import { API } from "../../env/Constants";
 import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
+import UpdateProductModal from "./UpdateProductModal";
 
 export default function Product({
   id,
+  categoryCode,
   code,
   name,
   price,
@@ -19,12 +21,17 @@ export default function Product({
   status,
   createTime,
   updateTime,
+  products,
+  setProducts,
   setCartOrderDetailCount,
 }) {
   const [inputs, setInputs] = useState({ quantity: 1 });
   const [validated, setValidated] = useState(false);
   const [showAddToCartToast, setShowAddToCartToast] = useState(false);
   const [errorAddToCart, setErrorAddToCart] = useState({});
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [showDeleteProductToast, setShowDeleteProductToast] = useState(false);
+  const [errorDeleteProduct, setErrorDeleteProduct] = useState({});
 
   function handleChange(e) {
     setInputs({
@@ -129,6 +136,28 @@ export default function Product({
     }
   };
 
+  const handleDelete = async () => {
+    axios.defaults.headers.common = {
+      Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+      "Access-Control-Allow-Origin": "*",
+    };
+    try {
+      let { status, data } = await axios.delete(
+        `${API}/seller/product/${code}/delete`
+      );
+      setProducts((products) =>
+        products.filter((product) => product.productCode != code)
+      );
+      setErrorDeleteProduct({});
+      setShowDeleteProductToast(true);
+    } catch (error) {
+      for (let errorObject of error.response.data.errors) {
+        setErrorDeleteProduct(errorObject);
+        setShowDeleteProductToast(true);
+      }
+    }
+  };
+
   return (
     <>
       <div className="col">
@@ -191,6 +220,24 @@ export default function Product({
                   </Form>
                 </div>
               )}
+            {(localStorage.getItem("userRole") == "ROLE_EMPLOYEE" ||
+              localStorage.getItem("userRole") == "ROLE_MANAGER") && (
+              <div className="text-center mt-3">
+                <Button
+                  variant="outline-primary"
+                  onClick={() => setShowUpdateModal(true)}
+                >
+                  Update
+                </Button>
+              </div>
+            )}
+            {localStorage.getItem("userRole") == "ROLE_MANAGER" && (
+              <div className="text-center mt-3">
+                <Button variant="outline-danger" onClick={handleDelete}>
+                  Delete
+                </Button>
+              </div>
+            )}
           </div>
           <div className="card-footer">
             <small className="text-muted">
@@ -237,6 +284,62 @@ export default function Product({
             </Toast>
           )}
         </ToastContainer>
+        <ToastContainer className="position-fixed p-3 top-0 end-0">
+          {Object.keys(errorDeleteProduct).length > 0 ? (
+            <Toast
+              onClose={() => setShowDeleteProductToast(false)}
+              show={showDeleteProductToast}
+              delay={3000}
+              autohide
+            >
+              <Toast.Header className="bg-danger">
+                <img
+                  src="holder.js/20x20?text=%20"
+                  className="rounded me-2"
+                  alt=""
+                />
+                <strong className="me-auto text-light">Error</strong>
+              </Toast.Header>
+              <Toast.Body>{errorDeleteProduct.message}</Toast.Body>
+            </Toast>
+          ) : (
+            <Toast
+              onClose={() => setShowDeleteProductToast(false)}
+              show={showDeleteProductToast}
+              delay={3000}
+              autohide
+            >
+              <Toast.Header className="bg-success">
+                <img
+                  src="holder.js/20x20?text=%20"
+                  className="rounded me-2"
+                  alt=""
+                />
+                <strong className="me-auto text-light">Success</strong>
+              </Toast.Header>
+              <Toast.Body>Delete product success!</Toast.Body>
+            </Toast>
+          )}
+        </ToastContainer>
+      </>
+      <>
+        <UpdateProductModal
+          id={id}
+          categoryCode={categoryCode}
+          code={code}
+          name={name}
+          price={price}
+          period={period}
+          description={description}
+          image={image}
+          status={status}
+          createTime={createTime}
+          updateTime={updateTime}
+          products={products}
+          setProducts={setProducts}
+          show={showUpdateModal}
+          onHide={() => setShowUpdateModal(false)}
+        />
       </>
     </>
   );

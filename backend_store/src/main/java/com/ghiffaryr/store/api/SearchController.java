@@ -8,6 +8,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 @CrossOrigin
 @RestController
 public class SearchController {
@@ -17,7 +20,10 @@ public class SearchController {
 
     @GetMapping("/search")
     public ResponseEntity<Page<Product>> product(@RequestParam("query") String query,
-                                                 @RequestParam(value = "productStatus", required=false) Integer productStatus,
+                                                 @RequestParam(value = "productStatus", required=false)
+                                                     @Min(message = "Product status must be greater than or equal to 0", value = 0)
+                                                     @Max(message = "Product status must be less than or equal to 1", value = 1)
+                                                     Integer productStatus,
                                                  @RequestParam(value = "page", defaultValue = "1") Integer page,
                                                  @RequestParam(value = "size", defaultValue = "3") Integer size) {
         PageRequest request = PageRequest.of(page - 1, size);

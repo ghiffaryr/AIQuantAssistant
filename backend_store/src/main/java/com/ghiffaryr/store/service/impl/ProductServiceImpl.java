@@ -127,7 +127,7 @@ public class ProductServiceImpl implements ProductService {
     public Product update(String productCode, ProductForm productForm) {
         Product oldProduct = find(productCode);
         Product isProductCodeExist = productRepository.findByProductCode(productForm.getProductCode());
-        if (isProductCodeExist != null) {
+        if (isProductCodeExist != null && !productCode.equals(productForm.getProductCode())) {
             logger.error(ResultEnum.PRODUCT_EXISTS.getMessage());
             throw new ConflictException(ResultEnum.PRODUCT_EXISTS);
         }

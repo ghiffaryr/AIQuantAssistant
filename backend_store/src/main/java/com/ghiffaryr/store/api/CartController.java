@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.security.Principal;
 import java.util.Collection;
 
@@ -34,7 +35,8 @@ public class CartController {
 
     @PutMapping("/cart/{productCode}/update")
     public ResponseEntity<OrderDetail> update(@PathVariable("productCode") String productCode,
-                                              @RequestBody @Valid Integer quantity,
+                                              @RequestBody @Min(message = "Product quantity must be greater than or equal to 1",
+                                                      value = 1) Integer quantity,
                                               Principal principal) {
         return ResponseEntity.ok(cartService.update(productCode, quantity, principal.getName()));
     }

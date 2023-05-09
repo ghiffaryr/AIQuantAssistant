@@ -38,6 +38,11 @@ export default function ProfilePage() {
   });
   const [showGetProfileToast, setShowGetProfileToast] = useState(false);
   const [errorGetProfile, setErrorGetProfile] = useState({});
+  const [showUploadProfilePictureToast, setShowUploadProfilePictureToast] =
+    useState(false);
+  const [errorUploadProfilePicture, setErrorUploadProfilePicture] = useState(
+    {}
+  );
   const [showUpdateProfileToast, setShowUpdateProfileToast] = useState(false);
   const [errorUpdateProfile, setErrorUpdateProfile] = useState({});
   const [validated, setValidated] = useState(false);
@@ -197,8 +202,8 @@ export default function ProfilePage() {
         });
       })
       .catch((err) => {
-        setErrorGetProfile({ code: 500, message: "Upload failed!" });
-        setShowGetProfileToast(true);
+        setErrorUploadProfilePicture({ code: 500, message: "Upload failed!" });
+        setShowUploadProfilePictureToast(true);
       });
   }
 
@@ -289,7 +294,7 @@ export default function ProfilePage() {
                   controlId="validationCustom02"
                 >
                   <Form.Label column sm="4">
-                    Profile Picture
+                    Upload Profile Picture
                   </Form.Label>
                   <Col sm="8">
                     <Form.Control
@@ -636,6 +641,26 @@ export default function ProfilePage() {
               <strong className="me-auto text-light">Error</strong>
             </Toast.Header>
             <Toast.Body>{errorGetProfile.message}</Toast.Body>
+          </Toast>
+        )}
+      </ToastContainer>
+      <ToastContainer className="position-fixed p-3 top-0 end-0">
+        {Object.keys(errorUploadProfilePicture).length > 0 && (
+          <Toast
+            onClose={() => setShowUploadProfilePictureToast(false)}
+            show={showUploadProfilePictureToast}
+            delay={3000}
+            autohide
+          >
+            <Toast.Header className="bg-danger">
+              <img
+                src="holder.js/20x20?text=%20"
+                className="rounded me-2"
+                alt=""
+              />
+              <strong className="me-auto text-light">Error</strong>
+            </Toast.Header>
+            <Toast.Body>{errorUploadProfilePicture.message}</Toast.Body>
           </Toast>
         )}
       </ToastContainer>

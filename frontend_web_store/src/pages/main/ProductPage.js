@@ -170,6 +170,7 @@ export default function ProductPage() {
         </div>
         <ProductList
           products={products}
+          setProducts={setProducts}
           setCartOrderDetailCount={setCartOrderDetailCount}
         />
         <PaginationControl

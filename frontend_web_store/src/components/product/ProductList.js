@@ -1,7 +1,11 @@
 import React from "react";
 import Product from "./Product";
 
-export default function ProductList({ products, setCartOrderDetailCount }) {
+export default function ProductList({
+  products,
+  setProducts,
+  setCartOrderDetailCount,
+}) {
   return (
     <>
       <div className="container mb-3">
@@ -14,6 +18,7 @@ export default function ProductList({ products, setCartOrderDetailCount }) {
             <Product
               key={idx}
               id={product.productId}
+              categoryCode={product.productCategoryCode}
               code={product.productCode}
               name={product.productName}
               price={product.productPrice}
@@ -23,6 +28,8 @@ export default function ProductList({ products, setCartOrderDetailCount }) {
               status={product.productStatus}
               createTime={product.createTime}
               updateTime={product.updateTime}
+              products={products}
+              setProducts={setProducts}
               setCartOrderDetailCount={setCartOrderDetailCount}
             />
           ))}

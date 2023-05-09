@@ -64,13 +64,9 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Override
     @Transactional
     public ProductCategory update(String productCategoryCode, ProductCategoryForm productCategoryForm) {
-        ProductCategory oldProductCategory = productCategoryRepository.findByProductCategoryCode(productCategoryCode);
-        if (oldProductCategory == null) {
-            logger.error(ResultEnum.CATEGORY_NOT_FOUND.getMessage());
-            throw new NotFoundException(ResultEnum.CATEGORY_NOT_FOUND);
-        }
+        ProductCategory oldProductCategory = find(productCategoryCode);
         ProductCategory isCategoryCodeExist = productCategoryRepository.findByProductCategoryCode(productCategoryForm.getProductCategoryCode());
-        if (isCategoryCodeExist != null) {
+        if (isCategoryCodeExist != null && !productCategoryCode.equals(productCategoryForm.getProductCategoryCode())) {
             logger.error(ResultEnum.CATEGORY_EXISTS.getMessage());
             throw new ConflictException(ResultEnum.CATEGORY_EXISTS);
         }

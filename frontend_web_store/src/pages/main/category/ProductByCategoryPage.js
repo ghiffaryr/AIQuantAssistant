@@ -110,6 +110,7 @@ export default function ProductByCategoryPage() {
         <Breadcrumbs />
         <ProductList
           products={products}
+          setProducts={setProducts}
           setCartOrderDetailCount={setCartOrderDetailCount}
         />
         <PaginationControl
