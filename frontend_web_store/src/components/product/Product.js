@@ -220,8 +220,7 @@ export default function Product({
                   </Form>
                 </div>
               )}
-            {(localStorage.getItem("userRole") == "ROLE_EMPLOYEE" ||
-              localStorage.getItem("userRole") == "ROLE_MANAGER") && (
+            {localStorage.getItem("userRole") == "ROLE_EMPLOYEE" && (
               <div className="text-center mt-3">
                 <Button
                   variant="outline-primary"
@@ -233,9 +232,17 @@ export default function Product({
             )}
             {localStorage.getItem("userRole") == "ROLE_MANAGER" && (
               <div className="text-center mt-3">
-                <Button variant="outline-danger" onClick={handleDelete}>
-                  Delete
-                </Button>
+                <div className="d-flex justify-content-evenly">
+                  <Button
+                    variant="outline-primary"
+                    onClick={() => setShowUpdateModal(true)}
+                  >
+                    Update
+                  </Button>
+                  <Button variant="outline-danger" onClick={handleDelete}>
+                    Delete
+                  </Button>
+                </div>
               </div>
             )}
           </div>
