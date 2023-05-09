@@ -251,7 +251,7 @@ export default function ProfilePage() {
                 src={
                   inputs.image
                     ? inputs.image
-                    : "https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/profile.png?alt=media&token=787108ed-bd72-4d6b-92a1-9b26e6bb42ad"
+                    : "https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/profile_image_notfound.png?alt=media&token=e1488150-c31b-4020-9ca5-b8694f6c72b3"
                 }
                 alt="Profile Picture"
               />
