@@ -23,8 +23,8 @@ services:
   backend_forecast:
     build: backend_forecast
     restart: always
-    ports:
-      - "8000:8000"
+    # ports:
+    #   - "8000:8000"
   backend_store:
     build: backend_store
     restart: always
@@ -33,11 +33,11 @@ services:
     depends_on:
       db:
         condition: service_healthy
-  # frontend_web_store:
-  #   build: frontend_web_store
-  #   restart: always
-  #   ports:
-  #     - "3000:80"
-  #   depends_on:
-  #     backend_store:
-  #       condition: service_started
+  frontend_web_store:
+    build: frontend_web_store
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      backend_store:
+        condition: service_started
