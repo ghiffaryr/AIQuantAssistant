@@ -113,7 +113,7 @@ Assist your quantitative analysis by our AI quant assistant at affordable price
 docker-compose up --build
 ```
 
-### Import SQL dump
+### Import SQL Dump
 
 1. Connect MySQL Workbench to
 
@@ -126,15 +126,25 @@ Password = Password1#
 
 2. Import ai_store.sql
 
-### Prepare FrontEnd Client
+### Prepare FrontEnd Web Client
 
-1. Install dependencies
+1. Open terminal from frontend_web_store
+2. Install dependencies
 
 ```
 npm install
 ```
 
-2. Run apps
+### Prepare FrontEnd Expo Mobile Client
+
+1. Open terminal from frontend_mobile_store
+2. Install dependencies
+
+```
+npm install
+```
+
+3. Run apps
 
 ```
 npm start
