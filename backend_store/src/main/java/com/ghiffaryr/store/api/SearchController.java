@@ -17,7 +17,7 @@ public class SearchController {
 
     @GetMapping("/search")
     public ResponseEntity<Page<Product>> product(@RequestParam("query") String query,
-                                                 @RequestParam("productStatus") Integer productStatus,
+                                                 @RequestParam(value = "productStatus", required=false) Integer productStatus,
                                                  @RequestParam(value = "page", defaultValue = "1") Integer page,
                                                  @RequestParam(value = "size", defaultValue = "3") Integer size) {
         PageRequest request = PageRequest.of(page - 1, size);
