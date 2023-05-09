@@ -132,7 +132,7 @@ export default function Product({
   return (
     <>
       <div className="col">
-        <div className="card">
+        <div className="card h-100">
           <img
             src={
               image
@@ -155,39 +155,42 @@ export default function Product({
                 {period} {period < 2 ? "month" : "months"}
               </p>
             </div>
-            <div className="card-form w-100 align-self-center mt-3">
-              <Form
-                className="cart-form"
-                noValidate
-                validated={validated}
-                onSubmit={handleSubmitAddToCart}
-              >
-                <FloatingLabel
-                  controlId="floatingInput"
-                  label="Quantity"
-                  className="mb-3"
-                >
-                  <Form.Control
-                    type="number"
-                    name="quantity"
-                    value={inputs.quantity}
-                    onChange={handleChange}
-                    onWheel={(e) => e.target.blur()}
-                    placeholder="Quantity"
-                    min={1}
-                    required
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    Minimum quantity is 1.
-                  </Form.Control.Feedback>
-                </FloatingLabel>
-                <div className="text-center">
-                  <Button type="submit" variant="outline-primary">
-                    Add to Cart
-                  </Button>
+            {localStorage.getItem("userRole") != "ROLE_EMPLOYEE" &&
+              localStorage.getItem("userRole") != "ROLE_MANAGER" && (
+                <div className="card-form w-100 align-self-center mt-3">
+                  <Form
+                    className="cart-form"
+                    noValidate
+                    validated={validated}
+                    onSubmit={handleSubmitAddToCart}
+                  >
+                    <FloatingLabel
+                      controlId="floatingInput"
+                      label="Quantity"
+                      className="mb-3"
+                    >
+                      <Form.Control
+                        type="number"
+                        name="quantity"
+                        value={inputs.quantity}
+                        onChange={handleChange}
+                        onWheel={(e) => e.target.blur()}
+                        placeholder="Quantity"
+                        min={1}
+                        required
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        Minimum quantity is 1.
+                      </Form.Control.Feedback>
+                    </FloatingLabel>
+                    <div className="text-center">
+                      <Button type="submit" variant="outline-primary">
+                        Add to Cart
+                      </Button>
+                    </div>
+                  </Form>
                 </div>
-              </Form>
-            </div>
+              )}
           </div>
           <div className="card-footer">
             <small className="text-muted">

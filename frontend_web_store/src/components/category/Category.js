@@ -14,7 +14,7 @@ export default function Category({
   return (
     <>
       <div className="col">
-        <div className="card">
+        <div className="card h-100">
           <img
             src={
               image
