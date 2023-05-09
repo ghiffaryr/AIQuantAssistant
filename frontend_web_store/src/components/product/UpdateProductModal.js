@@ -282,30 +282,6 @@ export default function UpdateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom05"
-              >
-                <Form.Label column sm="4">
-                  <div className="d-inline-flex">
-                    Period&nbsp;<span className="text-danger">*</span>
-                  </div>
-                </Form.Label>
-                <Col sm="8">
-                  <Form.Control
-                    type="number"
-                    name="productPeriod"
-                    placeholder="Period (month)"
-                    aria-label="Period (month)"
-                    value={Number(inputs.productPeriod)}
-                    onChange={handleChange}
-                    onWheel={(e) => e.target.blur()}
-                    min={0}
-                    required
-                  />
-                </Col>
-              </Form.Group>
-              <Form.Group
-                as={Row}
-                className="mb-3"
                 controlId="validationCustom06"
               >
                 <Form.Label column sm="4">
