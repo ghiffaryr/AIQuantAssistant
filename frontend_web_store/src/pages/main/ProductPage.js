@@ -10,6 +10,8 @@ import FooterComponent from "../../components/basic/FooterComponent";
 import { PaginationControl } from "react-bootstrap-pagination-control";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import { Button } from "react-bootstrap";
+import CreateProductModal from "../../components/product/CreateProductModal";
 
 export default function ProductPage() {
   const [showGetServerCartToast, setShowGetServerCartToast] = useState(false);
@@ -22,6 +24,7 @@ export default function ProductPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [products, setProducts] = useState([]);
   const [inputs, setInputs] = useState({ query: "" });
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   const getServerCart = async () => {
     if (localStorage.getItem("userRole") === "ROLE_CUSTOMER") {
@@ -168,6 +171,17 @@ export default function ProductPage() {
             </InputGroup>
           </Form>
         </div>
+        {localStorage.getItem("userRole") == "ROLE_MANAGER" && (
+          <div className="container mb-3">
+            <Button
+              className="w-100"
+              variant="outline-primary"
+              onClick={() => setShowCreateModal(true)}
+            >
+              Create Product
+            </Button>
+          </div>
+        )}
         <ProductList
           products={products}
           setProducts={setProducts}
@@ -228,6 +242,13 @@ export default function ProductPage() {
           </Toast>
         )}
       </ToastContainer>
+      <>
+        <CreateProductModal
+          getProducts={getProducts}
+          show={showCreateModal}
+          onHide={() => setShowCreateModal(false)}
+        />
+      </>
     </>
   );
 }

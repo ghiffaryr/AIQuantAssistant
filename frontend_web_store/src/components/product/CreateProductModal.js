@@ -11,23 +11,7 @@ import { useEffect } from "react";
 import ToastContainer from "react-bootstrap/esm/ToastContainer";
 import Toast from "react-bootstrap/Toast";
 
-export default function UpdateProductModal({
-  id,
-  categoryCode,
-  code,
-  name,
-  price,
-  period,
-  description,
-  image,
-  status,
-  createTime,
-  updateTime,
-  products,
-  setProducts,
-  show,
-  onHide,
-}) {
+export default function CreateProductModal({ getProducts, show, onHide }) {
   const [inputs, setInputs] = useState({
     productCategoryCode: "",
     productCode: "",
@@ -41,25 +25,8 @@ export default function UpdateProductModal({
   const [validated, setValidated] = useState(false);
   const [showUploadImageToast, setShowUploadImageToast] = useState(false);
   const [errorUploadImage, setErrorUploadImage] = useState({});
-  const [showUpdateProductToast, setShowUpdateProductToast] = useState(false);
-  const [errorUpdateProduct, setErrorUpdateProduct] = useState({});
-
-  function getProduct() {
-    setInputs({
-      productCategoryCode: categoryCode,
-      productCode: code,
-      productDescription: description,
-      productImage: image,
-      productName: name,
-      productPeriod: Number(period),
-      productPrice: Number(price),
-      productStatus: Number(status),
-    });
-  }
-
-  useEffect(() => {
-    getProduct();
-  }, []);
+  const [showCreateProductToast, setShowCreateProductToast] = useState(false);
+  const [errorCreateProduct, setErrorCreateProduct] = useState({});
 
   function handleChange(e) {
     setInputs({
@@ -88,7 +55,7 @@ export default function UpdateProductModal({
       });
   }
 
-  const handleSubmitUpdateProduct = async (e) => {
+  const handleSubmitCreateProduct = async (e) => {
     const form = e.currentTarget;
 
     setValidated(true);
@@ -99,31 +66,17 @@ export default function UpdateProductModal({
           Authorization: `Bearer ${localStorage.getItem("userToken")}`,
           "Access-Control-Allow-Origin": "*",
         };
-        let { status, data } = await axios.put(
-          `${API}/seller/product/${inputs.productCode}/update`,
+        let { status, data } = await axios.post(
+          `${API}/seller/product/create`,
           inputs
         );
-        let newProducts = products;
-        newProducts = newProducts.map((product) => {
-          if (product.productCode === code) {
-            product.productCategoryCode = inputs.productCategoryCode;
-            product.productCode = inputs.productCode;
-            product.productDescription = inputs.productDescription;
-            product.productImage = inputs.productImage;
-            product.productName = inputs.productName;
-            product.productPeriod = inputs.productPeriod;
-            product.productPrice = inputs.productPrice;
-            product.productStatus = inputs.productStatus;
-          }
-          return product;
-        });
-        setProducts(newProducts);
-        setErrorUpdateProduct({});
-        setShowUpdateProductToast(true);
+        getProducts();
+        setErrorCreateProduct({});
+        setShowCreateProductToast(true);
       } catch (error) {
         for (let errorObject of error.response.data.errors) {
-          setErrorUpdateProduct(errorObject);
-          setShowUpdateProductToast(true);
+          setErrorCreateProduct(errorObject);
+          setShowCreateProductToast(true);
         }
       }
     }
@@ -140,13 +93,13 @@ export default function UpdateProductModal({
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Update Product
+            Create Product
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="container d-flex justify-content-center flex-column align-items-center text-left">
             <Form
-              onSubmit={handleSubmitUpdateProduct}
+              onSubmit={handleSubmitCreateProduct}
               className="update-product-form"
               id="update-product-form"
               noValidate
@@ -386,7 +339,7 @@ export default function UpdateProductModal({
                   document.getElementById("update-form-button").click()
                 }
               >
-                Save changes
+                Create
               </Button>
             </div>
             <Button variant="outline-danger" onClick={onHide}>
@@ -417,10 +370,10 @@ export default function UpdateProductModal({
           )}
         </ToastContainer>
         <ToastContainer className="position-fixed p-3 top-0 end-0">
-          {Object.keys(errorUpdateProduct).length > 0 ? (
+          {Object.keys(errorCreateProduct).length > 0 ? (
             <Toast
-              onClose={() => setShowUpdateProductToast(false)}
-              show={showUpdateProductToast}
+              onClose={() => setShowCreateProductToast(false)}
+              show={showCreateProductToast}
               delay={3000}
               autohide
             >
@@ -432,12 +385,12 @@ export default function UpdateProductModal({
                 />
                 <strong className="me-auto text-light">Error</strong>
               </Toast.Header>
-              <Toast.Body>{errorUpdateProduct.message}</Toast.Body>
+              <Toast.Body>{errorCreateProduct.message}</Toast.Body>
             </Toast>
           ) : (
             <Toast
-              onClose={() => setShowUpdateProductToast(false)}
-              show={showUpdateProductToast}
+              onClose={() => setShowCreateProductToast(false)}
+              show={showCreateProductToast}
               delay={3000}
               autohide
             >
@@ -449,7 +402,7 @@ export default function UpdateProductModal({
                 />
                 <strong className="me-auto text-light">Success</strong>
               </Toast.Header>
-              <Toast.Body>Update product success!</Toast.Body>
+              <Toast.Body>Create product success!</Toast.Body>
             </Toast>
           )}
         </ToastContainer>
