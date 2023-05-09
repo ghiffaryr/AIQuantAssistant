@@ -19,6 +19,8 @@ public interface ProductService {
 
     Page<Product> search(String query, Pageable pageable);
 
+    Page<Product> searchByProductStatus(Integer productStatus, String query, Pageable pageable);
+
     Product offSale(String productCode);
 
     Product onSale(String productCode);

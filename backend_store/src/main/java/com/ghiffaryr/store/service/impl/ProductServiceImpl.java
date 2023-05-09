@@ -89,6 +89,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Page<Product> searchByProductStatus(Integer productStatus, String query, Pageable pageable) {
+        Page<Product> productPage = productRepository.searchByProductStatus(productStatus, query, pageable);
+        if (productPage.getTotalElements() == 0){
+            logger.error(ResultEnum.PRODUCT_NOT_FOUND.getMessage());
+            throw new NotFoundException(ResultEnum.PRODUCT_NOT_FOUND);
+        }
+        return productPage;
+    }
+
+    @Override
     @Transactional
     public Product offSale(String productCode) {
         Product product = find(productCode);

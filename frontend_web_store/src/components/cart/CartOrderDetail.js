@@ -151,7 +151,11 @@ export default function CartOrderDetail({
           <div className="row g-0">
             <div className="col col-4">
               <img
-                src={product.productImage}
+                src={
+                  product.productImage
+                    ? product.productImage
+                    : "https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/product_image_notfound.jpg?alt=media&token=9b66da8d-37b7-4f30-bbc2-1338d7e2f52c"
+                }
                 className="card-img-top"
                 alt="Product Image"
                 height={250}

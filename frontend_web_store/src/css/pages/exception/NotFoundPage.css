@@ -1,7 +1,11 @@
+:root {
+  --bg-notfound: url("https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/background_notfound.jpg?alt=media&token=24cc5f62-1ecc-4b31-91df-33909c1e788e");
+}
+
 .main-notfound {
   width: 100%;
   height: 100vh;
-  background-image: url("https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/notfound.jpg?alt=media&token=88857484-5ef8-4bcd-9589-b052f83acfca");
+  background-image: var(--bg-notfound);
   background-repeat: no-repeat;
   background-size: cover;
   margin: 0;
@@ -11,7 +15,7 @@
 .main-notfound-navbar-breadcrumbs {
   width: 100%;
   height: calc(100vh - 128px);
-  background-image: url("https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/notfound.jpg?alt=media&token=88857484-5ef8-4bcd-9589-b052f83acfca");
+  background-image: var(--bg-notfound);
   background-repeat: no-repeat;
   background-size: cover;
   margin: 0;

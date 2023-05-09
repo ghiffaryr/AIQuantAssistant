@@ -26,4 +26,14 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "or p.productDescription like concat('%', :query, '%')")
     Page<Product> search(@Param("query") String query, Pageable pageable);
 
+    @Query("select p from Product p where " +
+            "p.productStatus =:productStatus and " +
+            "(" +
+            "p.productName like concat('%',:query, '%')" +
+            "or p.productCode like concat('%',:query, '%')" +
+            "or p.productCategoryCode like concat('%',:query, '%')" +
+            "or p.productDescription like concat('%', :query, '%')" +
+            ")")
+    Page<Product> searchByProductStatus(@Param("productStatus") Integer productStatus, @Param("query") String query, Pageable pageable);
+
 }

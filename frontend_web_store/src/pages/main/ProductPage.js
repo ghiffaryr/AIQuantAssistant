@@ -8,6 +8,8 @@ import ProductList from "../../components/product/ProductList";
 import axios from "axios";
 import FooterComponent from "../../components/basic/FooterComponent";
 import { PaginationControl } from "react-bootstrap-pagination-control";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 
 export default function ProductPage() {
   const [showGetServerCartToast, setShowGetServerCartToast] = useState(false);
@@ -19,6 +21,7 @@ export default function ProductPage() {
   const [size, setSize] = useState(6);
   const [totalPages, setTotalPages] = useState(1);
   const [products, setProducts] = useState([]);
+  const [inputs, setInputs] = useState({ query: "" });
 
   const getServerCart = async () => {
     if (localStorage.getItem("userRole") === "ROLE_CUSTOMER") {
@@ -89,6 +92,52 @@ export default function ProductPage() {
   //   return () => clearTimeout(timer);
   // });
 
+  function handleChange(e) {
+    setInputs({
+      ...inputs,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  const onSubmitSearch = async (e) => {
+    console.log(e.target[0].value);
+    e.preventDefault();
+    if (e.target[0].value.trim().length > 0) {
+      try {
+        let { status, data } = await axios.get(
+          `${API}/search`,
+          localStorage.getItem("userRole") === "ROLE_EMPLOYEE" ||
+            localStorage.getItem("userRole") === "ROLE_MANAGER"
+            ? {
+                params: { query: e.target[0].value, page: page, size: size },
+              }
+            : {
+                params: {
+                  query: e.target[0].value,
+                  productStatus: 1,
+                  page: page,
+                  size: size,
+                },
+              }
+        );
+        setProducts(data.content);
+        setTotalPages(data.totalPages);
+        setErrorGetProducts({});
+        setShowGetProductsToast(true);
+      } catch (error) {
+        for (let errorObject of error.response.data.errors) {
+          if (errorObject.code === 10) {
+            setProducts([]);
+          }
+          setErrorGetProducts(errorObject);
+          setShowGetProductsToast(true);
+        }
+      }
+    } else {
+      getProducts();
+    }
+  };
+
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart"));
     let counter = Number(0);
@@ -105,6 +154,20 @@ export default function ProductPage() {
       <NavbarComponent cartOrderDetailCount={cartOrderDetailCount} />
       <>
         <Breadcrumbs />
+        <div className="container mb-3">
+          <Form className="search-form" noValidate onSubmit={onSubmitSearch}>
+            <InputGroup className="rounded-pill mb-3">
+              <Form.Control
+                type="text"
+                name="query"
+                value={inputs.search}
+                onChange={handleChange}
+                placeholder="Search..."
+                aria-label="Search..."
+              />
+            </InputGroup>
+          </Form>
+        </div>
         <ProductList
           products={products}
           setCartOrderDetailCount={setCartOrderDetailCount}

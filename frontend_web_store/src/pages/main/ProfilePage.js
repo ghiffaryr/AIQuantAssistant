@@ -248,7 +248,11 @@ export default function ProfilePage() {
             <div className="col col-12 col-md-5 col-lg-4 d-flex align-items-center justify-content-center">
               <img
                 className="img-fluid rounded-5"
-                src={inputs.image}
+                src={
+                  inputs.image
+                    ? inputs.image
+                    : "https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/profile.png?alt=media&token=787108ed-bd72-4d6b-92a1-9b26e6bb42ad"
+                }
                 alt="Profile Picture"
               />
             </div>

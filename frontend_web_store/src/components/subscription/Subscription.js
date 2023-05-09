@@ -117,12 +117,16 @@ export default function Subscription({
   return (
     <>
       <div className="col">
-        <div className="card w-100">
+        <div className="card">
           <div className="row g-0">
             <div className="col col-4">
               <img
-                src={productCategory.productCategoryImage}
-                className="rounded-start"
+                src={
+                  productCategory.productCategoryImage
+                    ? productCategory.productCategoryImage
+                    : "https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/product_image_notfound.jpg?alt=media&token=9b66da8d-37b7-4f30-bbc2-1338d7e2f52c"
+                }
+                className="card-img-top"
                 alt="Category Image"
                 height={250}
                 overflow="hidden"

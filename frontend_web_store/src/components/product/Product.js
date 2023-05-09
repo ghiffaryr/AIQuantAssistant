@@ -132,9 +132,13 @@ export default function Product({
   return (
     <>
       <div className="col">
-        <div className="card h-100">
+        <div className="card">
           <img
-            src={image}
+            src={
+              image
+                ? image
+                : "https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/product_image_notfound.jpg?alt=media&token=9b66da8d-37b7-4f30-bbc2-1338d7e2f52c"
+            }
             className="card-img-top"
             alt="Product Image"
             height={250}

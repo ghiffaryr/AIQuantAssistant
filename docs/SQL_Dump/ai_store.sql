@@ -171,12 +171,12 @@ insert  into `product`(`product_id`,`create_time`,`product_category_code`,`produ
 (11,'2023-04-28 13:54:02','facebookprophet','facebookprophet1m','High performance AI quant assistant backed by facebook regression model','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Stock Market AI Assistant 1 Month Subscription',1,6.00,1,'2023-04-28 13:54:02'),
 (12,'2023-04-28 13:54:40','facebookprophet','facebookprophet3m','High performance AI quant assistant backed by facebook regression model','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Stock Market AI Assistant 3 Month Subscription',3,17.00,1,'2023-04-28 13:54:40'),
 (13,'2023-04-28 13:55:29','facebookprophet','facebookprophet6m','High performance AI quant assistant backed by facebook regression model','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Stock Market AI Assistant 6 Month Subscription',6,31.00,1,'2023-04-28 13:55:29'),
-(14,'2023-04-28 14:01:47','neuralprophet','neuralprophet1m','High performance AI quant assistant backed by AR-Net','https://user-images.githubusercontent.com/21246060/111388960-6c367e80-866d-11eb-91c1-46f2c0d21879.PNG','Stock Market AI Assistant 1 Month Subscription',1,6.00,1,'2023-04-28 14:01:47'),
-(15,'2023-04-28 14:02:09','neuralprophet','neuralprophet3m','High performance AI quant assistant backed by AR-Net','https://user-images.githubusercontent.com/21246060/111388960-6c367e80-866d-11eb-91c1-46f2c0d21879.PNG','Stock Market AI Assistant 3 Month Subscription',3,17.00,1,'2023-04-28 14:02:09'),
-(16,'2023-04-28 14:02:26','neuralprophet','neuralprophet6m','High performance AI quant assistant backed by AR-Net','https://user-images.githubusercontent.com/21246060/111388960-6c367e80-866d-11eb-91c1-46f2c0d21879.PNG','Stock Market AI Assistant 6 Month Subscription',6,31.00,1,'2023-04-28 14:02:26'),
+(14,'2023-04-28 14:01:47','neuralprophet','neuralprophet1m','High performance AI quant assistant backed by AR-Net','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Stock Market AI Assistant 1 Month Subscription',1,6.00,1,'2023-04-28 14:01:47'),
+(15,'2023-04-28 14:02:09','neuralprophet','neuralprophet3m','High performance AI quant assistant backed by AR-Net','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Stock Market AI Assistant 3 Month Subscription',3,17.00,1,'2023-04-28 14:02:09'),
+(16,'2023-04-28 14:02:26','neuralprophet','neuralprophet6m','High performance AI quant assistant backed by AR-Net','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Stock Market AI Assistant 6 Month Subscription',6,31.00,1,'2023-04-28 14:02:26'),
 (17,'2023-04-28 14:39:45','autots','autots12m','High performance AI quant assistant backed by ensemble method','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','Stock Market AI Assistant 12 Month Subscription',12,70.00,1,'2023-05-01 12:11:31'),
 (18,'2023-04-28 14:40:24','facebookprophet','facebookprophet12m','High performance AI quant assistant backed by facebook regression model','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Stock Market AI Assistant 12 Month Subscription',12,60.00,1,'2023-04-28 14:40:24'),
-(19,'2023-04-28 14:41:35','neuralprophet','neuralprophet12m','High performance AI quant assistant backed by AR-Net','https://user-images.githubusercontent.com/21246060/111388960-6c367e80-866d-11eb-91c1-46f2c0d21879.PNG','Stock Market AI Assistant 12 Month Subscription',12,60.00,0,'2023-04-28 14:39:45');
+(19,'2023-04-28 14:41:35','neuralprophet','neuralprophet12m','High performance AI quant assistant backed by AR-Net','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Stock Market AI Assistant 12 Month Subscription',12,60.00,0,'2023-04-28 14:39:45');
 
 /*Table structure for table `product_category` */
 
@@ -198,7 +198,7 @@ CREATE TABLE `product_category` (
 insert  into `product_category`(`product_category_id`,`create_time`,`product_category_code`,`product_category_description`,`product_category_image`,`product_category_name`,`update_time`) values 
 (5,'2023-04-28 13:18:42','autots','AutoTS Algorithm','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','AutoTS','2023-05-01 11:30:38'),
 (6,'2023-04-28 13:20:13','facebookprophet','Facebook Prophet Algorithm','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Facebook Prophet','2023-04-28 13:20:13'),
-(7,'2023-04-28 13:22:15','neuralprophet','Neural Prophet Algorithm','https://user-images.githubusercontent.com/21246060/111388960-6c367e80-866d-11eb-91c1-46f2c0d21879.PNG','Neural Prophet','2023-04-28 13:22:15');
+(7,'2023-04-28 13:22:15','neuralprophet','Neural Prophet Algorithm','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Neural Prophet','2023-04-28 13:22:15');
 
 /*Table structure for table `subscription` */
 
@@ -247,11 +247,11 @@ CREATE TABLE `user` (
 /*Data for the table `user` */
 
 insert  into `user`(`id`,`active`,`address`,`birthdate`,`create_time`,`email`,`gender`,`image`,`name`,`password`,`phone`,`recovery_phrase`,`role`,`update_time`) values 
-(1,'','New World','2023-04-27 09:35:45','2023-04-28 13:00:40','ghiffaryr@domain.com','','https://upload.wikimedia.org/wikipedia/id/5/5c/Spongebob-squarepants.png','Ghiffary Rifqialdi','$2a$10$wznJaLuLD/Btbn82f/V2wuO9OKAOGZsTv9h0Io/7uGWDnxmmf1z.2','+628999999999','what zit tooya','ROLE_CUSTOMER','2023-05-05 18:48:46'),
+(1,'','New World','2023-11-02 17:00:00','2023-04-28 13:00:40','ghiffaryr@domain.com','','https://upload.wikimedia.org/wikipedia/id/5/5c/Spongebob-squarepants.png','Ghiffary Rifqialdi','$2a$10$ppZZq0Nm2sH.lKzhqY9eDeeQEKBTwAXmzF8gZ4qZczHSmuDyojGuO','+628999999999','what zit tooya','ROLE_CUSTOMER','2023-05-08 17:15:01'),
 (2,'',NULL,NULL,'2023-04-28 13:01:00','customer@domain.com',NULL,NULL,'Real Customer','$2a$10$Q9ImyIHm0erCwE3dkHOUXeJxitweUWAFxHrjIrzGW1zYynDeIXX6i',NULL,'what zit tooya','ROLE_CUSTOMER','2023-04-28 13:01:00'),
 (3,'',NULL,NULL,'2023-04-28 13:01:09','employee@domain.com',NULL,NULL,'Real Employee','$2a$10$UQdoVXowcZsnUnD.OmnPW.WOGSh1GxfM/h7ZvPzwaF99cqEpSUGge',NULL,'what zit tooya','ROLE_EMPLOYEE','2023-04-28 13:01:09'),
 (4,'',NULL,NULL,'2023-04-28 13:01:14','manager@domain.com',NULL,NULL,'Real Manager','$2a$10$PInEh3xY7xQDl6yv38ZTr.rgnrbiodGcz9Vf59RgAPN8QdEIvSji.',NULL,'what zit tooya','ROLE_MANAGER','2023-04-28 13:01:14'),
-(61,'',NULL,NULL,'2023-05-06 03:29:37','newuser@domain.com','','https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/customer2.jpeg?alt=media&token=e89540b5-b966-41d0-b3ea-87bcbaf3ad7e','New User','$2a$10$sf4G0DgTeWryhMrk.skfK.H0kPMCwHPP3LmQo9EiPQuqAMU.JrGNO',NULL,'$2a$10$QDOMJDkFP8dVR/expB9A2e0N4jPyBP6RcXBCS9zSZnQD0q9Q/hU3C','ROLE_CUSTOMER','2023-05-06 03:29:37');
+(61,'\0',NULL,'1970-01-01 00:00:00','2023-05-06 03:29:37','newuser@domain.com','','https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/saitama.png?alt=media&token=d05aa20e-e497-4a2c-a18f-29c364735ee1','New User','$2a$10$KGqP90VNh2RiDbO5WxadouAXgOHorZnZUcs80cIxsQuULrX7t8ke2',NULL,'$2a$10$QDOMJDkFP8dVR/expB9A2e0N4jPyBP6RcXBCS9zSZnQD0q9Q/hU3C','ROLE_CUSTOMER','2023-05-08 18:00:07');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

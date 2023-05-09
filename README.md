@@ -1,5 +1,17 @@
 # AI Quant Assistant Commercial System
 
+Assist your quantitative analysis by our AI quant assistant at affordable price
+
+## Gallery
+
+![](https://github.com/ghiffaryr/AIQuantAssistant/raw/main/docs/Gallery/frontend_web_home_page.png)
+![](https://github.com/ghiffaryr/AIQuantAssistant/raw/main/docs/Gallery/frontend_web_category_page.png)
+![](https://github.com/ghiffaryr/AIQuantAssistant/raw/main/docs/Gallery/frontend_web_product_page.png)
+![](https://github.com/ghiffaryr/AIQuantAssistant/raw/main/docs/Gallery/frontend_web_cart_page.png)
+![](https://github.com/ghiffaryr/AIQuantAssistant/raw/main/docs/Gallery/frontend_web_order_page.png)
+![](https://github.com/ghiffaryr/AIQuantAssistant/raw/main/docs/Gallery/frontend_web_subscription_prediction_page.png)
+![](https://github.com/ghiffaryr/AIQuantAssistant/raw/main/docs/Gallery/frontend_web_profile_page.png)
+
 ## Features
 
 - REST API
@@ -81,7 +93,7 @@
 
 ## Database Schema
 
-![](https://github.com/ghiffaryr/AIQuantAssistant/raw/main/docs/ERD.bmp)
+![](https://github.com/ghiffaryr/AIQuantAssistant/raw/main/docs/ERD/ERD.bmp)
 
 ## How to
 
@@ -121,7 +133,9 @@ Password = Password1#
 ```
 npm install
 ```
+
 2. Run apps
+
 ```
 npm start
 ```
