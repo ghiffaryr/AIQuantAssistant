@@ -270,6 +270,7 @@ export default function Category({
                     className="w-100"
                     data={prediction.data}
                     layout={prediction.layout}
+                    config={{ responsive: true }}
                   />
                 )}
               </div>
