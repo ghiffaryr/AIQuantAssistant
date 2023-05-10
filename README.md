@@ -57,6 +57,8 @@ Assist your quantitative analysis by our AI quant assistant at affordable price
 - Hibernate
 - Maven
 - Spring Validation
+- Lombok
+- Swagger 2.9.2
 
 **FrontEnd Web**
 
@@ -64,7 +66,7 @@ Assist your quantitative analysis by our AI quant assistant at affordable price
 - Node.JS
 - React 18.2
 - React Router
-- Bootstrap
+- Bootstrap 5.2
 - SCSS
 - Redux
 - Axios
