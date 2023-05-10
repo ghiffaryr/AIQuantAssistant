@@ -254,6 +254,7 @@ export default function Subscription({
                   className="w-100"
                   data={prediction.data}
                   layout={prediction.layout}
+                  config={{ responsive: true }}
                 />
               )}
             </div>
