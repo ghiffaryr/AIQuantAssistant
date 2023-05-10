@@ -12,7 +12,7 @@ public class ForbiddenException extends RuntimeException{
 
     private Integer code;
     private List<Integer> codes;
-    List<String> messages;
+    private List<String> messages;
 
     public ForbiddenException(String message) {
         super(message);

@@ -24,11 +24,11 @@ Assist your quantitative analysis by our AI quant assistant at affordable price
 - Error handling
 - Local storage based visitor's shopping cart
 - Persistent customer's shopping cart
-- Cart and order management
-- Checkout
-- Catalogue
+- Product management
+- Cart management
 - Order management
 - Subscription management
+- Profile management
 - Pagination
 
 ## Technology Stacks

@@ -12,7 +12,7 @@ public class InternalServerErrorException extends RuntimeException {
 
     private Integer code;
     private List<Integer> codes;
-    List<String> messages;
+    private List<String> messages;
 
     public InternalServerErrorException(String message) {
         super(message);
