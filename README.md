@@ -22,7 +22,7 @@ Assist your quantitative analysis by our AI quant assistant at affordable price
 - JWT authentication
 - Password recovery
 - Error handling
-- Cookie based visitor's shopping cart
+- Local storage based visitor's shopping cart
 - Persistent customer's shopping cart
 - Cart and order management
 - Checkout
