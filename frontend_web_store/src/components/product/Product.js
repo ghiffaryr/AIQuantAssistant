@@ -29,7 +29,7 @@ export default function Product({
   const [validated, setValidated] = useState(false);
   const [showAddToCartToast, setShowAddToCartToast] = useState(false);
   const [errorAddToCart, setErrorAddToCart] = useState({});
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [showUpdateProductModal, setShowUpdateProductModal] = useState(false);
   const [showDeleteProductToast, setShowDeleteProductToast] = useState(false);
   const [errorDeleteProduct, setErrorDeleteProduct] = useState({});
 
@@ -224,7 +224,7 @@ export default function Product({
               <div className="text-center mt-3">
                 <Button
                   variant="outline-primary"
-                  onClick={() => setShowUpdateModal(true)}
+                  onClick={() => setShowUpdateProductModal(true)}
                 >
                   Update
                 </Button>
@@ -235,7 +235,7 @@ export default function Product({
                 <div className="d-flex justify-content-evenly">
                   <Button
                     variant="outline-primary"
-                    onClick={() => setShowUpdateModal(true)}
+                    onClick={() => setShowUpdateProductModal(true)}
                   >
                     Update
                   </Button>
@@ -344,8 +344,8 @@ export default function Product({
           updateTime={updateTime}
           products={products}
           setProducts={setProducts}
-          show={showUpdateModal}
-          onHide={() => setShowUpdateModal(false)}
+          show={showUpdateProductModal}
+          onHide={() => setShowUpdateProductModal(false)}
         />
       </>
     </>

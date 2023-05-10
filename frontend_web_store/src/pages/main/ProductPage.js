@@ -24,7 +24,7 @@ export default function ProductPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [products, setProducts] = useState([]);
   const [inputs, setInputs] = useState({ query: "" });
-  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showCreateProductModal, setShowCreateProductModal] = useState(false);
 
   const getServerCart = async () => {
     if (localStorage.getItem("userRole") === "ROLE_CUSTOMER") {
@@ -176,7 +176,7 @@ export default function ProductPage() {
             <Button
               className="w-100"
               variant="outline-primary"
-              onClick={() => setShowCreateModal(true)}
+              onClick={() => setShowCreateProductModal(true)}
             >
               Create Product
             </Button>
@@ -245,8 +245,8 @@ export default function ProductPage() {
       <>
         <CreateProductModal
           getProducts={getProducts}
-          show={showCreateModal}
-          onHide={() => setShowCreateModal(false)}
+          show={showCreateProductModal}
+          onHide={() => setShowCreateProductModal(false)}
         />
       </>
     </>

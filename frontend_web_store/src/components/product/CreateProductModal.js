@@ -7,7 +7,6 @@ import { storage } from "../../env/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { API } from "../../env/Constants";
 import axios from "axios";
-import { useEffect } from "react";
 import ToastContainer from "react-bootstrap/esm/ToastContainer";
 import Toast from "react-bootstrap/Toast";
 
@@ -325,7 +324,7 @@ export default function CreateProductModal({ getProducts, show, onHide }) {
               <Button
                 className="d-none"
                 type="submit"
-                id="update-form-button"
+                id="create-form-button"
               />
             </Form>
           </div>
@@ -336,7 +335,7 @@ export default function CreateProductModal({ getProducts, show, onHide }) {
               <Button
                 variant="outline-success"
                 onClick={() =>
-                  document.getElementById("update-form-button").click()
+                  document.getElementById("create-form-button").click()
                 }
               >
                 Create

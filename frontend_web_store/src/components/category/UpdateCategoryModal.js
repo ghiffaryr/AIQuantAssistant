@@ -11,54 +11,42 @@ import { useEffect } from "react";
 import ToastContainer from "react-bootstrap/esm/ToastContainer";
 import Toast from "react-bootstrap/Toast";
 
-export default function UpdateProductModal({
+export default function UpdateCategoryModal({
   id,
-  categoryCode,
   code,
   name,
-  price,
-  period,
   description,
   image,
-  status,
   createTime,
   updateTime,
-  products,
-  setProducts,
+  categories,
+  setCategories,
   show,
   onHide,
 }) {
   const [inputs, setInputs] = useState({
     productCategoryCode: "",
-    productCode: "",
-    productDescription: "",
-    productImage: "",
-    productName: "",
-    productPeriod: 0,
-    productPrice: 0,
-    productStatus: 0,
+    productCategoryDescription: "",
+    productCategoryImage: "",
+    productCategoryName: "",
   });
   const [validated, setValidated] = useState(false);
   const [showUploadImageToast, setShowUploadImageToast] = useState(false);
   const [errorUploadImage, setErrorUploadImage] = useState({});
-  const [showUpdateProductToast, setShowUpdateProductToast] = useState(false);
-  const [errorUpdateProduct, setErrorUpdateProduct] = useState({});
+  const [showUpdateCategoryToast, setShowUpdateCategoryToast] = useState(false);
+  const [errorUpdateCategory, setErrorUpdateCategory] = useState({});
 
-  function getProduct() {
+  function getCategory() {
     setInputs({
-      productCategoryCode: categoryCode,
-      productCode: code,
-      productDescription: description,
-      productImage: image,
-      productName: name,
-      productPeriod: Number(period),
-      productPrice: Number(price),
-      productStatus: Number(status),
+      productCategoryCode: code,
+      productCategoryDescription: description,
+      productCategoryImage: image,
+      productCategoryName: name,
     });
   }
 
   useEffect(() => {
-    getProduct();
+    getCategory();
   }, []);
 
   function handleChange(e) {
@@ -79,7 +67,7 @@ export default function UpdateProductModal({
       .then((downloadURL) => {
         setInputs({
           ...inputs,
-          productImage: downloadURL,
+          productCategoryImage: downloadURL,
         });
       })
       .catch((err) => {
@@ -88,7 +76,7 @@ export default function UpdateProductModal({
       });
   }
 
-  const handleSubmitUpdateProduct = async (e) => {
+  const handleSubmitUpdateCategory = async (e) => {
     const form = e.currentTarget;
 
     setValidated(true);
@@ -100,31 +88,28 @@ export default function UpdateProductModal({
           "Access-Control-Allow-Origin": "*",
         };
         let { status, data } = await axios.put(
-          `${API}/seller/product/${inputs.productCode}/update`,
+          `${API}/seller/category/${inputs.productCategoryCode}/update`,
           inputs
         );
-        let newProducts = products;
-        newProducts = newProducts.map((product) => {
-          if (product.productCode === code) {
-            product.productCategoryCode = data.productCategoryCode;
-            product.productCode = data.productCode;
-            product.productDescription = data.productDescription;
-            product.productImage = data.productImage;
-            product.productName = data.productName;
-            product.productPeriod = data.productPeriod;
-            product.productPrice = data.productPrice;
-            product.productStatus = data.productStatus;
-            product.updateTime = data.updateTime;
+        let newCategories = categories;
+        newCategories = newCategories.map((category) => {
+          if (category.productCategoryCode === code) {
+            category.productCategoryCode = data.productCategoryCode;
+            category.productCategoryDescription =
+              data.productCategoryDescription;
+            category.productCategoryImage = data.productImage;
+            category.productCategoryName = data.productName;
+            category.updateTime = data.updateTime;
           }
-          return product;
+          return category;
         });
-        setProducts(newProducts);
-        setErrorUpdateProduct({});
-        setShowUpdateProductToast(true);
+        setCategories(newCategories);
+        setErrorUpdateCategory({});
+        setShowUpdateCategoryToast(true);
       } catch (error) {
         for (let errorObject of error.response.data.errors) {
-          setErrorUpdateProduct(errorObject);
-          setShowUpdateProductToast(true);
+          setErrorUpdateCategory(errorObject);
+          setShowUpdateCategoryToast(true);
         }
       }
     }
@@ -141,13 +126,13 @@ export default function UpdateProductModal({
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Update Product
+            Update Category
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="container d-flex justify-content-center flex-column align-items-center text-left">
             <Form
-              onSubmit={handleSubmitUpdateProduct}
+              onSubmit={handleSubmitUpdateCategory}
               className="update-product-form"
               id="update-product-form"
               noValidate
@@ -160,42 +145,16 @@ export default function UpdateProductModal({
               >
                 <Form.Label column sm="4">
                   <div className="d-inline-flex">
-                    Category Code&nbsp;<span className="text-danger">*</span>
-                  </div>
-                </Form.Label>
-                <Col sm="8">
-                  <Form.Control
-                    type="text"
-                    name="productCategoryCode"
-                    placeholder="Category Code"
-                    aria-label="Category Code"
-                    value={inputs.productCategoryCode}
-                    onChange={handleChange}
-                    pattern="^(?!\s*$).+"
-                    required
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    Category Code cannot be blank.
-                  </Form.Control.Feedback>
-                </Col>
-              </Form.Group>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="validationCustom02"
-              >
-                <Form.Label column sm="4">
-                  <div className="d-inline-flex">
                     Code&nbsp;<span className="text-danger">*</span>
                   </div>
                 </Form.Label>
                 <Col sm="8">
                   <Form.Control
                     type="text"
-                    name="productCode"
+                    name="productCategoryCode"
                     placeholder="Code"
                     aria-label="Code"
-                    value={inputs.productCode}
+                    value={inputs.productCategoryCode}
                     onChange={handleChange}
                     pattern="^(?!\s*$).+"
                     required
@@ -208,7 +167,7 @@ export default function UpdateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom03"
+                controlId="validationCustom02"
               >
                 <Form.Label column sm="4">
                   <div className="d-inline-flex">
@@ -218,10 +177,10 @@ export default function UpdateProductModal({
                 <Col sm="8">
                   <Form.Control
                     type="text"
-                    name="productName"
+                    name="productCategoryName"
                     placeholder="Name"
                     aria-label="Name"
-                    value={inputs.productName}
+                    value={inputs.productCategoryName}
                     onChange={handleChange}
                     pattern="^(?!\s*$).+"
                     required
@@ -234,96 +193,17 @@ export default function UpdateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom04"
-              >
-                <Form.Label column sm="4">
-                  <div className="d-inline-flex">
-                    Price&nbsp;<span className="text-danger">*</span>
-                  </div>
-                </Form.Label>
-                <Col sm="8">
-                  <Form.Control
-                    type="number"
-                    name="productPrice"
-                    placeholder="Price"
-                    aria-label="Price"
-                    value={Number(inputs.productPrice)}
-                    onChange={handleChange}
-                    onWheel={(e) => e.target.blur()}
-                    min={0}
-                    required
-                  />
-                </Col>
-              </Form.Group>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="validationCustom05"
-              >
-                <Form.Label column sm="4">
-                  <div className="d-inline-flex">
-                    Period&nbsp;<span className="text-danger">*</span>
-                  </div>
-                </Form.Label>
-                <Col sm="8">
-                  <Form.Control
-                    type="number"
-                    name="productPeriod"
-                    placeholder="Period (month)"
-                    aria-label="Period (month)"
-                    value={Number(inputs.productPeriod)}
-                    onChange={handleChange}
-                    onWheel={(e) => e.target.blur()}
-                    min={0}
-                    required
-                  />
-                </Col>
-              </Form.Group>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="validationCustom06"
-              >
-                <Form.Label column sm="4">
-                  Status&nbsp;<span className="text-danger">*</span>
-                </Form.Label>
-                <Col sm="8" className="d-flex align-items-center">
-                  <Form.Check
-                    inline
-                    label="Available"
-                    name="productStatus"
-                    value={1}
-                    type={"radio"}
-                    id="inline-radio-product-status-available"
-                    onChange={handleChange}
-                    checked={Number(inputs.productStatus) === 1}
-                  />
-                  <Form.Check
-                    inline
-                    label="Unavailable"
-                    name="productStatus"
-                    value={0}
-                    type={"radio"}
-                    id="inline-radio-product-status-unavailable"
-                    onChange={handleChange}
-                    checked={Number(inputs.productStatus) === 0}
-                  />
-                </Col>
-              </Form.Group>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="validationCustom07"
+                controlId="validationCustom03"
               >
                 <Form.Label column sm="4">
                   Image Link
                 </Form.Label>
                 <Col sm="8">
                   <Form.Control
-                    name="productImage"
+                    name="productCategoryImage"
                     type="text"
                     onChange={handleChange}
-                    value={inputs.productImage}
+                    value={inputs.productCategoryImage}
                     placeholder="Image Link"
                     aria-label="Image Link"
                     aria-describedby="basic-addon1"
@@ -333,7 +213,7 @@ export default function UpdateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom08"
+                controlId="validationCustom04"
               >
                 <Form.Label column sm="4">
                   Upload Image
@@ -353,19 +233,19 @@ export default function UpdateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom09"
+                controlId="validationCustom05"
               >
                 <Form.Label column sm="4">
                   Description
                 </Form.Label>
                 <Col sm="8">
                   <Form.Control
-                    name="productDescription"
+                    name="productCategoryDescription"
                     type="text"
                     onChange={handleChange}
-                    value={inputs.productDescription}
-                    placeholder="Product Description"
-                    aria-label="Product Description"
+                    value={inputs.productCategoryDescription}
+                    placeholder="Category Description"
+                    aria-label="Category Description"
                     aria-describedby="basic-addon1"
                   />
                 </Col>
@@ -418,10 +298,10 @@ export default function UpdateProductModal({
           )}
         </ToastContainer>
         <ToastContainer className="position-fixed p-3 top-0 end-0">
-          {Object.keys(errorUpdateProduct).length > 0 ? (
+          {Object.keys(errorUpdateCategory).length > 0 ? (
             <Toast
-              onClose={() => setShowUpdateProductToast(false)}
-              show={showUpdateProductToast}
+              onClose={() => setShowUpdateCategoryToast(false)}
+              show={showUpdateCategoryToast}
               delay={3000}
               autohide
             >
@@ -433,12 +313,12 @@ export default function UpdateProductModal({
                 />
                 <strong className="me-auto text-light">Error</strong>
               </Toast.Header>
-              <Toast.Body>{errorUpdateProduct.message}</Toast.Body>
+              <Toast.Body>{errorUpdateCategory.message}</Toast.Body>
             </Toast>
           ) : (
             <Toast
-              onClose={() => setShowUpdateProductToast(false)}
-              show={showUpdateProductToast}
+              onClose={() => setShowUpdateCategoryToast(false)}
+              show={showUpdateCategoryToast}
               delay={3000}
               autohide
             >
@@ -450,7 +330,7 @@ export default function UpdateProductModal({
                 />
                 <strong className="me-auto text-light">Success</strong>
               </Toast.Header>
-              <Toast.Body>Update product success!</Toast.Body>
+              <Toast.Body>Update category success!</Toast.Body>
             </Toast>
           )}
         </ToastContainer>

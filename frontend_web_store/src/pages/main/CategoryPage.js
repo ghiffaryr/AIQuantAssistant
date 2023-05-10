@@ -8,6 +8,8 @@ import CategoryList from "../../components/category/CategoryList";
 import axios from "axios";
 import FooterComponent from "../../components/basic/FooterComponent";
 import { PaginationControl } from "react-bootstrap-pagination-control";
+import { Button } from "react-bootstrap";
+import CreateCategoryModal from "../../components/category/CreateCategoryModal";
 
 export default function CategoryPage() {
   const [showGetServerCartToast, setShowGetServerCartToast] = useState(false);
@@ -19,6 +21,7 @@ export default function CategoryPage() {
   const [size, setSize] = useState(6);
   const [totalPages, setTotalPages] = useState(1);
   const [categories, setCategories] = useState([]);
+  const [showCreateCategoryModal, setShowCreateCategoryModal] = useState(false);
 
   const getServerCart = async () => {
     if (localStorage.getItem("userRole") === "ROLE_CUSTOMER") {
@@ -99,7 +102,18 @@ export default function CategoryPage() {
       <NavbarComponent cartOrderDetailCount={cartOrderDetailCount} />
       <>
         <Breadcrumbs />
-        <CategoryList categories={categories} />
+        {localStorage.getItem("userRole") == "ROLE_MANAGER" && (
+          <div className="container mb-3">
+            <Button
+              className="w-100"
+              variant="outline-primary"
+              onClick={() => setShowCreateCategoryModal(true)}
+            >
+              Create Category
+            </Button>
+          </div>
+        )}
+        <CategoryList categories={categories} setCategories={setCategories} />
         <PaginationControl
           page={page}
           between={4}
@@ -154,6 +168,13 @@ export default function CategoryPage() {
           </Toast>
         )}
       </ToastContainer>
+      <>
+        <CreateCategoryModal
+          getCategories={getCategories}
+          show={showCreateCategoryModal}
+          onHide={() => setShowCreateCategoryModal(false)}
+        />
+      </>
     </>
   );
 }
