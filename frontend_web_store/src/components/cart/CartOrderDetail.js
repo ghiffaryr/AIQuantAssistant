@@ -149,7 +149,7 @@ export default function CartOrderDetail({
       <div className="col">
         <div className="card w-100">
           <div className="row g-0">
-            <div className="col col-4">
+            <div className="col col-5">
               <img
                 src={
                   product.productImage
@@ -162,7 +162,7 @@ export default function CartOrderDetail({
                 overflow="hidden"
               />
             </div>
-            <div className="col col-8">
+            <div className="col col-7">
               <div className="card-body d-flex flex-column justify-content-between">
                 <div className="card-description">
                   <h5 className="card-title">{product.productName}</h5>

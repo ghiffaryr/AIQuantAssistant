@@ -104,13 +104,13 @@ export default function CartPage() {
           <>
             <div className="container mb-3">
               <div className="row">
-                <div className="col col-8">
+                <div className="col col-9">
                   <CartOrderDetailList
                     cartOrderDetails={cartOrderDetails}
                     setCartOrderDetails={setCartOrderDetails}
                   />
                 </div>
-                <div className="col col-4 flex-column">
+                <div className="col col-3 flex-column">
                   <h3>Total amount is ${cartOrderDetailTotalPrice}</h3>
                   <Button variant="outline-primary" onClick={handleCheckout}>
                     Checkout
