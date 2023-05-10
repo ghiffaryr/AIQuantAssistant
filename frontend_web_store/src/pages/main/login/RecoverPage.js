@@ -10,17 +10,17 @@ import { FaUser } from "react-icons/fa";
 import { VscSymbolKey } from "react-icons/vsc";
 import { LinkContainer } from "react-router-bootstrap";
 import Button from "react-bootstrap/esm/Button";
-import "../../../css/pages/main/login/RecoveryPage.css";
+import "../../../css/pages/main/login/RecoverPage.css";
 import { API } from "../../../env/Constants";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import axios from "axios";
 
-export default function RecoveryPage() {
+export default function RecoverPage() {
   const [inputs, setInputs] = useState({ email: "", recoveryPhrase: "" });
-  const [recoveryPassword, setRecoveryPassword] = useState("");
-  const [showRecoveryToast, setShowRecoveryToast] = useState(false);
-  const [errorRecovery, setErrorRecovery] = useState({});
+  const [recoverPassword, setRecoverPassword] = useState("");
+  const [showRecoverToast, setShowRecoverToast] = useState(false);
+  const [errorRecover, setErrorRecover] = useState({});
   const [validated, setValidated] = useState(false);
 
   function handleChange(e) {
@@ -30,22 +30,22 @@ export default function RecoveryPage() {
     });
   }
 
-  const handleRecovery = async () => {
+  const handleRecover = async () => {
     try {
-      let { status, data } = await axios.put(`${API}/recovery`, {
+      let { status, data } = await axios.put(`${API}/recover`, {
         email: inputs.email,
         recoveryPhrase: inputs.recoveryPhrase,
       });
 
-      setErrorRecovery({});
-      setShowRecoveryToast(true);
-      setRecoveryPassword(data.password);
+      setErrorRecover({});
+      setShowRecoverToast(true);
+      setRecoverPassword(data.password);
     } catch (error) {
       setInputs({ ...inputs, recoveryPhrase: "" });
-      setRecoveryPassword("");
+      setRecoverPassword("");
       for (let errorObject of error.response.data.errors) {
-        setErrorRecovery(errorObject);
-        setShowRecoveryToast(true);
+        setErrorRecover(errorObject);
+        setShowRecoverToast(true);
       }
     }
   };
@@ -56,7 +56,7 @@ export default function RecoveryPage() {
     setValidated(true);
     e.preventDefault();
     if (form.checkValidity()) {
-      handleRecovery();
+      handleRecover();
     }
   };
 
@@ -72,10 +72,10 @@ export default function RecoveryPage() {
                 <Button variant="outline-primary">Go to Home Page</Button>
               </LinkContainer>
             </>
-          ) : recoveryPassword ? (
+          ) : recoverPassword ? (
             <>
               <h3 className="main-title">
-                Your new password is {recoveryPassword}
+                Your new password is {recoverPassword}
               </h3>
               <h3 className="main-title">Please log in.</h3>
               <LinkContainer to="/login">
@@ -160,15 +160,13 @@ export default function RecoveryPage() {
             </>
           )}
         </Container>
-        <div className="recovery-footer">
-          <FooterComponent position="absolute" />
-        </div>
+        <FooterComponent position="absolute" />
       </>
       <ToastContainer className="position-fixed p-3 top-0 end-0">
-        {Object.keys(errorRecovery).length > 0 && (
+        {Object.keys(errorRecover).length > 0 && (
           <Toast
-            onClose={() => setShowRecoveryToast(false)}
-            show={showRecoveryToast}
+            onClose={() => setShowRecoverToast(false)}
+            show={showRecoverToast}
             delay={3000}
             autohide
           >
@@ -180,7 +178,7 @@ export default function RecoveryPage() {
               />
               <strong className="me-auto text-light">Error</strong>
             </Toast.Header>
-            <Toast.Body>{errorRecovery.message}</Toast.Body>
+            <Toast.Body>{errorRecover.message}</Toast.Body>
           </Toast>
         )}
       </ToastContainer>

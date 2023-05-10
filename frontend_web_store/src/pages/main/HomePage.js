@@ -89,9 +89,7 @@ export default function HomePage() {
             <Col xs={7}></Col>
           </Row>
         </main>
-        <div className="homepage-footer">
-          <FooterComponent position="absolute" color="white" />
-        </div>
+        <FooterComponent position="absolute" color="white" />
       </>
       <ToastContainer className="position-fixed p-3 top-0 end-0">
         {Object.keys(errorGetServerCart).length > 0 && (

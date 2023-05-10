@@ -1,10 +1,10 @@
 package com.ghiffaryr.store.service;
 
-import com.ghiffaryr.store.dto.request.UserRecoveryForm;
+import com.ghiffaryr.store.dto.request.UserRecoverForm;
 import com.ghiffaryr.store.dto.request.UserRegisterForm;
 import com.ghiffaryr.store.dto.request.UserUpdateForm;
 import com.ghiffaryr.store.dto.response.ProfileResponse;
-import com.ghiffaryr.store.dto.response.UserRecoveryResponse;
+import com.ghiffaryr.store.dto.response.UserRecoverResponse;
 import com.ghiffaryr.store.entity.User;
 import com.ghiffaryr.store.dto.request.UserLoginForm;
 import com.ghiffaryr.store.dto.response.UserLoginResponse;
@@ -21,7 +21,7 @@ public interface UserService {
 
     ProfileResponse update(UserUpdateForm userUpdateForm, String principalName);
 
-    UserRecoveryResponse recovery(UserRecoveryForm userRecoveryForm);
+    UserRecoverResponse recover(UserRecoverForm userRecoverForm);
 
     ProfileResponse deactivate(String principalName);
 

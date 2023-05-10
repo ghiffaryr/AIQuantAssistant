@@ -464,9 +464,7 @@ export default function RegisterPage() {
             </>
           )}
         </Container>
-        <div className="register-footer">
-          <FooterComponent />
-        </div>
+        <FooterComponent />
       </>
       <ToastContainer className="position-fixed p-3 top-0 end-0">
         {Object.keys(errorRegister).length > 0 ? (

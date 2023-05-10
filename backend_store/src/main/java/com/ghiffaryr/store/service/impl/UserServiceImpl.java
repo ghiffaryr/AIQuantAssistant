@@ -1,10 +1,10 @@
 package com.ghiffaryr.store.service.impl;
 
-import com.ghiffaryr.store.dto.request.UserRecoveryForm;
+import com.ghiffaryr.store.dto.request.UserRecoverForm;
 import com.ghiffaryr.store.dto.request.UserRegisterForm;
 import com.ghiffaryr.store.dto.request.UserUpdateForm;
 import com.ghiffaryr.store.dto.response.ProfileResponse;
-import com.ghiffaryr.store.dto.response.UserRecoveryResponse;
+import com.ghiffaryr.store.dto.response.UserRecoverResponse;
 import com.ghiffaryr.store.entity.User;
 import com.ghiffaryr.store.enums.ResultEnum;
 import com.ghiffaryr.store.exception.BadRequestException;
@@ -144,9 +144,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserRecoveryResponse recovery(UserRecoveryForm userRecoveryForm) {
-        User oldUser = find(userRecoveryForm.getEmail());
-        if (!oldUser.getRecoveryPhrase().equals(userRecoveryForm.getRecoveryPhrase())){
+    public UserRecoverResponse recover(UserRecoverForm userRecoverForm) {
+        User oldUser = find(userRecoverForm.getEmail());
+        if (!passwordEncoder.matches(userRecoverForm.getRecoveryPhrase(), oldUser.getRecoveryPhrase())){
             logger.error(ResultEnum.USER_RECOVERY_PHRASE_WRONG.getMessage());
             throw new BadRequestException(ResultEnum.USER_RECOVERY_PHRASE_WRONG);
         }
@@ -154,10 +154,10 @@ public class UserServiceImpl implements UserService {
         oldUser.setPassword(passwordEncoder.encode(generatedPassword));
         userRepository.save(oldUser);
 
-        UserRecoveryResponse userRecoveryResponse = new UserRecoveryResponse();
-        userRecoveryResponse.setEmail(oldUser.getEmail());
-        userRecoveryResponse.setPassword(generatedPassword);
-        return userRecoveryResponse;
+        UserRecoverResponse userRecoverResponse = new UserRecoverResponse();
+        userRecoverResponse.setEmail(oldUser.getEmail());
+        userRecoverResponse.setPassword(generatedPassword);
+        return userRecoverResponse;
     }
 
     @Override

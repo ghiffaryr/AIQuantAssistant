@@ -1,10 +1,10 @@
 package com.ghiffaryr.store.api;
 
-import com.ghiffaryr.store.dto.request.UserRecoveryForm;
+import com.ghiffaryr.store.dto.request.UserRecoverForm;
 import com.ghiffaryr.store.dto.request.UserRegisterForm;
 import com.ghiffaryr.store.dto.request.UserUpdateForm;
 import com.ghiffaryr.store.dto.response.ProfileResponse;
-import com.ghiffaryr.store.dto.response.UserRecoveryResponse;
+import com.ghiffaryr.store.dto.response.UserRecoverResponse;
 import com.ghiffaryr.store.service.UserService;
 import com.ghiffaryr.store.dto.request.UserLoginForm;
 import com.ghiffaryr.store.dto.response.UserLoginResponse;
@@ -41,9 +41,9 @@ public class UserController {
         return ResponseEntity.ok(userService.update(userUpdateForm, principal.getName()));
     }
 
-    @PutMapping("/recovery")
-    public ResponseEntity<UserRecoveryResponse> recovery(@RequestBody @Valid UserRecoveryForm userRecoveryForm) {
-        return ResponseEntity.ok(userService.recovery(userRecoveryForm));
+    @PutMapping("/recover")
+    public ResponseEntity<UserRecoverResponse> recover(@RequestBody @Valid UserRecoverForm userRecoverForm) {
+        return ResponseEntity.ok(userService.recover(userRecoverForm));
     }
 
     @PatchMapping("/profile/deactivate")

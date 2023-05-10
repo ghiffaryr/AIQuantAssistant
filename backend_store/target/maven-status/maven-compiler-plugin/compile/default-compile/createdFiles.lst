@@ -1,7 +1,6 @@
 com/ghiffaryr/store/service/CartService.class
 com/ghiffaryr/store/repository/CartRepository.class
 com/ghiffaryr/store/exception/ConflictException.class
-com/ghiffaryr/store/dto/request/UserRecoveryForm.class
 com/ghiffaryr/store/security/JWT/JwtProvider.class
 com/ghiffaryr/store/security/SecurityConfig.class
 com/ghiffaryr/store/repository/UserRepository.class
@@ -25,6 +24,7 @@ com/ghiffaryr/store/dto/request/ForecastForm.class
 com/ghiffaryr/store/repository/SubscriptionRepository.class
 com/ghiffaryr/store/service/SubscriptionService.class
 com/ghiffaryr/store/dto/request/SubscriptionUpdateForm.class
+com/ghiffaryr/store/dto/response/UserRecoverResponse.class
 com/ghiffaryr/store/repository/ProductCategoryRepository.class
 com/ghiffaryr/store/service/impl/CartServiceImpl.class
 com/ghiffaryr/store/service/impl/UserServiceImpl.class
@@ -34,6 +34,7 @@ com/ghiffaryr/store/api/CartController.class
 com/ghiffaryr/store/dto/request/ProductCategoryForm.class
 com/ghiffaryr/store/security/JWT/JwtFilter.class
 com/ghiffaryr/store/dto/request/UserUpdateForm.class
+com/ghiffaryr/store/dto/request/UserRecoverForm.class
 com/ghiffaryr/store/entity/Cart.class
 com/ghiffaryr/store/security/utils/PasswordUtils.class
 com/ghiffaryr/store/service/OrderDetailService.class
@@ -58,7 +59,6 @@ com/ghiffaryr/store/repository/ProductRepository.class
 com/ghiffaryr/store/entity/OrderDetail.class
 com/ghiffaryr/store/entity/OrderMain.class
 com/ghiffaryr/store/api/UserController.class
-com/ghiffaryr/store/dto/response/UserRecoveryResponse.class
 com/ghiffaryr/store/dto/request/OrderDetailForm.class
 com/ghiffaryr/store/api/ProductController.class
 com/ghiffaryr/store/service/OrderMainService.class

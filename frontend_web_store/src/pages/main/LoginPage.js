@@ -235,10 +235,10 @@ export default function LoginPage() {
                       <Form.Text>
                         Forget your password?{" "}
                         <LinkContainer
-                          to="/recovery"
-                          className="recovery-link text-primary"
+                          to="/recover"
+                          className="recover-link text-primary"
                         >
-                          <span>Recovery</span>
+                          <span>Recover</span>
                         </LinkContainer>
                       </Form.Text>
                     </Col>
@@ -259,9 +259,7 @@ export default function LoginPage() {
             </>
           )}
         </Container>
-        <div className="login-footer">
-          <FooterComponent />
-        </div>
+        <FooterComponent position="absolute" />
       </>
       <ToastContainer className="position-fixed p-3 top-0 end-0">
         {Object.keys(errorLogin).length > 0 ? (

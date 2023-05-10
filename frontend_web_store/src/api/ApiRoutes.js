@@ -5,7 +5,7 @@ import LoginPage from "../pages/main/LoginPage";
 import RegisterPage from "../pages/main/login/RegisterPage";
 import NotFoundPage from "../pages/exception/NotFoundPage";
 import CategoryPage from "../pages/main/CategoryPage";
-import RecoveryPage from "../pages/main/login/RecoveryPage";
+import RecoverPage from "../pages/main/login/RecoverPage";
 import ProductByCategoryPage from "../pages/main/category/ProductByCategoryPage";
 import CartPage from "../pages/main/CartPage";
 import ProductPage from "../pages/main/ProductPage";
@@ -23,7 +23,7 @@ function ApiRoutes() {
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      <Route path="/recovery" element={<RecoveryPage />} />
+      <Route path="/recover" element={<RecoverPage />} />
       <Route
         path="/cart"
         element={

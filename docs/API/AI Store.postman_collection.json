@@ -82,7 +82,7 @@
 			"response": []
 		},
 		{
-			"name": "Recovery",
+			"name": "Recover",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -101,7 +101,7 @@
 						}
 					}
 				},
-				"url": "http://0.0.0.0:8080/api/recovery"
+				"url": "http://0.0.0.0:8080/api/recover"
 			},
 			"response": []
 		},

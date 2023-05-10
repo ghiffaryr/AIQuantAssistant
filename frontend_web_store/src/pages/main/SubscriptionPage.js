@@ -121,9 +121,7 @@ export default function SubscriptionPage() {
           }}
           ellipsis={1}
         />
-        <div className="subscription-footer">
-          <FooterComponent />
-        </div>
+        <FooterComponent />
       </>
       <ToastContainer className="position-fixed p-3 top-0 end-0">
         {Object.keys(errorGetServerCart).length > 0 && (

@@ -118,9 +118,7 @@ export default function CartPage() {
                 </div>
               </div>
             </div>
-            <div className="cart-footer">
-              <FooterComponent />
-            </div>
+            <FooterComponent />
           </>
         ) : (
           <>

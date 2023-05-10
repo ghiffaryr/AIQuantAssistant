@@ -178,9 +178,7 @@ export default function OrderPage() {
           }}
           ellipsis={1}
         />
-        <div className="order-footer">
-          <FooterComponent />
-        </div>
+        <FooterComponent />
       </>
       <ToastContainer className="position-fixed p-3 top-0 end-0">
         {Object.keys(errorGetServerCart).length > 0 && (

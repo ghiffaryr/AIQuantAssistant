@@ -247,10 +247,10 @@ CREATE TABLE `user` (
 /*Data for the table `user` */
 
 insert  into `user`(`id`,`active`,`address`,`birthdate`,`create_time`,`email`,`gender`,`image`,`name`,`password`,`phone`,`recovery_phrase`,`role`,`update_time`) values 
-(1,'','New World','2023-11-02 17:00:00','2023-04-28 13:00:40','ghiffaryr@domain.com','','https://upload.wikimedia.org/wikipedia/id/5/5c/Spongebob-squarepants.png','Ghiffary Rifqialdi','$2a$10$ppZZq0Nm2sH.lKzhqY9eDeeQEKBTwAXmzF8gZ4qZczHSmuDyojGuO','+628999999999','what zit tooya','ROLE_CUSTOMER','2023-05-08 17:15:01'),
-(2,'',NULL,NULL,'2023-04-28 13:01:00','customer@domain.com',NULL,NULL,'Real Customer','$2a$10$Q9ImyIHm0erCwE3dkHOUXeJxitweUWAFxHrjIrzGW1zYynDeIXX6i',NULL,'what zit tooya','ROLE_CUSTOMER','2023-04-28 13:01:00'),
-(3,'',NULL,NULL,'2023-04-28 13:01:09','employee@domain.com',NULL,NULL,'Real Employee','$2a$10$UQdoVXowcZsnUnD.OmnPW.WOGSh1GxfM/h7ZvPzwaF99cqEpSUGge',NULL,'what zit tooya','ROLE_EMPLOYEE','2023-04-28 13:01:09'),
-(4,'',NULL,NULL,'2023-04-28 13:01:14','manager@domain.com',NULL,NULL,'Real Manager','$2a$10$PInEh3xY7xQDl6yv38ZTr.rgnrbiodGcz9Vf59RgAPN8QdEIvSji.',NULL,'what zit tooya','ROLE_MANAGER','2023-04-28 13:01:14'),
+(1,'','New World','2023-11-02 17:00:00','2023-04-28 13:00:40','ghiffaryr@domain.com','','https://upload.wikimedia.org/wikipedia/id/5/5c/Spongebob-squarepants.png','Ghiffary Rifqialdi','$2a$10$ppZZq0Nm2sH.lKzhqY9eDeeQEKBTwAXmzF8gZ4qZczHSmuDyojGuO','+628999999999','$2a$10$QDOMJDkFP8dVR/expB9A2e0N4jPyBP6RcXBCS9zSZnQD0q9Q/hU3C','ROLE_CUSTOMER','2023-05-08 17:15:01'),
+(2,'',NULL,NULL,'2023-04-28 13:01:00','customer@domain.com',NULL,NULL,'Real Customer','$2a$10$Q9ImyIHm0erCwE3dkHOUXeJxitweUWAFxHrjIrzGW1zYynDeIXX6i',NULL,'$2a$10$QDOMJDkFP8dVR/expB9A2e0N4jPyBP6RcXBCS9zSZnQD0q9Q/hU3C','ROLE_CUSTOMER','2023-04-28 13:01:00'),
+(3,'',NULL,NULL,'2023-04-28 13:01:09','employee@domain.com',NULL,NULL,'Real Employee','$2a$10$UQdoVXowcZsnUnD.OmnPW.WOGSh1GxfM/h7ZvPzwaF99cqEpSUGge',NULL,'$2a$10$QDOMJDkFP8dVR/expB9A2e0N4jPyBP6RcXBCS9zSZnQD0q9Q/hU3C','ROLE_EMPLOYEE','2023-04-28 13:01:09'),
+(4,'',NULL,NULL,'2023-04-28 13:01:14','manager@domain.com',NULL,NULL,'Real Manager','$2a$10$PInEh3xY7xQDl6yv38ZTr.rgnrbiodGcz9Vf59RgAPN8QdEIvSji.',NULL,'$2a$10$QDOMJDkFP8dVR/expB9A2e0N4jPyBP6RcXBCS9zSZnQD0q9Q/hU3C','ROLE_MANAGER','2023-04-28 13:01:14'),
 (61,'\0',NULL,'1970-01-01 00:00:00','2023-05-06 03:29:37','newuser@domain.com','','https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/saitama.png?alt=media&token=d05aa20e-e497-4a2c-a18f-29c364735ee1','New User','$2a$10$KGqP90VNh2RiDbO5WxadouAXgOHorZnZUcs80cIxsQuULrX7t8ke2',NULL,'$2a$10$QDOMJDkFP8dVR/expB9A2e0N4jPyBP6RcXBCS9zSZnQD0q9Q/hU3C','ROLE_CUSTOMER','2023-05-08 18:00:07');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
