@@ -13,7 +13,7 @@ from api.scrapper_controller import (
     ScrapperStockAnalysis
 )
 
-ROUTES: Dict[str, any] = {
+ROUTES: Dict[str, type] = {
     "/": Status,
     "/forecast/predict": Predict,
     "/forecast/dictionary": ForecastModelDictionary,
