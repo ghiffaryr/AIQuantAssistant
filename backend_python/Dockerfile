@@ -57,7 +57,7 @@ WORKDIR /app
 COPY ./Pipfile /app/
 COPY ./Pipfile.lock /app/
 COPY ./src /app/src
-COPY ./temp /app/temp
+COPY ./tmp /app/tmp
 
 RUN pipenv install --deploy --system
 RUN pipenv install --deploy
