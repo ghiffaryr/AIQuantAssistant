@@ -5,6 +5,7 @@ from service.impl.scrapper_service_stock_statistics_impl import ScrapperServiceS
 from service.impl.scrapper_service_stock_analysis_impl import ScrapperServiceStockAnalysisImpl
 from const.param import Param
 
+
 class ScrapperStockStatistics:
     async def on_post(self, req, resp, stock_code) -> None:
         @EndpointDecorator.error_handling
@@ -21,6 +22,7 @@ class ScrapperStockStatistics:
             scrapper_stock_statistics.initialize()
             scrapper_stock_statistics.configure(stock_code)
             result = scrapper_stock_statistics.retrieve()
+            scrapper_stock_statistics.end()
             return result
         params = {Param.STOCK_CODE: stock_code}
         res = get_result(params)
@@ -42,6 +44,7 @@ class ScrapperStockAnalysis:
             scrapper_stock_analysis.initialize()
             scrapper_stock_analysis.configure(stock_code)
             result = scrapper_stock_analysis.retrieve()
+            scrapper_stock_analysis.end()
             return result
         params = {Param.STOCK_CODE: stock_code}
         res = get_result(params)

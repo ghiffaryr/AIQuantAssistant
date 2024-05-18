@@ -8,8 +8,12 @@ class ScrapperService(ABC):
 
     @abstractmethod
     def configure(self) -> None:
-       pass
+        pass
 
     @abstractmethod
     def retrieve(self) -> None:
-       pass
+        pass
+
+    @abstractmethod
+    def end(self) -> None:
+        pass

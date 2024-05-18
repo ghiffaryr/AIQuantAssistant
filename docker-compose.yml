@@ -20,8 +20,8 @@ services:
         ]
       timeout: 60s
       retries: 100
-  backend_forecast:
-    build: backend_forecast
+  backend_python:
+    build: backend_python
     restart: always
     # ports:
     #   - "8000:8000"

@@ -36,9 +36,18 @@ ENV LANG C.UTF-8
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-RUN apt-get install -y ./google-chrome-stable_current_amd64.deb
-RUN rm -rf ./google-chrome-stable_current_amd64.deb
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \ 
+    && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+RUN apt-get update && apt-get -y install google-chrome-stable
+RUN apt-get install -yqq unzip jq
+RUN CHROME_VERSION=$(google-chrome --version | awk '{print $3}') && \
+    CHROME_DRIVER_URL=$(curl -sSL "https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json" | \
+    jq -r --arg CHROME_VERSION "$CHROME_VERSION" '.versions[] | select(.version==$CHROME_VERSION) | .downloads.chromedriver[] | select(.platform=="linux64") | .url') && \
+    wget -O /tmp/chromedriver.zip $CHROME_DRIVER_URL && \
+    unzip /tmp/chromedriver.zip -d /tmp/ && \
+    mv /tmp/chromedriver-linux64/chromedriver /usr/local/bin/chromedriver && \
+    chmod +x /usr/local/bin/chromedriver && \
+    rm /tmp/chromedriver.zip
 
 RUN pip3 install pipenv
 
@@ -48,10 +57,11 @@ WORKDIR /app
 COPY ./Pipfile /app/
 COPY ./Pipfile.lock /app/
 COPY ./src /app/src
+COPY ./temp /app/temp
 
 RUN pipenv install --deploy --system
 RUN pipenv install --deploy
 
-CMD pipenv run uvicorn --app-dir src start_application:StartApplication --host 0.0.0.0 --port 8000 --reload
+CMD pipenv run uvicorn --app-dir src start_application:StartApplication --host 0.0.0.0 --port 8000
 
 EXPOSE 8000

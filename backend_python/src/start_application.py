@@ -3,6 +3,9 @@ from api import ROUTES
 from dto import DTOS
 from __init__  import __version__
 from utils.config import Config
+from service.impl.text_classifier_service_sentiment_impl import TextClassifierServiceSentimentImpl
+from service.impl.text_classifier_service_topic_impl import TextClassifierServiceTopicImpl
+from service.impl.text_summarizer_service_impl import TextSummarizerServiceImpl
 
 
 description = "This is a sample server."
@@ -40,13 +43,17 @@ class API(responder.API):
         params.update(OPENAPI_PARAMS)
         params.update(kwargs)
 
-        super().__init__(**params)        
+        super().__init__(**params)
+        
+        TextClassifierServiceSentimentImpl.instance()
+        TextClassifierServiceTopicImpl.instance()
+        TextSummarizerServiceImpl.instance()
 
         for route, service in ROUTES.items():
             self.add_route(prefix + route, service)
 
         for name, dto in DTOS.items():
-            self.schema(name)(dto)            
+            self.schema(name)(dto)        
 
 cors_options = {
     "cors": True,

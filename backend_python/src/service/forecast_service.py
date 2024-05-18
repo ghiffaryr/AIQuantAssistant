@@ -8,16 +8,16 @@ class ForecastService(ABC):
 
     @abstractmethod
     def impute_dataset(self) -> None:
-       pass
+        pass
 
     @abstractmethod
     def configure_training_parameter(self) -> None:
-       pass
+        pass
 
     @abstractmethod
     def train(self) -> None:
-       pass
+        pass
 
     @abstractmethod
     def predict(self) -> None:
-       pass
+        pass

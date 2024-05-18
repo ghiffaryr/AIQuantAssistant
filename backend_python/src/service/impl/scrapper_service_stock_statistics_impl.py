@@ -1,4 +1,4 @@
-from service.scrapper_service import ScrapperService
+# from service.scrapper_service import ScrapperService
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 import json
 
 
-class ScrapperServiceStockStatisticsImpl(ScrapperService):
+class ScrapperServiceStockStatisticsImpl():
     def __init__(self) -> None:
         self._driver = None
         self.result = json.dumps({})
@@ -33,12 +33,12 @@ class ScrapperServiceStockStatisticsImpl(ScrapperService):
         self._driver.get(url)
 
     def retrieve(self) -> None:
-        valuation_measure_table = WebDriverWait(self._driver, 20).until(EC.visibility_of_element_located((By.CLASS_NAME, "svelte-104jbnt"))).text.split('\n')
+        valuation_measure_table = WebDriverWait(self._driver, 300).until(EC.visibility_of_element_located((By.CLASS_NAME, "svelte-104jbnt"))).text.split('\n')
         date_list = valuation_measure_table[1].split(' ')
         market_cap_list = valuation_measure_table[2].split(' ')[2:]
         trailing_pe_list = valuation_measure_table[4].split(' ')[2:]
         price_per_book_list = valuation_measure_table[8].split(' ')[1:]
-        financial_highlights_table = WebDriverWait(self._driver, 100).until(EC.visibility_of_element_located((By.CLASS_NAME, "svelte-14j5zka"))).text.split('\n')
+        financial_highlights_table = WebDriverWait(self._driver, 300).until(EC.visibility_of_element_located((By.CLASS_NAME, "svelte-14j5zka"))).text.split('\n')
         diluted_eps = financial_highlights_table[17].split(' ')[-1]
         avg_volume_3month = financial_highlights_table[39].split(' ')[-1]
         trailing_annual_dividend_yield = financial_highlights_table[55].split(' ')[-1]
@@ -60,3 +60,8 @@ class ScrapperServiceStockStatisticsImpl(ScrapperService):
         }
         self.result = result
         return result
+
+    def end(self) -> None:
+        if self._driver:
+            self._driver.quit()
+            del self._driver

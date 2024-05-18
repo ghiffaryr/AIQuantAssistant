@@ -33,7 +33,7 @@ class ScrapperServiceStockAnalysisImpl(ScrapperService):
         self._driver.get(url)
 
     def retrieve(self) -> None:
-        eps_section = WebDriverWait(self._driver, 20).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "section[data-testid='earningsHistory']")))
+        eps_section = WebDriverWait(self._driver, 300).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "section[data-testid='earningsHistory']")))
         eps_table = eps_section.find_element(By.CLASS_NAME, "svelte-17yshpm").text.split('\n')
         date_list = eps_table[0].split(' ')[3:]
         eps_actual_list = eps_table[2].split(' ')[2:]
@@ -43,3 +43,8 @@ class ScrapperServiceStockAnalysisImpl(ScrapperService):
         }
         self.result = result
         return result
+    
+    def end(self) -> None:
+        if self._driver:
+            self._driver.quit()
+            del self._driver
