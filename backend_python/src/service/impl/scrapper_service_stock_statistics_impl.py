@@ -1,4 +1,4 @@
-# from service.scrapper_service import ScrapperService
+from service.scrapper_service import ScrapperService
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 import json
 
 
-class ScrapperServiceStockStatisticsImpl():
+class ScrapperServiceStockStatisticsImpl(ScrapperService):
     def __init__(self) -> None:
         self._driver = None
         self.result = json.dumps({})
@@ -46,7 +46,6 @@ class ScrapperServiceStockStatisticsImpl():
         one_year_high = financial_highlights_table[34].split(' ')[-1]
         one_year_low = financial_highlights_table[35].split(' ')[-1]
         result = {
-            "valuation_measure_table": valuation_measure_table,
             "date_list": date_list,
             "market_cap_list": market_cap_list,
             "trailing_pe_list": trailing_pe_list,
