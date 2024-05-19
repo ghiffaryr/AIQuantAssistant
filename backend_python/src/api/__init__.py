@@ -10,7 +10,8 @@ from api.dictionary_controller import (
 )
 from api.scrapper_controller import (
     ScrapperStockStatistics,
-    ScrapperStockAnalysis
+    ScrapperStockAnalysis,
+    ScrapperNews
 )
 from api.text_classifier_controller import (
     SentimentPredict,
@@ -27,6 +28,7 @@ ROUTES: Dict[str, type] = {
     "/forecast/dictionary": ForecastModelDictionary,
     "/scrapper/stock/{stock_code}/statistics": ScrapperStockStatistics,
     "/scrapper/stock/{stock_code}/analysis": ScrapperStockAnalysis,
+    "/scrapper/stock/{stock_code}/news": ScrapperStockNews,
     "/sentiment/predict": SentimentPredict,
     "/topic/predict": TopicPredict,
     "/summary/predict": SummarizerPredict

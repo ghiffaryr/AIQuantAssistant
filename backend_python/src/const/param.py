@@ -5,3 +5,5 @@ class Param:
     FORECASTING_HORIZON = "forecasting_horizon"
     IMPUTE_METHOD = "impute_method"
     INPUT = "input"
+    START_INDEX = "start_index"
+    LENGTH = "length"
