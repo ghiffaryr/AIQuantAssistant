@@ -29,5 +29,5 @@ ROUTES: Dict[str, type] = {
     "/scrapper/stock/{stock_code}/analysis": ScrapperStockAnalysis,
     "/sentiment/predict": SentimentPredict,
     "/topic/predict": TopicPredict,
-    "/summary/predcit": SummarizerPredict
+    "/summary/predict": SummarizerPredict
 }
