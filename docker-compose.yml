@@ -20,11 +20,16 @@ services:
         ]
       timeout: 60s
       retries: 100
-  backend_python:
-    build: backend_python
+  backend_ml:
+    build: backend_ml
     restart: always
     # ports:
     #   - "8000:8000"
+  backend_scrapper:
+    build: backend_scrapper
+    restart: always
+    ports:
+      - "8001:8001"
   backend_store:
     build: backend_store
     restart: always
