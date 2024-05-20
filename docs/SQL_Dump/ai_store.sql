@@ -69,42 +69,42 @@ CREATE TABLE `order_detail` (
 /*Data for the table `order_detail` */
 
 insert  into `order_detail`(`order_detail_id`,`product_code`,`product_price`,`quantity`,`cart_id`,`order_id`) values 
-(20,'autots3m',20.00,1,NULL,25),
-(22,'facebookprophet1m',6.00,2,NULL,25),
-(23,'neuralprophet1m',6.00,1,NULL,25),
-(24,'autots12m',70.00,1,NULL,25),
-(25,'neuralprophet1m',6.00,1,NULL,28),
-(26,'autots3m',20.00,1,NULL,28),
-(27,'facebookprophet1m',6.00,1,NULL,28),
-(29,'facebookprophet3m',17.00,1,NULL,32),
-(30,'neuralprophet3m',17.00,1,NULL,32),
-(31,'autots6m',37.00,1,NULL,32),
-(33,'facebookprophet12m',60.00,1,NULL,34),
-(35,'facebookprophet3m',17.00,1,NULL,36),
-(37,'facebookprophet1m',6.00,1,NULL,38),
-(39,'facebookprophet1m',6.00,1,NULL,40),
-(41,'facebookprophet1m',6.00,1,NULL,42),
-(43,'neuralprophet1m',6.00,1,NULL,44),
-(45,'facebookprophet1m',6.00,1,NULL,48),
-(46,'neuralprophet1m',6.00,1,NULL,48),
-(47,'autots3m',20.00,1,NULL,48),
-(49,'facebookprophet3m',17.00,1,NULL,50),
-(51,'facebookprophet1m',6.00,1,NULL,52),
-(53,'facebookprophet1m',6.00,1,NULL,54),
-(55,'facebookprophet1m',6.00,1,NULL,56),
-(57,'neuralprophet1m',6.00,1,NULL,58),
-(59,'autots3m',20.00,1,NULL,60),
-(63,'autots3m',20.00,1,NULL,67),
-(64,'autots6m',37.00,1,NULL,67),
-(65,'autots12m',70.00,2,NULL,67),
-(66,'facebookprophet1m',6.00,11,NULL,67),
-(71,'autots3m',20.00,1,NULL,74),
-(72,'autots6m',37.00,1,NULL,74),
-(73,'facebookprophet1m',6.00,1,NULL,74),
-(75,'autots6m',37.00,2,NULL,79),
-(76,'autots3m',20.00,2,NULL,79),
-(77,'facebookprophet1m',6.00,4,NULL,79),
-(78,'facebookprophet1m',6.00,4,NULL,79);
+(20,'forecast_autots3m',20.00,1,NULL,25),
+(22,'forecast_facebookprophet1m',6.00,2,NULL,25),
+(23,'forecast_neuralprophet1m',6.00,1,NULL,25),
+(24,'forecast_autots12m',70.00,1,NULL,25),
+(25,'forecast_neuralprophet1m',6.00,1,NULL,28),
+(26,'forecast_autots3m',20.00,1,NULL,28),
+(27,'forecast_facebookprophet1m',6.00,1,NULL,28),
+(29,'forecast_facebookprophet3m',17.00,1,NULL,32),
+(30,'forecast_neuralprophet3m',17.00,1,NULL,32),
+(31,'forecast_autots6m',37.00,1,NULL,32),
+(33,'forecast_facebookprophet12m',60.00,1,NULL,34),
+(35,'forecast_facebookprophet3m',17.00,1,NULL,36),
+(37,'forecast_facebookprophet1m',6.00,1,NULL,38),
+(39,'forecast_facebookprophet1m',6.00,1,NULL,40),
+(41,'forecast_facebookprophet1m',6.00,1,NULL,42),
+(43,'forecast_neuralprophet1m',6.00,1,NULL,44),
+(45,'forecast_facebookprophet1m',6.00,1,NULL,48),
+(46,'forecast_neuralprophet1m',6.00,1,NULL,48),
+(47,'forecast_autots3m',20.00,1,NULL,48),
+(49,'forecast_facebookprophet3m',17.00,1,NULL,50),
+(51,'forecast_facebookprophet1m',6.00,1,NULL,52),
+(53,'forecast_facebookprophet1m',6.00,1,NULL,54),
+(55,'forecast_facebookprophet1m',6.00,1,NULL,56),
+(57,'forecast_neuralprophet1m',6.00,1,NULL,58),
+(59,'forecast_autots3m',20.00,1,NULL,60),
+(63,'forecast_autots3m',20.00,1,NULL,67),
+(64,'forecast_autots6m',37.00,1,NULL,67),
+(65,'forecast_autots12m',70.00,2,NULL,67),
+(66,'forecast_facebookprophet1m',6.00,11,NULL,67),
+(71,'forecast_autots3m',20.00,1,NULL,74),
+(72,'forecast_autots6m',37.00,1,NULL,74),
+(73,'forecast_facebookprophet1m',6.00,1,NULL,74),
+(75,'forecast_autots6m',37.00,2,NULL,79),
+(76,'forecast_autots3m',20.00,2,NULL,79),
+(77,'forecast_facebookprophet1m',6.00,4,NULL,79),
+(78,'forecast_facebookprophet1m',6.00,4,NULL,79);
 
 /*Table structure for table `order_main` */
 
@@ -165,18 +165,18 @@ CREATE TABLE `product` (
 /*Data for the table `product` */
 
 insert  into `product`(`product_id`,`create_time`,`product_category_code`,`product_code`,`product_description`,`product_image`,`product_name`,`product_period`,`product_price`,`product_status`,`update_time`) values 
-(8,'2023-04-28 13:44:25','autots','autots1m','High performance AI quant assistant backed by ensemble method','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','Stock Market AI Assistant 1 Month Subscription',1,21.00,0,'2023-05-01 12:11:12'),
-(9,'2023-04-28 13:50:11','autots','autots3m','High performance AI quant assistant backed by ensemble method','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','Stock Market AI Assistant 3 Month Subscription',3,20.00,1,'2023-04-28 13:50:11'),
-(10,'2023-04-28 13:50:46','autots','autots6m','High performance AI quant assistant backed by ensemble method','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','Stock Market AI Assistant 6 Month Subscription',6,37.00,1,'2023-04-28 13:50:46'),
-(11,'2023-04-28 13:54:02','facebookprophet','facebookprophet1m','High performance AI quant assistant backed by facebook regression model','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Stock Market AI Assistant 1 Month Subscription',1,6.00,1,'2023-04-28 13:54:02'),
-(12,'2023-04-28 13:54:40','facebookprophet','facebookprophet3m','High performance AI quant assistant backed by facebook regression model','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Stock Market AI Assistant 3 Month Subscription',3,17.00,1,'2023-04-28 13:54:40'),
-(13,'2023-04-28 13:55:29','facebookprophet','facebookprophet6m','High performance AI quant assistant backed by facebook regression model','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Stock Market AI Assistant 6 Month Subscription',6,31.00,1,'2023-04-28 13:55:29'),
-(14,'2023-04-28 14:01:47','neuralprophet','neuralprophet1m','High performance AI quant assistant backed by AR-Net','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Stock Market AI Assistant 1 Month Subscription',1,6.00,1,'2023-04-28 14:01:47'),
-(15,'2023-04-28 14:02:09','neuralprophet','neuralprophet3m','High performance AI quant assistant backed by AR-Net','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Stock Market AI Assistant 3 Month Subscription',3,17.00,1,'2023-04-28 14:02:09'),
-(16,'2023-04-28 14:02:26','neuralprophet','neuralprophet6m','High performance AI quant assistant backed by AR-Net','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Stock Market AI Assistant 6 Month Subscription',6,31.00,1,'2023-04-28 14:02:26'),
-(17,'2023-04-28 14:39:45','autots','autots12m','High performance AI quant assistant backed by ensemble method','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','Stock Market AI Assistant 12 Month Subscription',12,70.00,1,'2023-05-01 12:11:31'),
-(18,'2023-04-28 14:40:24','facebookprophet','facebookprophet12m','High performance AI quant assistant backed by facebook regression model','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Stock Market AI Assistant 12 Month Subscription',12,60.00,1,'2023-04-28 14:40:24'),
-(19,'2023-04-28 14:41:35','neuralprophet','neuralprophet12m','High performance AI quant assistant backed by AR-Net','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Stock Market AI Assistant 12 Month Subscription',12,60.00,0,'2023-04-28 14:39:45');
+(8,'2023-04-28 13:44:25','forecast_autots','forecast_autots1m','High performance forecaster backed by ensemble method','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','Stock Market AI Assistant 1 Month Subscription',1,21.00,0,'2023-05-01 12:11:12'),
+(9,'2023-04-28 13:50:11','forecast_autots','forecast_autots3m','High performance forecaster backed by ensemble method','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','Stock Market AI Assistant 3 Month Subscription',3,20.00,1,'2023-04-28 13:50:11'),
+(10,'2023-04-28 13:50:46','forecast_autots','forecast_autots6m','High performance forecaster backed by ensemble method','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','Stock Market AI Assistant 6 Month Subscription',6,37.00,1,'2023-04-28 13:50:46'),
+(11,'2023-04-28 13:54:02','forecast_facebookprophet','forecast_facebookprophet1m','High performance forecaster backed by facebook regression model','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Stock Market AI Assistant 1 Month Subscription',1,6.00,1,'2023-04-28 13:54:02'),
+(12,'2023-04-28 13:54:40','forecast_facebookprophet','forecast_facebookprophet3m','High performance forecaster backed by facebook regression model','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Stock Market AI Assistant 3 Month Subscription',3,17.00,1,'2023-04-28 13:54:40'),
+(13,'2023-04-28 13:55:29','forecast_facebookprophet','forecast_facebookprophet6m','High performance forecaster backed by facebook regression model','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Stock Market AI Assistant 6 Month Subscription',6,31.00,1,'2023-04-28 13:55:29'),
+(14,'2023-04-28 14:01:47','forecast_neuralprophet','forecast_neuralprophet1m','High performance forecaster backed by AR-Net','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Stock Market AI Assistant 1 Month Subscription',1,6.00,1,'2023-04-28 14:01:47'),
+(15,'2023-04-28 14:02:09','forecast_neuralprophet','forecast_neuralprophet3m','High performance forecaster backed by AR-Net','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Stock Market AI Assistant 3 Month Subscription',3,17.00,1,'2023-04-28 14:02:09'),
+(16,'2023-04-28 14:02:26','forecast_neuralprophet','forecast_neuralprophet6m','High performance forecaster backed by AR-Net','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Stock Market AI Assistant 6 Month Subscription',6,31.00,1,'2023-04-28 14:02:26'),
+(17,'2023-04-28 14:39:45','forecast_autots','forecast_autots12m','High performance forecaster backed by ensemble method','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','Stock Market AI Assistant 12 Month Subscription',12,70.00,1,'2023-05-01 12:11:31'),
+(18,'2023-04-28 14:40:24','forecast_facebookprophet','forecast_facebookprophet12m','High performance forecaster backed by facebook regression model','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Stock Market AI Assistant 12 Month Subscription',12,60.00,1,'2023-04-28 14:40:24'),
+(19,'2023-04-28 14:41:35','forecast_neuralprophet','forecast_neuralprophet12m','High performance forecaster backed by AR-Net','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Stock Market AI Assistant 12 Month Subscription',12,60.00,0,'2023-04-28 14:39:45');
 
 /*Table structure for table `product_category` */
 
@@ -196,9 +196,9 @@ CREATE TABLE `product_category` (
 /*Data for the table `product_category` */
 
 insert  into `product_category`(`product_category_id`,`create_time`,`product_category_code`,`product_category_description`,`product_category_image`,`product_category_name`,`update_time`) values 
-(5,'2023-04-28 13:18:42','autots','AutoTS Algorithm','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','AutoTS','2023-05-01 11:30:38'),
-(6,'2023-04-28 13:20:13','facebookprophet','Facebook Prophet Algorithm','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Facebook Prophet','2023-04-28 13:20:13'),
-(7,'2023-04-28 13:22:15','neuralprophet','Neural Prophet Algorithm','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Neural Prophet','2023-04-28 13:22:15');
+(5,'2023-04-28 13:18:42','forecast_autots','AutoTS Forecast Algorithm','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','AutoTS','2023-05-01 11:30:38'),
+(6,'2023-04-28 13:20:13','forecast_facebookprophet','Facebook Prophet Forecast Algorithm','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Facebook Prophet','2023-04-28 13:20:13'),
+(7,'2023-04-28 13:22:15','forecast_neuralprophet','Neural Prophet Forecast Algorithm','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Neural Prophet','2023-04-28 13:22:15');
 
 /*Table structure for table `subscription` */
 
@@ -215,12 +215,12 @@ CREATE TABLE `subscription` (
 /*Data for the table `subscription` */
 
 insert  into `subscription`(`subscription_id`,`exp_time`,`product_category_code`,`user_email`) values 
-(27,'2023-07-02 02:24:06','facebookprophet','customer@domain.com'),
-(28,'2023-11-02 02:36:53','autots','customer@domain.com'),
-(29,'2023-06-02 02:24:07','neuralprophet','customer@domain.com'),
-(68,'2028-11-06 03:34:57','autots','newuser@domain.com'),
-(69,'2025-03-06 03:34:58','facebookprophet','newuser@domain.com'),
-(70,'2023-07-06 03:35:26','facebookprophet','ghiffaryr@domain.com');
+(27,'2023-07-02 02:24:06','forecast_facebookprophet','customer@domain.com'),
+(28,'2023-11-02 02:36:53','forecast_autots','customer@domain.com'),
+(29,'2023-06-02 02:24:07','forecast_neuralprophet','customer@domain.com'),
+(68,'2028-11-06 03:34:57','forecast_autots','newuser@domain.com'),
+(69,'2025-03-06 03:34:58','forecast_facebookprophet','newuser@domain.com'),
+(70,'2023-07-06 03:35:26','forecast_facebookprophet','ghiffaryr@domain.com');
 
 /*Table structure for table `user` */
 
