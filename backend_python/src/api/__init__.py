@@ -11,7 +11,7 @@ from api.dictionary_controller import (
 from api.scrapper_controller import (
     ScrapperStockStatistics,
     ScrapperStockAnalysis,
-    ScrapperNews
+    ScrapperStockNews
 )
 from api.text_classifier_controller import (
     SentimentPredict,
