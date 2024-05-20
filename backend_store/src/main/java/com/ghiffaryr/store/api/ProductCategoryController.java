@@ -1,6 +1,6 @@
 package com.ghiffaryr.store.api;
 
-import com.ghiffaryr.store.dto.request.ForecastForm;
+import com.ghiffaryr.store.dto.request.PredictForm;
 import com.ghiffaryr.store.entity.ProductCategory;
 import com.ghiffaryr.store.entity.Product;
 import com.ghiffaryr.store.enums.ProductStatusEnum;
@@ -26,8 +26,14 @@ public class ProductCategoryController {
     ProductCategoryService productCategoryService;
     @Autowired
     ProductService productService;
-    @Value("${model.predict.api}")
-    private String modelApi;
+    @Value("${forecast.predict.api}")
+    private String forecastApi;
+    @Value("${sentiment.predict.api}")
+    private String sentimentApi;
+    @Value("${topic.predict.api}")
+    private String topicApi;
+    @Value("${summary.predict.api}")
+    private String summaryApi;
 
     @GetMapping("/category")
     public ResponseEntity<Page<ProductCategory>> getPage(@RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -98,11 +104,11 @@ public class ProductCategoryController {
 
     @PostMapping("/category/{productCategoryCode}/predict")
     public ResponseEntity<String> predict(@PathVariable("productCategoryCode") String productCategoryCode,
-                          @RequestBody @Valid ForecastForm forecastForm,
+                          @RequestBody @Valid PredictForm predictForm,
                           Authentication authentication) {
-        return ResponseEntity.ok(productCategoryService.predict(modelApi,
+        return ResponseEntity.ok(productCategoryService.predict(forecastApi, sentimentApi, topicApi, summaryApi,
                 productCategoryCode,
-                forecastForm,
+                predictForm,
                 authentication.getName(),
                 authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CUSTOMER"))));
     }

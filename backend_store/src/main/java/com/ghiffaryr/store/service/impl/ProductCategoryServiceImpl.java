@@ -1,6 +1,6 @@
 package com.ghiffaryr.store.service.impl;
 
-import com.ghiffaryr.store.dto.request.ForecastForm;
+import com.ghiffaryr.store.dto.request.PredictForm;
 import com.ghiffaryr.store.entity.ProductCategory;
 import com.ghiffaryr.store.entity.Subscription;
 import com.ghiffaryr.store.enums.ResultEnum;
@@ -102,13 +102,34 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Override
     @SuppressWarnings("unchecked")
-    public String predict(String modelApi, String productCategoryCode, ForecastForm forecastForm, String authenticationEmail, Boolean isCustomer){
-        JSONObject forecastJsonObject = new JSONObject();
-        forecastJsonObject.put("stock_code", forecastForm.getStockCode());
-        forecastJsonObject.put("training_window", forecastForm.getTrainingWindow());
-        forecastJsonObject.put("model_choice", productCategoryCode);
-        forecastJsonObject.put("forecasting_horizon", forecastForm.getForecastingHorizon());
-        System.out.println(forecastJsonObject);
+    public String predict(String forecastApi, String sentimentApi, String topicApi, String summaryApi, String productCategoryCode, PredictForm predictForm, String authenticationEmail, Boolean isCustomer){
+        String targetApi = "";
+        JSONObject requestJsonObject = new JSONObject();
+        if (productCategoryCode.startsWith("forecast")){
+            targetApi = forecastApi;
+            System.out.println("Target API: " + targetApi);
+            requestJsonObject.put("stock_code", predictForm.getStockCode());
+            requestJsonObject.put("training_window", predictForm.getTrainingWindow());
+            requestJsonObject.put("model_choice", productCategoryCode);
+            requestJsonObject.put("forecasting_horizon", predictForm.getForecastingHorizon());
+            System.out.println(requestJsonObject);
+        } else if (productCategoryCode.startsWith("sentiment")){
+            targetApi = sentimentApi;
+            System.out.println("Target API: " + targetApi);
+            requestJsonObject.put("input", predictForm.getInput());
+            System.out.println(requestJsonObject);
+        } else if (productCategoryCode.startsWith("topic")){
+            targetApi = topicApi;
+            System.out.println("Target API: " + targetApi);
+            requestJsonObject.put("input", predictForm.getInput());
+            System.out.println(requestJsonObject);
+        } else if (productCategoryCode.startsWith("summary")){
+            targetApi = summaryApi;
+            System.out.println("Target API: " + targetApi);
+            requestJsonObject.put("input", predictForm.getInput());
+            System.out.println(requestJsonObject);
+        }
+        
 
         if (isCustomer){
             Subscription subscription = subscriptionService.findByUserEmailAndProductCategoryCode(authenticationEmail, productCategoryCode, true);
@@ -120,7 +141,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
         HttpURLConnection con = null;
         try {
-            URL myurl = new URL(modelApi);
+            URL myurl = new URL(targetApi);
             con = (HttpURLConnection) myurl.openConnection();
 
             con.setDoOutput(true);
@@ -129,7 +150,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
             con.setRequestProperty("Content-Type", "application/json");
 
             try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
-                wr.write(forecastJsonObject.toString().getBytes());
+                wr.write(requestJsonObject.toString().getBytes());
             }
 
             int responseCode = con.getResponseCode();

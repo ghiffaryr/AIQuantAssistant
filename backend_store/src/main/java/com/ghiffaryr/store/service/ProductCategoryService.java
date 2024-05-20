@@ -1,6 +1,6 @@
 package com.ghiffaryr.store.service;
 
-import com.ghiffaryr.store.dto.request.ForecastForm;
+import com.ghiffaryr.store.dto.request.PredictForm;
 import com.ghiffaryr.store.entity.ProductCategory;
 import com.ghiffaryr.store.dto.request.ProductCategoryForm;
 import org.springframework.data.domain.Page;
@@ -18,6 +18,6 @@ public interface ProductCategoryService {
 
     void delete(String productCategoryCode);
 
-    String predict(String modelApi, String productCategoryCode, ForecastForm forecastForm, String authenticationEmail, Boolean isCustomer);
+    String predict(String forecastApi, String sentimentApi, String topicApi, String summaryApi, String productCategoryCode, PredictForm predictForm, String authenticationEmail, Boolean isCustomer);
 
 }

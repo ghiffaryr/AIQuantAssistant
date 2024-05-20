@@ -31,6 +31,15 @@ jwtExpiration: 86400 # seconds or 1440 minutes or 24 hours
 
 corsExpiration: 3600 # seconds or 60 minutes or 1 hour
 
-model:
+forecast:
   predict:
-    api: http://backend_forecast:8000/api/predict
+    api: http://backend_ml:8000/api/forecast/predict
+sentiment:
+  predict:
+    api: http://backend_ml:8000/api/sentiment/predict
+topic:
+  predict:
+    api: http://backend_ml:8000/api/topic/predict
+summary:
+  predict:
+    api: http://backend_ml:8000/api/summary/predict

@@ -1,7 +1,6 @@
 package com.ghiffaryr.store.service;
 
 import com.ghiffaryr.store.entity.Subscription;
-import com.ghiffaryr.store.dto.request.ForecastForm;
 import com.ghiffaryr.store.dto.request.SubscriptionUpdateForm;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
