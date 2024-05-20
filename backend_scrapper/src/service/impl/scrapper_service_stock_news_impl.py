@@ -177,5 +177,5 @@ class ScrapperServiceStockNewsImpl(ScrapperService):
 
     def end(self) -> None:
         if self._driver:
-            self._driver.quit()
+            self._driver.close()
             del self._driver

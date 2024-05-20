@@ -65,7 +65,7 @@ class ScrapperStockNews:
             params = {**required_params}
             logger.info(f"Params processed: {params}")
 
-            scrapper_news = ScrapperServiceNewsImpl()
+            scrapper_news = ScrapperServiceStockNewsImpl()
             scrapper_news.initialize()
             scrapper_news.configure(params[Param.STOCK_CODE])
             result = scrapper_news.retrieve(start_index=int(params[Param.START_INDEX]),
