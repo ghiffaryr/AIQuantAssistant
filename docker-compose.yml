@@ -25,11 +25,17 @@ services:
     restart: always
     # ports:
     #   - "8000:8000"
+    volumes:
+      # Uncoment below volume mount for development
+      - ./backend_ml:/app
   backend_scrapper:
     build: backend_scrapper
     restart: always
     ports:
       - "8001:8001"
+    volumes:
+      # Uncoment below volume mount for development
+      - ./backend_scrapper:/app
   backend_store:
     build: backend_store
     restart: always
