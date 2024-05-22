@@ -3,6 +3,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import WebDriverException
+import time
 import json
 
 
@@ -13,17 +15,22 @@ class ScrapperServiceStockStatisticsImpl(ScrapperService):
 
     def initialize(self, 
                    window_size: tuple = (1920,1200)) -> None:
-        options = webdriver.ChromeOptions()
-        options.add_argument("--verbose")
-        options.add_argument('--no-sandbox')
-        options.add_argument('--headless')
-        # options.add_argument('--disable-gpu')
-        options.add_argument(f"--window-size={str(window_size)[1:-1]}")
-        # options.add_argument('--disable-dev-shm-usage')
-        driver = webdriver.Chrome(
-        options=options
-        )
-        self._driver = driver
+        try:
+            options = webdriver.ChromeOptions()
+            options.add_argument("--verbose")
+            options.add_argument('--no-sandbox')
+            options.add_argument('--headless')
+            options.add_argument('--disable-gpu')
+            options.add_argument(f"--window-size={str(window_size)[1:-1]}")
+            options.add_argument('--disable-dev-shm-usage')
+            driver = webdriver.Chrome(
+            options=options
+            )
+            self._driver = driver
+        except WebDriverException as e:
+            print(f"WebDriverException: {e}")
+            time.sleep(5)  # Wait before retrying
+            self.initialize(window_size=window_size)
 
     def configure(self, stock_code) -> None:
         url = f"https://finance.yahoo.com/quote/{stock_code}/key-statistics"

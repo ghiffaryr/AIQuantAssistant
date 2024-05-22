@@ -2,7 +2,10 @@ from service.scrapper_service import ScrapperService
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, WebDriverException, TimeoutException
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+import time
 import json
 import pandas as pd
 import time
@@ -18,17 +21,22 @@ class ScrapperServiceStockNewsImpl(ScrapperService):
 
     def initialize(self, 
                    window_size: tuple = (1920,1200)) -> None:
-        options = webdriver.ChromeOptions()
-        options.add_argument("--verbose")
-        options.add_argument('--no-sandbox')
-        options.add_argument('--headless')
-        # options.add_argument('--disable-gpu')
-        options.add_argument(f"--window-size={str(window_size)[1:-1]}")
-        # options.add_argument('--disable-dev-shm-usage')
-        driver = webdriver.Chrome(
-        options=options
-        )
-        self._driver = driver
+        try:
+            options = webdriver.ChromeOptions()
+            options.add_argument("--verbose")
+            options.add_argument('--no-sandbox')
+            options.add_argument('--headless')
+            options.add_argument('--disable-gpu')
+            options.add_argument(f"--window-size={str(window_size)[1:-1]}")
+            options.add_argument('--disable-dev-shm-usage')
+            driver = webdriver.Chrome(
+            options=options
+            )
+            self._driver = driver
+        except WebDriverException as e:
+            print(f"WebDriverException: {e}")
+            time.sleep(5)  # Wait before retrying
+            self.initialize(window_size=window_size)
 
     def configure(self, stock_code) -> None:
         url = f"https://finance.yahoo.com/quote/{stock_code}/news"
@@ -38,7 +46,10 @@ class ScrapperServiceStockNewsImpl(ScrapperService):
         self._driver.get(url)
 
     def _get_elements(self, driver):
-        return driver.find_elements(By.CLASS_NAME, 'stream-item')
+        try:
+            return driver.find_elements(By.CLASS_NAME, 'stream-item')
+        except TimeoutException:
+            self._get_elements(driver)
 
     def _get_source(self, snippet):
         return snippet.split('\n')[2]
@@ -89,8 +100,7 @@ class ScrapperServiceStockNewsImpl(ScrapperService):
     def _click_story_continues(self, driver):
         # Click "Story Continues" if it exists
         try:
-            read_more_button = driver.find_element(By.CLASS_NAME, 'readmoreButtonText')
-            read_more_button.click()
+            driver.find_element(By.CLASS_NAME, 'readmoreButtonText').click()
         except NoSuchElementException:
             pass  # Continue scraping if "Story Continues" button is not found
 
