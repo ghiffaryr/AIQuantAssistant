@@ -29,12 +29,13 @@ class TextClassifierServiceTopicImpl(TextClassifierService):
 
     def initialize(self,
                    model_choice: str) -> None:
-        tokenizer = AutoTokenizer.from_pretrained(model_choice)
-        model = AutoModelForSequenceClassification.from_pretrained(model_choice)
-        self._pipe = pipeline("text-classification", model=model, tokenizer=tokenizer)
-        self._pipe.save_pretrained("./tmp/"+model_choice.replace("/","_"))
-        del self._pipe
-        self._pipe = pipeline("text-classification", model="./tmp/"+model_choice.replace("/","_"))
+        try:
+            self._pipe = pipeline("text-classification", model="./tmp/"+model_choice.replace("/","_"))
+        except:
+            tokenizer = AutoTokenizer.from_pretrained(model_choice)
+            model = AutoModelForSequenceClassification.from_pretrained(model_choice)
+            self._pipe = pipeline("text-classification", model=model, tokenizer=tokenizer)
+            self._pipe.save_pretrained("./tmp/"+model_choice.replace("/","_"))
 
     def predict(self, 
                 input: str):

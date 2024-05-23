@@ -110,20 +110,20 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
             System.out.println("Target API: " + targetApi);
             requestJsonObject.put("stock_code", predictForm.getStockCode());
             requestJsonObject.put("training_window", predictForm.getTrainingWindow());
-            requestJsonObject.put("model_choice", productCategoryCode);
+            requestJsonObject.put("model_choice", productCategoryCode.substring(9));
             requestJsonObject.put("forecasting_horizon", predictForm.getForecastingHorizon());
             System.out.println(requestJsonObject);
-        } else if (productCategoryCode.startsWith("sentiment")){
+        } else if (productCategoryCode.equals("text_sentiment")){
             targetApi = sentimentApi;
             System.out.println("Target API: " + targetApi);
             requestJsonObject.put("input", predictForm.getInput());
             System.out.println(requestJsonObject);
-        } else if (productCategoryCode.startsWith("topic")){
+        } else if (productCategoryCode.startsWith("text_topic")){
             targetApi = topicApi;
             System.out.println("Target API: " + targetApi);
             requestJsonObject.put("input", predictForm.getInput());
             System.out.println(requestJsonObject);
-        } else if (productCategoryCode.startsWith("summary")){
+        } else if (productCategoryCode.startsWith("text_summary")){
             targetApi = summaryApi;
             System.out.println("Target API: " + targetApi);
             requestJsonObject.put("input", predictForm.getInput());
@@ -167,7 +167,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
                 sb.append(line).append(System.lineSeparator());
             }
             String responseBody = sb.toString();
-
+            System.out.println("Response body: "+responseBody);
             if (responseCode == 200) {
                 return responseBody;
             } else {

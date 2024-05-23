@@ -6,7 +6,7 @@ from const.param import Param
 
 
 class ForecastPredict:
-    async def on_get(self, req, resp) -> None:
+    async def on_post(self, req, resp) -> None:
         @EndpointDecorator.error_handling
         def get_result(params):
             logger.info(f"Params passed: {params}")

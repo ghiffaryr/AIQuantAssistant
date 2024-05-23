@@ -10,7 +10,7 @@ from const.param import Param
 
 
 class ScrapperStockStatistics:
-    async def on_get(self, req, resp, stock_code) -> None:
+    async def on_post(self, req, resp, stock_code) -> None:
         @EndpointDecorator.error_handling
         def get_result(params):            
             logger.info(f"Params passed: {params}")
@@ -32,7 +32,7 @@ class ScrapperStockStatistics:
         resp.media = res
 
 class ScrapperStockAnalysis:
-    async def on_get(self, req, resp, stock_code) -> None:
+    async def on_post(self, req, resp, stock_code) -> None:
         @EndpointDecorator.error_handling
         def get_result(params):            
             logger.info(f"Params passed: {params}")
@@ -54,7 +54,7 @@ class ScrapperStockAnalysis:
         resp.media = res
 
 class ScrapperStockNews:
-    async def on_get(self, req, resp, stock_code) -> None:
+    async def on_post(self, req, resp, stock_code) -> None:
         @EndpointDecorator.error_handling
         def get_result(params):            
             logger.info(f"Params passed: {params}")

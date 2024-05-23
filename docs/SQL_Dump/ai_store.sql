@@ -1,5 +1,5 @@
 /*
-SQLyog Ultimate v13.1.1 (32 bit)
+SQLyog Ultimate v13.1.1 (64 bit)
 MySQL - 8.0.32 : Database - ai_store
 *********************************************************************
 */
@@ -46,7 +46,7 @@ CREATE TABLE `hibernate_sequence` (
 /*Data for the table `hibernate_sequence` */
 
 insert  into `hibernate_sequence`(`next_val`) values 
-(80);
+(83);
 
 /*Table structure for table `order_detail` */
 
@@ -198,7 +198,10 @@ CREATE TABLE `product_category` (
 insert  into `product_category`(`product_category_id`,`create_time`,`product_category_code`,`product_category_description`,`product_category_image`,`product_category_name`,`update_time`) values 
 (5,'2023-04-28 13:18:42','forecast_autots','AutoTS Forecast Algorithm','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','AutoTS','2023-05-01 11:30:38'),
 (6,'2023-04-28 13:20:13','forecast_facebookprophet','Facebook Prophet Forecast Algorithm','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Facebook Prophet','2023-04-28 13:20:13'),
-(7,'2023-04-28 13:22:15','forecast_neuralprophet','Neural Prophet Forecast Algorithm','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Neural Prophet','2023-04-28 13:22:15');
+(7,'2023-04-28 13:22:15','forecast_neuralprophet','Neural Prophet Forecast Algorithm','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Neural Prophet','2023-04-28 13:22:15'),
+(80,'2024-05-23 18:44:58','text_sentiment','','','Sentiment Analyzer','2024-05-23 18:44:58'),
+(81,'2024-05-23 18:45:13','text_summary','','','Summarizer','2024-05-23 18:45:13'),
+(82,'2024-05-23 18:45:21','text_topic','','','Topic Classifier','2024-05-23 18:45:21');
 
 /*Table structure for table `subscription` */
 

@@ -39,13 +39,11 @@ class ForecastServiceImpl(ForecastService):
         self._df = df
 
     def impute_dataset(self,
-                       method: Union[str,callable] = "ffill") -> None:
-        try:
-            for col in self.features:
-                self._df[col] = self._df[col].fillna(method=method)
-            self._impute_method = method
-        except:
-            self.retrieve_dataset(self._stock_code)
+                       method: str = "ffill") -> None:
+        for col in self.features:
+            self._df[col] = self._df[col].fillna(method=method)
+        self._impute_method = method
+        print("self._impute_method: ",self._impute_method)
 
     def configure_training_parameter(self, 
                                      training_window: int, 

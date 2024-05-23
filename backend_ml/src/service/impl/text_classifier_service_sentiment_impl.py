@@ -29,10 +29,11 @@ class TextClassifierServiceSentimentImpl(TextClassifierService):
 
     def initialize(self,
                    model_choice: str) -> None:
-        self._pipe = pipeline("text-classification", model=model_choice)
-        self._pipe.save_pretrained("./tmp/"+model_choice.replace("/","_"))
-        del self._pipe
-        self._pipe = pipeline("text-classification", model="./tmp/"+model_choice.replace("/","_"))
+        try:
+            self._pipe = pipeline("text-classification", model="./tmp/"+model_choice.replace("/","_"))
+        except:
+            self._pipe = pipeline("text-classification", model=model_choice)
+            self._pipe.save_pretrained("./tmp/"+model_choice.replace("/","_"))        
 
     def predict(self, 
                 input: str):
