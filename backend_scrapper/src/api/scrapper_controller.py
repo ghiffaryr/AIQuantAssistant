@@ -4,11 +4,13 @@ from loguru import logger
 from service.impl.scrapper_service_stock_statistics_impl import ScrapperServiceStockStatisticsImpl
 from service.impl.scrapper_service_stock_analysis_impl import ScrapperServiceStockAnalysisImpl
 from service.impl.scrapper_service_stock_news_impl import ScrapperServiceStockNewsImpl
+from service.impl.scrapper_service_stock_gainers_impl import ScrapperServiceStockGainersImpl
+from service.impl.scrapper_service_stock_losers_impl import ScrapperServiceStockLosersImpl
 from const.param import Param
 
 
 class ScrapperStockStatistics:
-    async def on_post(self, req, resp, stock_code) -> None:
+    async def on_get(self, req, resp, stock_code) -> None:
         @EndpointDecorator.error_handling
         def get_result(params):            
             logger.info(f"Params passed: {params}")
@@ -30,7 +32,7 @@ class ScrapperStockStatistics:
         resp.media = res
 
 class ScrapperStockAnalysis:
-    async def on_post(self, req, resp, stock_code) -> None:
+    async def on_get(self, req, resp, stock_code) -> None:
         @EndpointDecorator.error_handling
         def get_result(params):            
             logger.info(f"Params passed: {params}")
@@ -52,7 +54,7 @@ class ScrapperStockAnalysis:
         resp.media = res
 
 class ScrapperStockNews:
-    async def on_post(self, req, resp, stock_code) -> None:
+    async def on_get(self, req, resp, stock_code) -> None:
         @EndpointDecorator.error_handling
         def get_result(params):            
             logger.info(f"Params passed: {params}")
@@ -76,4 +78,30 @@ class ScrapperStockNews:
         params = {Param.STOCK_CODE: stock_code,
                   **params}
         res = get_result(params)
+        resp.media = res
+
+class ScrapperStockGainers:
+    async def on_get(self, req, resp) -> None:
+        @EndpointDecorator.error_handling
+        def get_result():
+            scrapper_stock_gainers = ScrapperServiceStockGainersImpl()
+            scrapper_stock_gainers.initialize()
+            scrapper_stock_gainers.configure()
+            result = scrapper_stock_gainers.retrieve()
+            scrapper_stock_gainers.end()
+            return result
+        res = get_result()
+        resp.media = res
+
+class ScrapperStockLosers:
+    async def on_get(self, req, resp) -> None:
+        @EndpointDecorator.error_handling
+        def get_result():
+            scrapper_stock_losers = ScrapperServiceStockLosersImpl()
+            scrapper_stock_losers.initialize()
+            scrapper_stock_losers.configure()
+            result = scrapper_stock_losers.retrieve()
+            scrapper_stock_losers.end()
+            return result
+        res = get_result()
         resp.media = res
