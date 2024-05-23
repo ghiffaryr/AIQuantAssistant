@@ -101,17 +101,18 @@ export default function Order({
                       </Button>
                     </div>
                   )}
-                  {(localStorage.getItem("userRole") === "ROLE_EMPLOYEE" ||
-                    localStorage.getItem("userRole") === "ROLE_MANAGER") && (
-                    <div className="ms-4">
-                      <Button
-                        variant="outline-success"
-                        onClick={() => handleFinishOrder(id)}
-                      >
-                        Finish Order
-                      </Button>
-                    </div>
-                  )}
+                  {status === 0 &&
+                    (localStorage.getItem("userRole") === "ROLE_EMPLOYEE" ||
+                      localStorage.getItem("userRole") === "ROLE_MANAGER") && (
+                      <div className="ms-4">
+                        <Button
+                          variant="outline-success"
+                          onClick={() => handleFinishOrder(id)}
+                        >
+                          Finish Order
+                        </Button>
+                      </div>
+                    )}
                 </div>
               </div>
             </div>
