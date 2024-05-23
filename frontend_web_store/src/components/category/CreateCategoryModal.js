@@ -61,8 +61,8 @@ export default function CreateCategoryModal({ getCategories, show, onHide }) {
           Authorization: `Bearer ${localStorage.getItem("userToken")}`,
           "Access-Control-Allow-Origin": "*",
         };
-        let { status, data } = await axios.put(
-          `${API}/seller/category/${inputs.productCategoryCode}/update`,
+        let { status, data } = await axios.post(
+          `${API}/seller/category/create`,
           inputs
         );
         getCategories();
@@ -95,8 +95,8 @@ export default function CreateCategoryModal({ getCategories, show, onHide }) {
           <div className="container d-flex justify-content-center flex-column align-items-center text-left">
             <Form
               onSubmit={handleSubmitCreateCategory}
-              className="update-product-form"
-              id="update-product-form"
+              className="create-product-form"
+              id="create-product-form"
               noValidate
               validated={validated}
             >
