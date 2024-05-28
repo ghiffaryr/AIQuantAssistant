@@ -15,6 +15,7 @@ import SubscriptionPage from "../pages/main/SubscriptionPage";
 import UnauthenticatedAndCustomerAccess from "../components/protected/UnauthenticatedAndCustomerAccess";
 import ProfilePage from "../pages/main/ProfilePage";
 import AuthenticatedAccess from "../components/protected/AuthenticatedAccess";
+import StockPage from "../pages/main/services/StockPage";
 
 function ApiRoutes() {
   const location = useLocation();
@@ -57,6 +58,14 @@ function ApiRoutes() {
         element={
           <AuthenticatedAccess>
             <SubscriptionPage />
+          </AuthenticatedAccess>
+        }
+      />
+       <Route 
+        path="/stocks"
+        element={
+          <AuthenticatedAccess>
+            <StockPage />
           </AuthenticatedAccess>
         }
       />

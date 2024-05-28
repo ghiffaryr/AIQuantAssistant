@@ -68,6 +68,30 @@ function NavbarComponent(props) {
                       Yahoo Finance
                     </Button>
                   </LinkContainer>
+                  <NavDropdown
+                    title="Services"
+                    menuVariant="light"
+                    className="nav-tab-dropdown"
+                  >
+                    <NavDropdown.Item href="/stocks">
+                      Stock
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="/forecasting">
+                      Forecasting
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="/sentiment-analysis">
+                      Sentiment Analysis
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="/summary">
+                      Narrative Summary
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                  <LinkContainer to="/news" className="nav-tab-link">
+                    <Button variant="link" className="nav-item">
+                      News
+                    </Button>
+                  </LinkContainer>
+                  Nav
                 </Nav>
                 <Nav>
                   {localStorage.getItem("userRole") === "ROLE_EMPLOYEE" ||
