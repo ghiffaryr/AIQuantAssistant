@@ -16,6 +16,7 @@ import UnauthenticatedAndCustomerAccess from "../components/protected/Unauthenti
 import ProfilePage from "../pages/main/ProfilePage";
 import AuthenticatedAccess from "../components/protected/AuthenticatedAccess";
 import StockPage from "../pages/main/services/StockPage";
+import SentimentAnalysisPage from "../pages/main/services/SentimentAnalysisPages";
 
 function ApiRoutes() {
   const location = useLocation();
@@ -61,11 +62,19 @@ function ApiRoutes() {
           </AuthenticatedAccess>
         }
       />
-       <Route 
-        path="/stocks"
+      <Route 
+        path="/services/stocks"
         element={
           <AuthenticatedAccess>
             <StockPage />
+          </AuthenticatedAccess>
+        }
+      />
+      <Route 
+        path="/services/sentiment-analysis"
+        element={
+          <AuthenticatedAccess>
+            <SentimentAnalysisPage />
           </AuthenticatedAccess>
         }
       />

@@ -73,16 +73,16 @@ function NavbarComponent(props) {
                     menuVariant="light"
                     className="nav-tab-dropdown"
                   >
-                    <NavDropdown.Item href="/stocks">
+                    <NavDropdown.Item href="/services/stocks">
                       Stock
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="/forecasting">
+                    <NavDropdown.Item href="/services/forecasting">
                       Forecasting
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="/sentiment-analysis">
+                    <NavDropdown.Item href="/services/sentiment-analysis">
                       Sentiment Analysis
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="/summary">
+                    <NavDropdown.Item href="/services/summary">
                       Narrative Summary
                     </NavDropdown.Item>
                   </NavDropdown>
