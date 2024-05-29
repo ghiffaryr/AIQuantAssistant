@@ -17,6 +17,7 @@ import ProfilePage from "../pages/main/ProfilePage";
 import AuthenticatedAccess from "../components/protected/AuthenticatedAccess";
 import StockPage from "../pages/main/services/StockPage";
 import SentimentAnalysisPage from "../pages/main/services/SentimentAnalysisPages";
+import NarrativeSummary from "../pages/main/services/NarrativeSummary";
 
 function ApiRoutes() {
   const location = useLocation();
@@ -75,6 +76,14 @@ function ApiRoutes() {
         element={
           <AuthenticatedAccess>
             <SentimentAnalysisPage />
+          </AuthenticatedAccess>
+        }
+      />
+      <Route 
+        path="/services/summary"
+        element={
+          <AuthenticatedAccess>
+            <NarrativeSummary />
           </AuthenticatedAccess>
         }
       />

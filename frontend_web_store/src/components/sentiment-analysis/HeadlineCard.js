@@ -1,6 +1,7 @@
 import { Card } from "react-bootstrap";
 import "../../css/pages/main/sentiment-analysis/HeadlineCard.css"
 import SentimentEnum from "../../enums/SentimentEnum";
+import TextWithStatusColor from "../commons/TextWithStatusColor";
 
 export default function HeadlineCard({
     className,
@@ -9,19 +10,6 @@ export default function HeadlineCard({
     content,
     status,
 }) {
-    let textColor = ""
-    switch(status) {
-        case SentimentEnum.NEGATIVE:
-            textColor = "text-danger"
-            break
-        case SentimentEnum.POSITIVE:
-            textColor = "text-success"
-            break
-        default:
-            textColor = "text-dark"
-            break
-    }
-
     return (
         <Card
             variant="light"
@@ -30,9 +18,19 @@ export default function HeadlineCard({
             className={`shadow rounded gradient-card-bg-${status} ${className}`}
         >
             <Card.Body>
-                <div className={`d-flex fs-3 fw-bold  ${textColor}align-items-center`}>
-                    <p className="flex-grow-1">{title}</p>
-                    <p className="fs-5">{`(${elapsedTime} Hour Ago)`}</p>
+                <div className={`d-flex fs-3 fw-bold align-items-center`}>
+                    <TextWithStatusColor
+                        status={SentimentEnum.POSITIVE}
+                        className="flex-grow-1"
+                    >
+                        {title}
+                    </TextWithStatusColor>
+                    <TextWithStatusColor
+                        status={SentimentEnum.POSITIVE}
+                        className="fs-5"
+                    >
+                        {`(${elapsedTime} Hour Ago)`}
+                    </TextWithStatusColor>
                 </div>
                 <p>{content}</p>
             </Card.Body>
