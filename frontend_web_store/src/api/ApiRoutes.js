@@ -18,6 +18,7 @@ import AuthenticatedAccess from "../components/protected/AuthenticatedAccess";
 import StockPage from "../pages/main/services/StockPage";
 import SentimentAnalysisPage from "../pages/main/services/SentimentAnalysisPages";
 import NarrativeSummary from "../pages/main/services/NarrativeSummary";
+import AnalysisResult from "../pages/main/services/AnalysisResultPages";
 
 function ApiRoutes() {
   const location = useLocation();
@@ -84,6 +85,14 @@ function ApiRoutes() {
         element={
           <AuthenticatedAccess>
             <NarrativeSummary />
+          </AuthenticatedAccess>
+        }
+      />
+      <Route 
+        path="/services/result"
+        element={
+          <AuthenticatedAccess>
+            <AnalysisResult />
           </AuthenticatedAccess>
         }
       />

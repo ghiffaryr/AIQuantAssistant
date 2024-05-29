@@ -85,6 +85,9 @@ function NavbarComponent(props) {
                     <NavDropdown.Item href="/services/summary">
                       Narrative Summary
                     </NavDropdown.Item>
+                    <NavDropdown.Item href="/services/result">
+                      Analysis Result
+                    </NavDropdown.Item>
                   </NavDropdown>
                   <LinkContainer to="/news" className="nav-tab-link">
                     <Button variant="link" className="nav-item">
