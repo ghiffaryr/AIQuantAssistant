@@ -57,7 +57,7 @@ function ApiRoutes() {
         }
       />
       <Route
-        path="/subscription"
+        path="/services/forecasting"
         element={
           <AuthenticatedAccess>
             <SubscriptionPage />

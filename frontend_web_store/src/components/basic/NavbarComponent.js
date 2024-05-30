@@ -136,9 +136,6 @@ function NavbarComponent(props) {
                             <LinkContainer to="/order">
                               <NavDropdown.Item>Order</NavDropdown.Item>
                             </LinkContainer>
-                            <LinkContainer to="/subscription">
-                              <NavDropdown.Item>Subscription</NavDropdown.Item>
-                            </LinkContainer>
                           </>
                         )}
                         <NavDropdown.Item onClick={handleLogout}>
