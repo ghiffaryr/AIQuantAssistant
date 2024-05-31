@@ -7,7 +7,6 @@ import SentimentEnum from "../../../enums/SentimentEnum";
 export default function NarrativeSummary() {
     return (
         <>
-            <NavbarComponent />
             <>
                 <HeaderTitleComponent 
                   title={"Narrative Summary"} 

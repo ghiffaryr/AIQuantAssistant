@@ -27,3 +27,7 @@
   border: 1px solid #f8f9fa !important;
   color: #f8f9fa;
 }
+
+.navbar-height-inherit {
+  height: inherit;
+}

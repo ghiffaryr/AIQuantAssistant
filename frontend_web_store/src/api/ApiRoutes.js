@@ -19,6 +19,7 @@ import StockPage from "../pages/main/services/StockPage";
 import SentimentAnalysisPage from "../pages/main/services/SentimentAnalysisPages";
 import NarrativeSummary from "../pages/main/services/NarrativeSummary";
 import AnalysisResult from "../pages/main/services/AnalysisResultPages";
+import Sidebar from "../components/basic/Sidebar";
 
 function ApiRoutes() {
   const location = useLocation();
@@ -59,41 +60,51 @@ function ApiRoutes() {
       <Route
         path="/services/forecasting"
         element={
-          <AuthenticatedAccess>
-            <SubscriptionPage />
-          </AuthenticatedAccess>
+         <Sidebar>
+            <AuthenticatedAccess>
+              <SubscriptionPage />
+            </AuthenticatedAccess>
+         </Sidebar>
         }
       />
       <Route 
         path="/services/stocks"
         element={
-          <AuthenticatedAccess>
-            <StockPage />
-          </AuthenticatedAccess>
+          <Sidebar>
+            <AuthenticatedAccess>
+              <StockPage />
+            </AuthenticatedAccess>
+          </Sidebar>
         }
       />
       <Route 
         path="/services/sentiment-analysis"
         element={
-          <AuthenticatedAccess>
-            <SentimentAnalysisPage />
-          </AuthenticatedAccess>
+         <Sidebar>
+            <AuthenticatedAccess>
+              <SentimentAnalysisPage />
+            </AuthenticatedAccess>
+         </Sidebar>
         }
       />
       <Route 
         path="/services/summary"
         element={
-          <AuthenticatedAccess>
-            <NarrativeSummary />
-          </AuthenticatedAccess>
+         <Sidebar>
+            <AuthenticatedAccess>
+              <NarrativeSummary />
+            </AuthenticatedAccess>
+         </Sidebar>
         }
       />
       <Route 
         path="/services/result"
         element={
-          <AuthenticatedAccess>
-            <AnalysisResult />
-          </AuthenticatedAccess>
+         <Sidebar>
+            <AuthenticatedAccess>
+              <AnalysisResult />
+            </AuthenticatedAccess>
+         </Sidebar>
         }
       />
       <Route path="*" element={<NotFoundPage />} />

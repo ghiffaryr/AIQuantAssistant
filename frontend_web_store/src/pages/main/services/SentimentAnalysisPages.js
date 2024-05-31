@@ -8,7 +8,6 @@ import SentimentEnum from "../../../enums/SentimentEnum";
 export default function SentimentAnalysisPage() {
     return (
         <>
-            <NavbarComponent />
             <>
                 <HeaderTitleComponent 
                   title={"Sentiment Analysis"} 

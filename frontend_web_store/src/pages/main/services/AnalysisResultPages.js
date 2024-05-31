@@ -29,7 +29,6 @@ export default function AnalysisResult() {
 
     return (
         <>
-            <NavbarComponent />
             <>
                 <HeaderTitleComponent 
                   title={"Analysis Result"} 

@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@mantine/core": "^7.10.1",
+    "@mantine/hooks": "^7.10.1",
+    "@mantinex/mantine-logo": "^1.0.1",
+    "@tabler/icons-react": "^3.5.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",

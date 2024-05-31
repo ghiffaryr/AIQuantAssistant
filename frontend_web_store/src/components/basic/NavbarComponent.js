@@ -40,7 +40,7 @@ function NavbarComponent(props) {
 
   return (
     <>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className={`${props.navbarClassname}`}>
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
@@ -68,27 +68,11 @@ function NavbarComponent(props) {
                       Yahoo Finance
                     </Button>
                   </LinkContainer>
-                  <NavDropdown
-                    title="Services"
-                    menuVariant="light"
-                    className="nav-tab-dropdown"
-                  >
-                    <NavDropdown.Item href="/services/stocks">
-                      Stock
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/services/forecasting">
-                      Forecasting
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/services/sentiment-analysis">
-                      Sentiment Analysis
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/services/summary">
-                      Narrative Summary
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/services/result">
-                      Analysis Result
-                    </NavDropdown.Item>
-                  </NavDropdown>
+                  <LinkContainer to="/services/stocks" className="nav-tab-link">
+                    <Button variant="link" className="nav-item">
+                      Services
+                    </Button>
+                  </LinkContainer>
                   <LinkContainer to="/news" className="nav-tab-link">
                     <Button variant="link" className="nav-item">
                       News
@@ -181,3 +165,7 @@ function NavbarComponent(props) {
 }
 
 export default NavbarComponent;
+
+NavbarComponent.defaultProps = {
+  navbarClassname: ""
+}

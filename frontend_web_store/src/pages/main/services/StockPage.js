@@ -9,7 +9,6 @@ import { StockChart } from "../../../components/stock/StockChart";
 export default function StockPage() {
     return (
         <>
-            <NavbarComponent />
             <>
                 <HeaderTitleComponent 
                   title={"Stocks"} 
