@@ -13,7 +13,8 @@ from api.text_classifier_controller import (
     TopicPredict
 )
 from api.text_summarizer_controller import (
-    SummarizerPredict
+    SummarizerPredict,
+    SummarizerAllPredict
 )
 
 
@@ -23,5 +24,6 @@ ROUTES: Dict[str, type] = {
     "/forecast/dictionary": ForecastModelDictionary,
     "/sentiment/predict": SentimentPredict,
     "/topic/predict": TopicPredict,
-    "/summary/predict": SummarizerPredict
+    "/summary/predict": SummarizerPredict,
+    "/summary-all/predict": SummarizerAllPredict
 }

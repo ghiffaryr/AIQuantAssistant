@@ -48,6 +48,7 @@ class API(responder.API):
         TextClassifierServiceSentimentImpl.instance()
         TextClassifierServiceTopicImpl.instance()
         TextSummarizerServiceImpl.instance()
+        TextSummarizerServiceImpl.instance("facebook/bart-large-cnn")
 
         for route, service in ROUTES.items():
             self.add_route(prefix + route, service)
