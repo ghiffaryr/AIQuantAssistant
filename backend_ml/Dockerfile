@@ -49,6 +49,6 @@ COPY ./src /app/src
 RUN pipenv install --deploy --system
 RUN pipenv install --deploy
 
-CMD pipenv run uvicorn --app-dir src start_application:StartApplication --host 0.0.0.0 --port 8000 --reload
+CMD pipenv run uvicorn --app-dir src start_application:StartApplication --host 0.0.0.0 --port 8000
 
 EXPOSE 8000
