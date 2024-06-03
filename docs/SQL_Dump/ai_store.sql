@@ -46,7 +46,7 @@ CREATE TABLE `hibernate_sequence` (
 /*Data for the table `hibernate_sequence` */
 
 insert  into `hibernate_sequence`(`next_val`) values 
-(83);
+(95);
 
 /*Table structure for table `order_detail` */
 
@@ -165,7 +165,7 @@ CREATE TABLE `product` (
 /*Data for the table `product` */
 
 insert  into `product`(`product_id`,`create_time`,`product_category_code`,`product_code`,`product_description`,`product_image`,`product_name`,`product_period`,`product_price`,`product_status`,`update_time`) values 
-(8,'2023-04-28 13:44:25','forecast_autots','forecast_autots1m','High performance forecaster backed by ensemble method','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','Stock Market AI Assistant 1 Month Subscription',1,21.00,0,'2023-05-01 12:11:12'),
+(8,'2023-04-28 13:44:25','forecast_autots','forecast_autots1m','High performance forecaster backed by ensemble method','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','Stock Market AI Assistant 1 Month Subscription',1,7.00,0,'2023-05-01 12:11:12'),
 (9,'2023-04-28 13:50:11','forecast_autots','forecast_autots3m','High performance forecaster backed by ensemble method','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','Stock Market AI Assistant 3 Month Subscription',3,20.00,1,'2023-04-28 13:50:11'),
 (10,'2023-04-28 13:50:46','forecast_autots','forecast_autots6m','High performance forecaster backed by ensemble method','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','Stock Market AI Assistant 6 Month Subscription',6,37.00,1,'2023-04-28 13:50:46'),
 (11,'2023-04-28 13:54:02','forecast_facebookprophet','forecast_facebookprophet1m','High performance forecaster backed by facebook regression model','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Stock Market AI Assistant 1 Month Subscription',1,6.00,1,'2023-04-28 13:54:02'),
@@ -176,7 +176,19 @@ insert  into `product`(`product_id`,`create_time`,`product_category_code`,`produ
 (16,'2023-04-28 14:02:26','forecast_neuralprophet','forecast_neuralprophet6m','High performance forecaster backed by AR-Net','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Stock Market AI Assistant 6 Month Subscription',6,31.00,1,'2023-04-28 14:02:26'),
 (17,'2023-04-28 14:39:45','forecast_autots','forecast_autots12m','High performance forecaster backed by ensemble method','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','Stock Market AI Assistant 12 Month Subscription',12,70.00,1,'2023-05-01 12:11:31'),
 (18,'2023-04-28 14:40:24','forecast_facebookprophet','forecast_facebookprophet12m','High performance forecaster backed by facebook regression model','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Stock Market AI Assistant 12 Month Subscription',12,60.00,1,'2023-04-28 14:40:24'),
-(19,'2023-04-28 14:41:35','forecast_neuralprophet','forecast_neuralprophet12m','High performance forecaster backed by AR-Net','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Stock Market AI Assistant 12 Month Subscription',12,60.00,0,'2023-04-28 14:39:45');
+(19,'2023-04-28 14:41:35','forecast_neuralprophet','forecast_neuralprophet12m','High performance forecaster backed by AR-Net','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Stock Market AI Assistant 12 Month Subscription',12,60.00,0,'2023-04-28 14:39:45'),
+(83,'2024-06-03 05:53:02','text_sentiment','text_sentiment3m','Sentiment Analyzer backed by LLM','https://numlabs.com/static/img/posts/twarze-pos-neg.jpg','Sentiment Analyzer 3 Month Subscription',3,14.00,1,'2024-06-03 05:53:02'),
+(84,'2024-06-03 05:53:15','text_sentiment','text_sentiment1m','Sentiment Analyzer backed by LLM','https://numlabs.com/static/img/posts/twarze-pos-neg.jpg','Sentiment Analyzer 1 Month Subscription',1,5.00,1,'2024-06-03 05:53:15'),
+(85,'2024-06-03 05:53:43','text_sentiment','text_sentiment6m','Sentiment Analyzer backed by LLM','https://numlabs.com/static/img/posts/twarze-pos-neg.jpg','Sentiment Analyzer 6 Month Subscription',6,25.00,1,'2024-06-03 05:53:43'),
+(86,'2024-06-03 05:54:19','text_sentiment','text_sentiment12m','Sentiment Analyzer backed by LLM','https://numlabs.com/static/img/posts/twarze-pos-neg.jpg','Sentiment Analyzer 12 Month Subscription',12,50.00,1,'2024-06-03 05:54:19'),
+(87,'2024-06-03 05:56:13','text_summary','text_summary1m','Summarizer backed by LLM','https://cdn.dribbble.com/userupload/13122418/file/original-e3070e37ea46719a6ab58fa9c7d063bb.png?resize=1024x724','Summarizer 1 Month Subscription',1,5.00,1,'2024-06-03 05:56:13'),
+(88,'2024-06-03 05:56:46','text_summary','text_summary3m','Summarizer backed by LLM','https://cdn.dribbble.com/userupload/13122418/file/original-e3070e37ea46719a6ab58fa9c7d063bb.png?resize=1024x724','Summarizer 3 Month Subscription',3,14.00,1,'2024-06-03 05:56:46'),
+(89,'2024-06-03 05:57:22','text_summary','text_summary6m','Summarizer backed by LLM','https://cdn.dribbble.com/userupload/13122418/file/original-e3070e37ea46719a6ab58fa9c7d063bb.png?resize=1024x724','Summarizer 6 Month Subscription',6,25.00,1,'2024-06-03 05:57:22'),
+(90,'2024-06-03 05:57:48','text_summary','text_summary12m','Summarizer backed by LLM','https://cdn.dribbble.com/userupload/13122418/file/original-e3070e37ea46719a6ab58fa9c7d063bb.png?resize=1024x724','Summarizer 12 Month Subscription',12,50.00,1,'2024-06-03 05:57:48'),
+(91,'2024-06-03 06:01:30','text_topic','text_topic1m','Topic Classifier backed by LLM','https://i.pinimg.com/736x/98/41/d8/9841d85dc0dae85b3b57d1dbe7b69942.jpg','Summarizer 1 Month Subscription',1,3.00,1,'2024-06-03 06:01:30'),
+(92,'2024-06-03 06:01:41','text_topic','text_topic3m','Topic Classifier backed by LLM','https://i.pinimg.com/736x/98/41/d8/9841d85dc0dae85b3b57d1dbe7b69942.jpg','Summarizer 3 Month Subscription',3,8.00,1,'2024-06-03 06:01:41'),
+(93,'2024-06-03 06:02:30','text_topic','text_topic6m','Topic Classifier backed by LLM','https://i.pinimg.com/736x/98/41/d8/9841d85dc0dae85b3b57d1dbe7b69942.jpg','Summarizer 6 Month Subscription',6,13.00,1,'2024-06-03 06:02:30'),
+(94,'2024-06-03 06:04:36','text_topic','text_topic12m','Topic Classifier backed by LLM','https://i.pinimg.com/736x/98/41/d8/9841d85dc0dae85b3b57d1dbe7b69942.jpg','Summarizer 12 Month Subscription',12,30.00,1,'2024-06-03 06:04:36');
 
 /*Table structure for table `product_category` */
 
@@ -199,9 +211,9 @@ insert  into `product_category`(`product_category_id`,`create_time`,`product_cat
 (5,'2023-04-28 13:18:42','forecast_autots','AutoTS Forecast Algorithm','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','AutoTS','2023-05-01 11:30:38'),
 (6,'2023-04-28 13:20:13','forecast_facebookprophet','Facebook Prophet Forecast Algorithm','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Facebook Prophet','2023-04-28 13:20:13'),
 (7,'2023-04-28 13:22:15','forecast_neuralprophet','Neural Prophet Forecast Algorithm','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Neural Prophet','2023-04-28 13:22:15'),
-(80,'2024-05-23 18:44:58','text_sentiment','','','Sentiment Analyzer','2024-05-23 18:44:58'),
-(81,'2024-05-23 18:45:13','text_summary','','','Summarizer','2024-05-23 18:45:13'),
-(82,'2024-05-23 18:45:21','text_topic','','','Topic Classifier','2024-05-23 18:45:21');
+(80,'2024-05-23 18:44:58','text_sentiment','Positive, Neutral, and Negative Sentiment Analyzer ','https://numlabs.com/static/img/posts/twarze-pos-neg.jpg','Sentiment Analyzer','2024-05-23 18:44:58'),
+(81,'2024-05-23 18:45:13','text_summary','Summarizer using LLM','https://cdn.dribbble.com/userupload/13122418/file/original-e3070e37ea46719a6ab58fa9c7d063bb.png?resize=1024x724','Summarizer','2024-06-03 05:39:53'),
+(82,'2024-05-23 18:45:21','text_topic','Topic Classifier','https://i.pinimg.com/736x/98/41/d8/9841d85dc0dae85b3b57d1dbe7b69942.jpg','Topic Classifier','2024-06-03 06:00:44');
 
 /*Table structure for table `subscription` */
 
