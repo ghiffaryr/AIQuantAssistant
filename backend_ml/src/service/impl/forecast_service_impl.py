@@ -28,8 +28,9 @@ class ForecastServiceImpl(ForecastService):
     def retrieve_dataset(self, 
                          stock_code: str) -> None:
         self._stock_code = stock_code
-        dataset = yf.download(self._stock_code)        
-        df = dataset[["Open", "High", "Low", "Close", "Volume"]]
+        dataset = yf.download(self._stock_code)
+        self.features = ['Open', 'High', 'Low', 'Close', 'Volume']
+        df = dataset[self.features]
         df["Date"] = df.index
         df = df.reset_index(drop=True)
         df = df.sort_values(by=["Date"], ascending=True)
