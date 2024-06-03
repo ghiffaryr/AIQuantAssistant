@@ -211,9 +211,9 @@ insert  into `product_category`(`product_category_id`,`create_time`,`product_cat
 (5,'2023-04-28 13:18:42','forecast_autots','AutoTS Forecast Algorithm','https://raw.githubusercontent.com/winedarksea/AutoTS/master/img/autots_1280.png','AutoTS','2023-05-01 11:30:38'),
 (6,'2023-04-28 13:20:13','forecast_facebookprophet','Facebook Prophet Forecast Algorithm','https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg','Facebook Prophet','2023-04-28 13:20:13'),
 (7,'2023-04-28 13:22:15','forecast_neuralprophet','Neural Prophet Forecast Algorithm','https://github.com/ourownstory/neural_prophet/blob/main/docs/source/images/np_favicon.png?raw=true','Neural Prophet','2023-04-28 13:22:15'),
-(80,'2024-05-23 18:44:58','text_sentiment','Positive, Neutral, and Negative Sentiment Analyzer ','https://numlabs.com/static/img/posts/twarze-pos-neg.jpg','Sentiment Analyzer','2024-05-23 18:44:58'),
-(81,'2024-05-23 18:45:13','text_summary','Summarizer using LLM','https://cdn.dribbble.com/userupload/13122418/file/original-e3070e37ea46719a6ab58fa9c7d063bb.png?resize=1024x724','Summarizer','2024-06-03 05:39:53'),
-(82,'2024-05-23 18:45:21','text_topic','Topic Classifier','https://i.pinimg.com/736x/98/41/d8/9841d85dc0dae85b3b57d1dbe7b69942.jpg','Topic Classifier','2024-06-03 06:00:44');
+(80,'2024-05-23 18:44:58','text_sentiment','Sentiment LLM Analyzer','https://numlabs.com/static/img/posts/twarze-pos-neg.jpg','Sentiment Analyzer','2024-05-23 18:44:58'),
+(81,'2024-05-23 18:45:13','text_summary','LLM Summarizer','https://cdn.dribbble.com/userupload/13122418/file/original-e3070e37ea46719a6ab58fa9c7d063bb.png?resize=1024x724','Summarizer','2024-06-03 05:39:53'),
+(82,'2024-05-23 18:45:21','text_topic','Topic LLM Classifier','https://i.pinimg.com/736x/98/41/d8/9841d85dc0dae85b3b57d1dbe7b69942.jpg','Topic Classifier','2024-06-03 06:00:44');
 
 /*Table structure for table `subscription` */
 
