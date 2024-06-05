@@ -3,16 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@mantine/core": "^7.10.1",
+    "@mantine/hooks": "^7.10.1",
+    "@mantinex/mantine-logo": "^1.0.1",
+    "@tabler/icons-react": "^3.5.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.3.4",
     "bootstrap": "^5.2.3",
+    "bootstrap-icons": "^1.11.3",
+    "chart.js": "^4.4.3",
     "firebase": "^9.18.0",
     "plotly.js": "^2.22.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-bootstrap-pagination-control": "^1.0.5",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-plotly.js": "^2.6.0",
@@ -48,5 +55,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "faker": "^5.5.3"
   }
 }

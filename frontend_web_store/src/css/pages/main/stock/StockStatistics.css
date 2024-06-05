@@ -1,0 +1,11 @@
+.stock-statistics-card {
+    max-width: 60%;
+}
+
+.medium-icons {
+    font-size: 2rem;
+}
+
+.stock-statistics-row > p {
+    margin: 0 !important;
+}

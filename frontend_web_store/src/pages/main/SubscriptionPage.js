@@ -98,7 +98,6 @@ export default function SubscriptionPage() {
 
   return (
     <>
-      <NavbarComponent cartOrderDetailCount={cartOrderDetailCount} />
       <>
         <Breadcrumbs />
         <div className="container mb-4 d-flex align-items-center">

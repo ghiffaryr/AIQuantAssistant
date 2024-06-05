@@ -40,7 +40,7 @@ function NavbarComponent(props) {
 
   return (
     <>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className={`${props.navbarClassname}`}>
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
@@ -68,6 +68,17 @@ function NavbarComponent(props) {
                       Yahoo Finance
                     </Button>
                   </LinkContainer>
+                  <LinkContainer to="/services/stocks" className="nav-tab-link">
+                    <Button variant="link" className="nav-item">
+                      Services
+                    </Button>
+                  </LinkContainer>
+                  <LinkContainer to="/news" className="nav-tab-link">
+                    <Button variant="link" className="nav-item">
+                      News
+                    </Button>
+                  </LinkContainer>
+                  Nav
                 </Nav>
                 <Nav>
                   {localStorage.getItem("userRole") === "ROLE_EMPLOYEE" ||
@@ -108,9 +119,6 @@ function NavbarComponent(props) {
                           <>
                             <LinkContainer to="/order">
                               <NavDropdown.Item>Order</NavDropdown.Item>
-                            </LinkContainer>
-                            <LinkContainer to="/subscription">
-                              <NavDropdown.Item>Subscription</NavDropdown.Item>
                             </LinkContainer>
                           </>
                         )}
@@ -157,3 +165,7 @@ function NavbarComponent(props) {
 }
 
 export default NavbarComponent;
+
+NavbarComponent.defaultProps = {
+  navbarClassname: ""
+}
