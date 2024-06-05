@@ -1,9 +1,9 @@
 const SentimentEnum = {
-    POSITIVE: "positive",
-    NEGATIVE: "negative",
-    NEUTRAL: "neutral"
-}
+  POSITIVE: 'positive',
+  NEGATIVE: 'negative',
+  NEUTRAL: 'neutral',
+};
 
-Object.freeze(SentimentEnum)
+Object.freeze(SentimentEnum);
 
 export default SentimentEnum;

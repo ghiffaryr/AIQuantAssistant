@@ -1,7 +1,7 @@
-import React from "react";
-import "../../css/pages/exception/NotFoundPage.css";
-import { Link } from "react-router-dom";
-import FooterComponent from "../../components/basic/FooterComponent";
+import React from 'react';
+import '../../css/pages/exception/NotFoundPage.css';
+import { Link } from 'react-router-dom';
+import FooterComponent from '../../components/basic/FooterComponent';
 
 export default function NotFoundPage() {
   return (

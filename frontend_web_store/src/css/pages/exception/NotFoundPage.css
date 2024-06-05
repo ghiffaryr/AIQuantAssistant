@@ -1,5 +1,5 @@
 :root {
-  --bg-notfound: url("https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/background_notfound.jpg?alt=media&token=24cc5f62-1ecc-4b31-91df-33909c1e788e");
+  --bg-notfound: url('https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/background_notfound.jpg?alt=media&token=24cc5f62-1ecc-4b31-91df-33909c1e788e');
 }
 
 .main-notfound {

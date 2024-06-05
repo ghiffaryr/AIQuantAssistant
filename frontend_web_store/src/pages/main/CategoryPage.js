@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import Toast from "react-bootstrap/Toast";
-import ToastContainer from "react-bootstrap/esm/ToastContainer";
-import Breadcrumbs from "../../components/basic/Breadcrumbs";
-import NavbarComponent from "../../components/basic/NavbarComponent";
-import { API } from "../../env/Constants";
-import CategoryList from "../../components/category/CategoryList";
-import axios from "axios";
-import FooterComponent from "../../components/basic/FooterComponent";
-import { PaginationControl } from "react-bootstrap-pagination-control";
-import { Button } from "react-bootstrap";
-import CreateCategoryModal from "../../components/category/CreateCategoryModal";
+import React, { useEffect, useState } from 'react';
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/esm/ToastContainer';
+import Breadcrumbs from '../../components/basic/Breadcrumbs';
+import NavbarComponent from '../../components/basic/NavbarComponent';
+import { API } from '../../env/Constants';
+import CategoryList from '../../components/category/CategoryList';
+import axios from 'axios';
+import FooterComponent from '../../components/basic/FooterComponent';
+import { PaginationControl } from 'react-bootstrap-pagination-control';
+import { Button } from 'react-bootstrap';
+import CreateCategoryModal from '../../components/category/CreateCategoryModal';
 
 export default function CategoryPage() {
   const [showGetServerCartToast, setShowGetServerCartToast] = useState(false);
@@ -24,10 +24,10 @@ export default function CategoryPage() {
   const [showCreateCategoryModal, setShowCreateCategoryModal] = useState(false);
 
   const getServerCart = async () => {
-    if (localStorage.getItem("userRole") === "ROLE_CUSTOMER") {
+    if (localStorage.getItem('userRole') === 'ROLE_CUSTOMER') {
       axios.defaults.headers.common = {
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+        'Access-Control-Allow-Origin': '*',
       };
       try {
         let { status, data } = await axios.get(`${API}/cart`);
@@ -40,7 +40,7 @@ export default function CategoryPage() {
             quantity: orderDetail.quantity,
           });
         }
-        localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage.setItem('cart', JSON.stringify(cart));
         setErrorGetServerCart({});
         setShowGetServerCartToast(false);
       } catch (error) {
@@ -87,7 +87,7 @@ export default function CategoryPage() {
   // });
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("cart"));
+    const cart = JSON.parse(localStorage.getItem('cart'));
     let counter = Number(0);
     if (cart) {
       for (let i = 0; i < cart.length; i++) {
@@ -102,7 +102,7 @@ export default function CategoryPage() {
       <NavbarComponent cartOrderDetailCount={cartOrderDetailCount} />
       <>
         <Breadcrumbs />
-        {localStorage.getItem("userRole") == "ROLE_MANAGER" && (
+        {localStorage.getItem('userRole') == 'ROLE_MANAGER' && (
           <div className="container mb-3">
             <Button
               className="w-100"
@@ -119,7 +119,7 @@ export default function CategoryPage() {
           between={4}
           total={totalPages}
           limit={1}
-          changePage={(page) => {
+          changePage={page => {
             setPage(page);
           }}
           ellipsis={1}

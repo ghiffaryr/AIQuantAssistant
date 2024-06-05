@@ -1,15 +1,15 @@
-import { Form, Modal } from "react-bootstrap";
-import { Button } from "react-bootstrap";
-import { useState } from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { storage } from "../../env/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { API } from "../../env/Constants";
-import axios from "axios";
-import { useEffect } from "react";
-import ToastContainer from "react-bootstrap/esm/ToastContainer";
-import Toast from "react-bootstrap/Toast";
+import { Form, Modal } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import { useState } from 'react';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { storage } from '../../env/firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { API } from '../../env/Constants';
+import axios from 'axios';
+import { useEffect } from 'react';
+import ToastContainer from 'react-bootstrap/esm/ToastContainer';
+import Toast from 'react-bootstrap/Toast';
 
 export default function UpdateProductModal({
   id,
@@ -29,11 +29,11 @@ export default function UpdateProductModal({
   onHide,
 }) {
   const [inputs, setInputs] = useState({
-    productCategoryCode: "",
-    productCode: "",
-    productDescription: "",
-    productImage: "",
-    productName: "",
+    productCategoryCode: '',
+    productCode: '',
+    productDescription: '',
+    productImage: '',
+    productName: '',
     productPeriod: 0,
     productPrice: 0,
     productStatus: 0,
@@ -73,22 +73,22 @@ export default function UpdateProductModal({
     const fileName = e.target.files[0].name;
     const storageRef = ref(storage, `${fileName}`);
     uploadBytes(storageRef, e.target.files[0])
-      .then((snapshot) => {
+      .then(snapshot => {
         return getDownloadURL(storageRef);
       })
-      .then((downloadURL) => {
+      .then(downloadURL => {
         setInputs({
           ...inputs,
           productImage: downloadURL,
         });
       })
-      .catch((err) => {
-        setErrorUploadImage({ code: 500, message: "Upload failed!" });
+      .catch(err => {
+        setErrorUploadImage({ code: 500, message: 'Upload failed!' });
         setShowUploadImageToast(true);
       });
   }
 
-  const handleSubmitUpdateProduct = async (e) => {
+  const handleSubmitUpdateProduct = async e => {
     const form = e.currentTarget;
 
     setValidated(true);
@@ -96,15 +96,15 @@ export default function UpdateProductModal({
     if (form.checkValidity()) {
       try {
         axios.defaults.headers.common = {
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+          'Access-Control-Allow-Origin': '*',
         };
         let { status, data } = await axios.put(
           `${API}/seller/product/${inputs.productCode}/update`,
-          inputs
+          inputs,
         );
         let newProducts = products;
-        newProducts = newProducts.map((product) => {
+        newProducts = newProducts.map(product => {
           if (product.productCode === code) {
             product.productCategoryCode = data.productCategoryCode;
             product.productCode = data.productCode;
@@ -249,7 +249,7 @@ export default function UpdateProductModal({
                     aria-label="Price"
                     value={Number(inputs.productPrice)}
                     onChange={handleChange}
-                    onWheel={(e) => e.target.blur()}
+                    onWheel={e => e.target.blur()}
                     min={0}
                     required
                   />
@@ -273,7 +273,7 @@ export default function UpdateProductModal({
                     aria-label="Period (month)"
                     value={Number(inputs.productPeriod)}
                     onChange={handleChange}
-                    onWheel={(e) => e.target.blur()}
+                    onWheel={e => e.target.blur()}
                     min={0}
                     required
                   />
@@ -293,7 +293,7 @@ export default function UpdateProductModal({
                     label="Available"
                     name="productStatus"
                     value={1}
-                    type={"radio"}
+                    type={'radio'}
                     id="inline-radio-product-status-available"
                     onChange={handleChange}
                     checked={Number(inputs.productStatus) === 1}
@@ -303,7 +303,7 @@ export default function UpdateProductModal({
                     label="Unavailable"
                     name="productStatus"
                     value={0}
-                    type={"radio"}
+                    type={'radio'}
                     id="inline-radio-product-status-unavailable"
                     onChange={handleChange}
                     checked={Number(inputs.productStatus) === 0}
@@ -384,7 +384,7 @@ export default function UpdateProductModal({
               <Button
                 variant="outline-success"
                 onClick={() =>
-                  document.getElementById("update-form-button").click()
+                  document.getElementById('update-form-button').click()
                 }
               >
                 Save changes

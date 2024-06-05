@@ -20,20 +20,20 @@ ChartJS.register(
   Title,
   Tooltip,
   Filler,
-  Legend
+  Legend,
 );
 
-export function StockChart({cData, title}) {
+export function StockChart({ cData, title }) {
   const data = {
     labels: cData.x,
     datasets: [
-        {
-            fill: true,
-            label: 'Dataset 2',
-            data: cData.y,
-            borderColor: 'rgb(53, 162, 235)',
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-        },
+      {
+        fill: true,
+        label: 'Dataset 2',
+        data: cData.y,
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
     ],
   };
 
@@ -41,15 +41,15 @@ export function StockChart({cData, title}) {
     responsive: true,
     plugins: {
       legend: {
-        display: false
+        display: false,
       },
       title: {
         display: true,
         text: title,
         font: {
           size: 24,
-          weight: 'bold'
-        }
+          weight: 'bold',
+        },
       },
     },
     scales: {
@@ -65,8 +65,6 @@ export function StockChart({cData, title}) {
       },
     },
   };
-  
-
 
   return <Line options={options} data={data} />;
 }
@@ -76,5 +74,5 @@ StockChart.defaultProps = {
     x: [],
     y: [],
   },
-  title: ""
-}
+  title: '',
+};

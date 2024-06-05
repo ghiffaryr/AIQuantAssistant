@@ -1,5 +1,5 @@
-import React from "react";
-import Subscription from "./Subscription";
+import React from 'react';
+import Subscription from './Subscription';
 
 export default function SubscriptionList({ subscriptions, setSubscriptions }) {
   return (

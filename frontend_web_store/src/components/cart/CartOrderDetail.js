@@ -1,13 +1,13 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
-import ToastContainer from "react-bootstrap/esm/ToastContainer";
-import Toast from "react-bootstrap/Toast";
-import Form from "react-bootstrap/Form";
-import { FaPlus, FaMinus } from "react-icons/fa";
-import ProductStatusEnum from "../../enums/ProductStatusEnum";
-import { API } from "../../env/Constants";
-import Button from "react-bootstrap/esm/Button";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import FloatingLabel from 'react-bootstrap/esm/FloatingLabel';
+import ToastContainer from 'react-bootstrap/esm/ToastContainer';
+import Toast from 'react-bootstrap/Toast';
+import Form from 'react-bootstrap/Form';
+import { FaPlus, FaMinus } from 'react-icons/fa';
+import ProductStatusEnum from '../../enums/ProductStatusEnum';
+import { API } from '../../env/Constants';
+import Button from 'react-bootstrap/esm/Button';
 
 export default function CartOrderDetail({
   id,
@@ -19,27 +19,27 @@ export default function CartOrderDetail({
   const [validated, setValidated] = useState(false);
   const [product, setProduct] = useState({
     productId: null,
-    productCode: "",
-    productName: "",
+    productCode: '',
+    productName: '',
     productPrice: null,
     productPeriod: null,
-    productDescription: "",
-    productImage: "",
+    productDescription: '',
+    productImage: '',
     productStatus: null,
-    productCategoryCode: "",
-    createTime: "",
-    updateTime: "",
+    productCategoryCode: '',
+    createTime: '',
+    updateTime: '',
   });
   const [showGetProductToast, setShowGetProductToast] = useState(false);
   const [errorGetProduct, setErrorGetProduct] = useState({});
   const [showUpdateCartOrderDetailToast, setShowUpdateCartOrderDetailToast] =
     useState(false);
   const [errorUpdateCartOrderDetail, setErrorUpdateCartOrderDetail] = useState(
-    {}
+    {},
   );
 
   function handleQuantityLocalChange(quantity) {
-    let oldCart = JSON.parse(localStorage.getItem("cart"));
+    let oldCart = JSON.parse(localStorage.getItem('cart'));
     let newCart = [];
     for (let orderDetail of oldCart) {
       if (orderDetail.productCode !== code) {
@@ -59,16 +59,16 @@ export default function CartOrderDetail({
         });
       }
     }
-    localStorage.setItem("cart", JSON.stringify(newCart));
+    localStorage.setItem('cart', JSON.stringify(newCart));
     setCartOrderDetails(newCart);
   }
 
-  const handleQuantityServerChange = async (quantity) => {
-    if (localStorage.getItem("userToken")) {
+  const handleQuantityServerChange = async quantity => {
+    if (localStorage.getItem('userToken')) {
       try {
         axios.defaults.headers.common = {
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+          'Access-Control-Allow-Origin': '*',
         };
         if (Number(quantity) > 0) {
           let { status, data } = await axios.put(
@@ -76,14 +76,14 @@ export default function CartOrderDetail({
             Number(quantity),
             {
               headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
               },
-            }
+            },
           );
         }
         if (Number(quantity) === 0) {
           let { status, data } = await axios.delete(
-            `${API}/cart/${code}/delete`
+            `${API}/cart/${code}/delete`,
           );
         }
         setErrorUpdateCartOrderDetail({});
@@ -97,12 +97,12 @@ export default function CartOrderDetail({
     }
   };
 
-  const handleQuantityChange = async (quantity) => {
+  const handleQuantityChange = async quantity => {
     await handleQuantityServerChange(quantity);
     handleQuantityLocalChange(quantity);
   };
 
-  const handleSubmitCartOrderDetail = async (e) => {
+  const handleSubmitCartOrderDetail = async e => {
     const form = e.currentTarget;
 
     setValidated(true);
@@ -126,7 +126,7 @@ export default function CartOrderDetail({
     await handleQuantityChange(newQuantity);
   };
 
-  const getProduct = async (code) => {
+  const getProduct = async code => {
     try {
       let { status, data } = await axios.get(`${API}/product/${code}`);
       setProduct(data);
@@ -154,7 +154,7 @@ export default function CartOrderDetail({
                 src={
                   product.productImage
                     ? product.productImage
-                    : "https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/product_image_notfound.jpg?alt=media&token=9b66da8d-37b7-4f30-bbc2-1338d7e2f52c"
+                    : 'https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/product_image_notfound.jpg?alt=media&token=9b66da8d-37b7-4f30-bbc2-1338d7e2f52c'
                 }
                 className="card-img-top"
                 alt="Product Image"
@@ -173,8 +173,8 @@ export default function CartOrderDetail({
                   </p>
                   <p className="card-text">${product.productPrice}</p>
                   <p className="card-text">
-                    {product.productPeriod}{" "}
-                    {product.productPeriod < 2 ? "month" : "months"}
+                    {product.productPeriod}{' '}
+                    {product.productPeriod < 2 ? 'month' : 'months'}
                   </p>
                 </div>
                 <div className="card-form container">
@@ -203,7 +203,7 @@ export default function CartOrderDetail({
                             name="quantity"
                             value={Number(quantity)}
                             onChange={handleQuantityChange}
-                            onWheel={(e) => e.target.blur()}
+                            onWheel={e => e.target.blur()}
                             placeholder="Quantity"
                             min={0}
                             required

@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import Toast from "react-bootstrap/Toast";
-import ToastContainer from "react-bootstrap/esm/ToastContainer";
-import Breadcrumbs from "../../components/basic/Breadcrumbs";
-import NavbarComponent from "../../components/basic/NavbarComponent";
-import { API } from "../../env/Constants";
-import ProductList from "../../components/product/ProductList";
-import axios from "axios";
-import FooterComponent from "../../components/basic/FooterComponent";
-import { PaginationControl } from "react-bootstrap-pagination-control";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import { Button } from "react-bootstrap";
-import CreateProductModal from "../../components/product/CreateProductModal";
+import React, { useEffect, useState } from 'react';
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/esm/ToastContainer';
+import Breadcrumbs from '../../components/basic/Breadcrumbs';
+import NavbarComponent from '../../components/basic/NavbarComponent';
+import { API } from '../../env/Constants';
+import ProductList from '../../components/product/ProductList';
+import axios from 'axios';
+import FooterComponent from '../../components/basic/FooterComponent';
+import { PaginationControl } from 'react-bootstrap-pagination-control';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import { Button } from 'react-bootstrap';
+import CreateProductModal from '../../components/product/CreateProductModal';
 
 export default function ProductPage() {
   const [showGetServerCartToast, setShowGetServerCartToast] = useState(false);
@@ -23,14 +23,14 @@ export default function ProductPage() {
   const [size, setSize] = useState(6);
   const [totalPages, setTotalPages] = useState(1);
   const [products, setProducts] = useState([]);
-  const [inputs, setInputs] = useState({ query: "" });
+  const [inputs, setInputs] = useState({ query: '' });
   const [showCreateProductModal, setShowCreateProductModal] = useState(false);
 
   const getServerCart = async () => {
-    if (localStorage.getItem("userRole") === "ROLE_CUSTOMER") {
+    if (localStorage.getItem('userRole') === 'ROLE_CUSTOMER') {
       axios.defaults.headers.common = {
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+        'Access-Control-Allow-Origin': '*',
       };
       try {
         let { status, data } = await axios.get(`${API}/cart`);
@@ -43,7 +43,7 @@ export default function ProductPage() {
             quantity: orderDetail.quantity,
           });
         }
-        localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage.setItem('cart', JSON.stringify(cart));
         setErrorGetServerCart({});
         setShowGetServerCartToast(false);
       } catch (error) {
@@ -58,13 +58,13 @@ export default function ProductPage() {
   const getProducts = async () => {
     try {
       let { status, data } = await axios.get(
-        localStorage.getItem("userRole") === "ROLE_EMPLOYEE" ||
-          localStorage.getItem("userRole") === "ROLE_MANAGER"
+        localStorage.getItem('userRole') === 'ROLE_EMPLOYEE' ||
+          localStorage.getItem('userRole') === 'ROLE_MANAGER'
           ? `${API}/product`
           : `${API}/product/onsale`,
         {
           params: { page: page, size: size },
-        }
+        },
       );
       setProducts(data.content);
       setTotalPages(data.totalPages);
@@ -102,15 +102,15 @@ export default function ProductPage() {
     });
   }
 
-  const onSubmitSearch = async (e) => {
+  const onSubmitSearch = async e => {
     console.log(e.target[0].value);
     e.preventDefault();
     if (e.target[0].value.trim().length > 0) {
       try {
         let { status, data } = await axios.get(
           `${API}/search`,
-          localStorage.getItem("userRole") === "ROLE_EMPLOYEE" ||
-            localStorage.getItem("userRole") === "ROLE_MANAGER"
+          localStorage.getItem('userRole') === 'ROLE_EMPLOYEE' ||
+            localStorage.getItem('userRole') === 'ROLE_MANAGER'
             ? {
                 params: { query: e.target[0].value, page: page, size: size },
               }
@@ -121,7 +121,7 @@ export default function ProductPage() {
                   page: page,
                   size: size,
                 },
-              }
+              },
         );
         setProducts(data.content);
         setTotalPages(data.totalPages);
@@ -142,7 +142,7 @@ export default function ProductPage() {
   };
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("cart"));
+    const cart = JSON.parse(localStorage.getItem('cart'));
     let counter = Number(0);
     if (cart) {
       for (let i = 0; i < cart.length; i++) {
@@ -171,7 +171,7 @@ export default function ProductPage() {
             </InputGroup>
           </Form>
         </div>
-        {localStorage.getItem("userRole") == "ROLE_MANAGER" && (
+        {localStorage.getItem('userRole') == 'ROLE_MANAGER' && (
           <div className="container mb-3">
             <Button
               className="w-100"
@@ -192,7 +192,7 @@ export default function ProductPage() {
           between={4}
           total={totalPages}
           limit={1}
-          changePage={(page) => {
+          changePage={page => {
             setPage(page);
           }}
           ellipsis={1}

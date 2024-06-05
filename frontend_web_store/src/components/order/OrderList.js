@@ -1,5 +1,5 @@
-import React from "react";
-import Order from "./Order";
+import React from 'react';
+import Order from './Order';
 
 export default function OrderList({ orders, setOrders }) {
   return (

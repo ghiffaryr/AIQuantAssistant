@@ -1,5 +1,5 @@
-import React from "react";
-import OrderOrderDetail from "./OrderOrderDetail";
+import React from 'react';
+import OrderOrderDetail from './OrderOrderDetail';
 
 export default function OrderOrderDetailList({ orderOrderDetails }) {
   return (

@@ -1,12 +1,12 @@
-import React from "react";
-import Category from "./Category";
+import React from 'react';
+import Category from './Category';
 
 export default function CategoryList({ categories, setCategories }) {
   return (
     <>
       <div className="container mb-3">
-        {localStorage.getItem("userRole") === "ROLE_EMPLOYEE" ||
-        localStorage.getItem("userRole") === "ROLE_MANAGER" ? (
+        {localStorage.getItem('userRole') === 'ROLE_EMPLOYEE' ||
+        localStorage.getItem('userRole') === 'ROLE_MANAGER' ? (
           <div
             className="row row-cols-1 g-4
         "

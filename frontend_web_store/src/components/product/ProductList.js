@@ -1,5 +1,5 @@
-import React from "react";
-import Product from "./Product";
+import React from 'react';
+import Product from './Product';
 
 export default function ProductList({
   products,

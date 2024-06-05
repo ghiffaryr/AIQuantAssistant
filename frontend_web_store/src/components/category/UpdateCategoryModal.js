@@ -1,15 +1,15 @@
-import { Form, Modal } from "react-bootstrap";
-import { Button } from "react-bootstrap";
-import { useState } from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { storage } from "../../env/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { API } from "../../env/Constants";
-import axios from "axios";
-import { useEffect } from "react";
-import ToastContainer from "react-bootstrap/esm/ToastContainer";
-import Toast from "react-bootstrap/Toast";
+import { Form, Modal } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import { useState } from 'react';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { storage } from '../../env/firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { API } from '../../env/Constants';
+import axios from 'axios';
+import { useEffect } from 'react';
+import ToastContainer from 'react-bootstrap/esm/ToastContainer';
+import Toast from 'react-bootstrap/Toast';
 
 export default function UpdateCategoryModal({
   id,
@@ -25,10 +25,10 @@ export default function UpdateCategoryModal({
   onHide,
 }) {
   const [inputs, setInputs] = useState({
-    productCategoryCode: "",
-    productCategoryDescription: "",
-    productCategoryImage: "",
-    productCategoryName: "",
+    productCategoryCode: '',
+    productCategoryDescription: '',
+    productCategoryImage: '',
+    productCategoryName: '',
   });
   const [validated, setValidated] = useState(false);
   const [showUploadImageToast, setShowUploadImageToast] = useState(false);
@@ -61,22 +61,22 @@ export default function UpdateCategoryModal({
     const fileName = e.target.files[0].name;
     const storageRef = ref(storage, `${fileName}`);
     uploadBytes(storageRef, e.target.files[0])
-      .then((snapshot) => {
+      .then(snapshot => {
         return getDownloadURL(storageRef);
       })
-      .then((downloadURL) => {
+      .then(downloadURL => {
         setInputs({
           ...inputs,
           productCategoryImage: downloadURL,
         });
       })
-      .catch((err) => {
-        setErrorUploadImage({ code: 500, message: "Upload failed!" });
+      .catch(err => {
+        setErrorUploadImage({ code: 500, message: 'Upload failed!' });
         setShowUploadImageToast(true);
       });
   }
 
-  const handleSubmitUpdateCategory = async (e) => {
+  const handleSubmitUpdateCategory = async e => {
     const form = e.currentTarget;
 
     setValidated(true);
@@ -84,15 +84,15 @@ export default function UpdateCategoryModal({
     if (form.checkValidity()) {
       try {
         axios.defaults.headers.common = {
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+          'Access-Control-Allow-Origin': '*',
         };
         let { status, data } = await axios.put(
           `${API}/seller/category/${inputs.productCategoryCode}/update`,
-          inputs
+          inputs,
         );
         let newCategories = categories;
-        newCategories = newCategories.map((category) => {
+        newCategories = newCategories.map(category => {
           if (category.productCategoryCode === code) {
             category.productCategoryCode = data.productCategoryCode;
             category.productCategoryDescription =
@@ -264,7 +264,7 @@ export default function UpdateCategoryModal({
               <Button
                 variant="outline-success"
                 onClick={() =>
-                  document.getElementById("update-form-button").click()
+                  document.getElementById('update-form-button').click()
                 }
               >
                 Save changes

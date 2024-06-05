@@ -1,5 +1,5 @@
 :root {
-  --bg-main: url("https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/background_main.jpg?alt=media&token=3682fc26-28b2-4bb4-9d2d-c649c2345155");
+  --bg-main: url('https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/background_main.jpg?alt=media&token=3682fc26-28b2-4bb4-9d2d-c649c2345155');
 }
 
 .main-homepage {

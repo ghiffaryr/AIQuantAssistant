@@ -1,13 +1,13 @@
-import axios from "axios";
-import React, { useState } from "react";
-import Button from "react-bootstrap/esm/Button";
-import Form from "react-bootstrap/Form";
-import ToastContainer from "react-bootstrap/esm/ToastContainer";
-import Toast from "react-bootstrap/Toast";
-import ProductStatusEnum from "../../enums/ProductStatusEnum";
-import { API } from "../../env/Constants";
-import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
-import UpdateProductModal from "./UpdateProductModal";
+import axios from 'axios';
+import React, { useState } from 'react';
+import Button from 'react-bootstrap/esm/Button';
+import Form from 'react-bootstrap/Form';
+import ToastContainer from 'react-bootstrap/esm/ToastContainer';
+import Toast from 'react-bootstrap/Toast';
+import ProductStatusEnum from '../../enums/ProductStatusEnum';
+import { API } from '../../env/Constants';
+import FloatingLabel from 'react-bootstrap/esm/FloatingLabel';
+import UpdateProductModal from './UpdateProductModal';
 
 export default function Product({
   id,
@@ -40,8 +40,8 @@ export default function Product({
     });
   }
 
-  const handleAddToCart = async (quantity) => {
-    let cart = JSON.parse(localStorage.getItem("cart"));
+  const handleAddToCart = async quantity => {
+    let cart = JSON.parse(localStorage.getItem('cart'));
     let newCart = cart;
     let isOrderDetailFound = false;
     if (cart) {
@@ -56,10 +56,10 @@ export default function Product({
         }
       }
       if (isOrderDetailFound) {
-        if (localStorage.getItem("userToken")) {
+        if (localStorage.getItem('userToken')) {
           axios.defaults.headers.common = {
-            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+            'Access-Control-Allow-Origin': '*',
           };
           try {
             let { status, data } = await axios.put(
@@ -67,9 +67,9 @@ export default function Product({
               newQuantity,
               {
                 headers: {
-                  "Content-Type": "application/json",
+                  'Content-Type': 'application/json',
                 },
-              }
+              },
             );
             setErrorAddToCart({});
             setShowAddToCartToast(true);
@@ -97,12 +97,12 @@ export default function Product({
         },
       ];
     }
-    localStorage.setItem("cart", JSON.stringify(newCart));
+    localStorage.setItem('cart', JSON.stringify(newCart));
     if (!cart || !isOrderDetailFound) {
-      if (localStorage.getItem("userToken")) {
+      if (localStorage.getItem('userToken')) {
         axios.defaults.headers.common = {
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+          'Access-Control-Allow-Origin': '*',
         };
         try {
           let { status, data } = await axios.post(`${API}/cart/add`, {
@@ -126,7 +126,7 @@ export default function Product({
     setCartOrderDetailCount(Number(counter));
   };
 
-  const handleSubmitAddToCart = async (e) => {
+  const handleSubmitAddToCart = async e => {
     const form = e.currentTarget;
 
     setValidated(true);
@@ -138,15 +138,15 @@ export default function Product({
 
   const handleDelete = async () => {
     axios.defaults.headers.common = {
-      Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-      "Access-Control-Allow-Origin": "*",
+      Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+      'Access-Control-Allow-Origin': '*',
     };
     try {
       let { status, data } = await axios.delete(
-        `${API}/seller/product/${code}/delete`
+        `${API}/seller/product/${code}/delete`,
       );
-      setProducts((products) =>
-        products.filter((product) => product.productCode != code)
+      setProducts(products =>
+        products.filter(product => product.productCode != code),
       );
       setErrorDeleteProduct({});
       setShowDeleteProductToast(true);
@@ -166,7 +166,7 @@ export default function Product({
             src={
               image
                 ? image
-                : "https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/product_image_notfound.jpg?alt=media&token=9b66da8d-37b7-4f30-bbc2-1338d7e2f52c"
+                : 'https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/product_image_notfound.jpg?alt=media&token=9b66da8d-37b7-4f30-bbc2-1338d7e2f52c'
             }
             className="card-img-top"
             alt="Product Image"
@@ -181,11 +181,11 @@ export default function Product({
               <p className="card-text">{ProductStatusEnum[status]}</p>
               <p className="card-text">${price}</p>
               <p className="card-text">
-                {period} {period < 2 ? "month" : "months"}
+                {period} {period < 2 ? 'month' : 'months'}
               </p>
             </div>
-            {localStorage.getItem("userRole") != "ROLE_EMPLOYEE" &&
-              localStorage.getItem("userRole") != "ROLE_MANAGER" && (
+            {localStorage.getItem('userRole') != 'ROLE_EMPLOYEE' &&
+              localStorage.getItem('userRole') != 'ROLE_MANAGER' && (
                 <div className="card-form w-100 align-self-center mt-3">
                   <Form
                     className="cart-form"
@@ -203,7 +203,7 @@ export default function Product({
                         name="quantity"
                         value={inputs.quantity}
                         onChange={handleChange}
-                        onWheel={(e) => e.target.blur()}
+                        onWheel={e => e.target.blur()}
                         placeholder="Quantity"
                         min={1}
                         required
@@ -220,7 +220,7 @@ export default function Product({
                   </Form>
                 </div>
               )}
-            {localStorage.getItem("userRole") == "ROLE_EMPLOYEE" && (
+            {localStorage.getItem('userRole') == 'ROLE_EMPLOYEE' && (
               <div className="text-center mt-3">
                 <Button
                   variant="outline-primary"
@@ -230,7 +230,7 @@ export default function Product({
                 </Button>
               </div>
             )}
-            {localStorage.getItem("userRole") == "ROLE_MANAGER" && (
+            {localStorage.getItem('userRole') == 'ROLE_MANAGER' && (
               <div className="text-center mt-3">
                 <div className="d-flex justify-content-evenly">
                   <Button

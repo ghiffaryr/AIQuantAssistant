@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import Toast from "react-bootstrap/Toast";
-import ToastContainer from "react-bootstrap/esm/ToastContainer";
-import Breadcrumbs from "../../components/basic/Breadcrumbs";
-import NavbarComponent from "../../components/basic/NavbarComponent";
-import { API } from "../../env/Constants";
-import axios from "axios";
-import CartOrderDetailList from "../../components/cart/CartOrderDetailList";
-import FooterComponent from "../../components/basic/FooterComponent";
-import Button from "react-bootstrap/esm/Button";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/esm/ToastContainer';
+import Breadcrumbs from '../../components/basic/Breadcrumbs';
+import NavbarComponent from '../../components/basic/NavbarComponent';
+import { API } from '../../env/Constants';
+import axios from 'axios';
+import CartOrderDetailList from '../../components/cart/CartOrderDetailList';
+import FooterComponent from '../../components/basic/FooterComponent';
+import Button from 'react-bootstrap/esm/Button';
+import { Link } from 'react-router-dom';
 
 export default function CartPage() {
   const [cartOrderDetailCount, setCartOrderDetailCount] = useState(0);
@@ -21,7 +21,7 @@ export default function CartPage() {
   const [cartOrderDetails, setCartOrderDetails] = useState([]);
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("cart"));
+    const cart = JSON.parse(localStorage.getItem('cart'));
     let counter = Number(0);
     let totaler = Number(0);
     if (cart) {
@@ -37,17 +37,17 @@ export default function CartPage() {
   });
 
   const getCartOrderDetails = async () => {
-    if (localStorage.getItem("userToken")) {
+    if (localStorage.getItem('userToken')) {
       try {
         axios.defaults.headers.common = {
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+          'Access-Control-Allow-Origin': '*',
         };
         let { status, data } = await axios.get(`${API}/cart`);
         let cart = data.orderDetails.sort(
-          (a, b) => a.orderDetailId - b.orderDetailId
+          (a, b) => a.orderDetailId - b.orderDetailId,
         );
-        localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage.setItem('cart', JSON.stringify(cart));
         setCartOrderDetails(cart);
         setErrorGetCartOrderDetails({});
         setShowGetCartOrderDetailsToast(true);
@@ -61,7 +61,7 @@ export default function CartPage() {
         }
       }
     } else {
-      setCartOrderDetails(JSON.parse(localStorage.getItem("cart")));
+      setCartOrderDetails(JSON.parse(localStorage.getItem('cart')));
     }
   };
 
@@ -80,8 +80,8 @@ export default function CartPage() {
   const handleCheckout = async () => {
     try {
       axios.defaults.headers.common = {
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+        'Access-Control-Allow-Origin': '*',
       };
       let { status, data } = await axios.post(`${API}/cart/checkout`);
       setErrorCheckout({});
@@ -126,7 +126,7 @@ export default function CartPage() {
               <div className="notfound-content">
                 <h3 className="notfound-header">There is no item in Cart.</h3>
                 <h4 className="notfound-link">
-                  Explore interesting algorithms in{" "}
+                  Explore interesting algorithms in{' '}
                   <Link to="/category">Category Page</Link>
                 </h4>
                 <h4 className="notfound-link">

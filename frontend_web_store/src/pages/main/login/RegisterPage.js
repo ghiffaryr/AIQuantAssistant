@@ -1,38 +1,38 @@
-import React, { useState } from "react";
-import Container from "react-bootstrap/esm/Container";
-import Form from "react-bootstrap/Form";
-import Toast from "react-bootstrap/Toast";
-import ToastContainer from "react-bootstrap/ToastContainer";
-import FooterComponent from "../../../components/basic/FooterComponent";
-import NavbarComponent from "../../../components/basic/NavbarComponent";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { LinkContainer } from "react-router-bootstrap";
-import { useNavigate } from "react-router-dom";
-import Button from "react-bootstrap/esm/Button";
-import "../../../css/pages/main/login/Register.css";
-import { API } from "../../../env/Constants";
-import { storage } from "../../../env/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import axios from "axios";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
-import { BsQuestionCircleFill } from "react-icons/bs";
+import React, { useState } from 'react';
+import Container from 'react-bootstrap/esm/Container';
+import Form from 'react-bootstrap/Form';
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
+import FooterComponent from '../../../components/basic/FooterComponent';
+import NavbarComponent from '../../../components/basic/NavbarComponent';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { LinkContainer } from 'react-router-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import Button from 'react-bootstrap/esm/Button';
+import '../../../css/pages/main/login/Register.css';
+import { API } from '../../../env/Constants';
+import { storage } from '../../../env/firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import axios from 'axios';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+import { BsQuestionCircleFill } from 'react-icons/bs';
 
 export default function RegisterPage() {
   const [inputs, setInputs] = useState({
-    image: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    coPassword: "",
-    recoveryPhrase: "",
-    phone: "",
-    address: "",
+    image: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    coPassword: '',
+    recoveryPhrase: '',
+    phone: '',
+    address: '',
     gender: null,
-    birthdate: "",
-    role: "ROLE_CUSTOMER",
+    birthdate: '',
+    role: 'ROLE_CUSTOMER',
   });
   const [showRegisterToast, setShowRegisterToast] = useState(false);
   const [errorRegister, setErrorRegister] = useState({});
@@ -43,15 +43,15 @@ export default function RegisterPage() {
     setInputs({
       ...inputs,
       [e.target.name]:
-        e.target.name === "gender" && e.target.value === "male"
+        e.target.name === 'gender' && e.target.value === 'male'
           ? true
-          : e.target.name === "gender" && e.target.value === "female"
-          ? false
-          : e.target.value,
+          : e.target.name === 'gender' && e.target.value === 'female'
+            ? false
+            : e.target.value,
     });
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     const form = e.currentTarget;
 
     setValidated(true);
@@ -62,12 +62,12 @@ export default function RegisterPage() {
           ...Object.fromEntries(
             Object.entries(inputs).filter(
               ([key, value]) =>
-                key !== "firstName" &&
-                key !== "lastName" &&
-                key !== "coPassword" &&
-                value !== "" &&
-                value !== null
-            )
+                key !== 'firstName' &&
+                key !== 'lastName' &&
+                key !== 'coPassword' &&
+                value !== '' &&
+                value !== null,
+            ),
           ),
           name: `${inputs.firstName} ${inputs.lastName}`,
           birthdate: new Date(inputs.birthdate).toISOString(),
@@ -76,14 +76,14 @@ export default function RegisterPage() {
         setErrorRegister({});
         setShowRegisterToast(true);
         setTimeout(() => {
-          navigate("/login");
+          navigate('/login');
         }, 3000);
       } catch (error) {
         setInputs({
           ...inputs,
-          password: "",
-          coPassword: "",
-          recoveryPhrase: "",
+          password: '',
+          coPassword: '',
+          recoveryPhrase: '',
         });
         for (let errorObject of error.response.data.errors) {
           setErrorRegister(errorObject);
@@ -98,17 +98,17 @@ export default function RegisterPage() {
     const fileName = e.target.files[0].name;
     const storageRef = ref(storage, `${fileName}`);
     uploadBytes(storageRef, e.target.files[0])
-      .then((snapshot) => {
+      .then(snapshot => {
         return getDownloadURL(storageRef);
       })
-      .then((downloadURL) => {
+      .then(downloadURL => {
         setInputs({
           ...inputs,
           image: downloadURL,
         });
       })
-      .catch((err) => {
-        setErrorRegister({ code: 500, message: "Upload failed!" });
+      .catch(err => {
+        setErrorRegister({ code: 500, message: 'Upload failed!' });
         setShowRegisterToast(true);
       });
   }
@@ -118,7 +118,7 @@ export default function RegisterPage() {
       <NavbarComponent navStyle="simple" />
       <>
         <Container className="container register-main d-flex justify-content-center flex-column align-items-center my-5 pt-5">
-          {localStorage.getItem("user_token") ? (
+          {localStorage.getItem('user_token') ? (
             <>
               <h3 className="main-title">You are already registered.</h3>
               <LinkContainer to="/">
@@ -239,21 +239,21 @@ export default function RegisterPage() {
                       &nbsp;
                       <span className="d-flex align-items-center">
                         <OverlayTrigger
-                          placement={"top"}
+                          placement={'top'}
                           overlay={
-                            <Tooltip id={"tooltip-top"}>
-                              <p style={{ textAlign: "left" }}>
-                                The password needs to:{" "}
+                            <Tooltip id={'tooltip-top'}>
+                              <p style={{ textAlign: 'left' }}>
+                                The password needs to:{' '}
                               </p>
                               <ul>
-                                <li style={{ textAlign: "left" }}>
+                                <li style={{ textAlign: 'left' }}>
                                   include both lower and upper case characters
                                 </li>
-                                <li style={{ textAlign: "left" }}>
+                                <li style={{ textAlign: 'left' }}>
                                   include at least one number and one special
                                   character
                                 </li>
-                                <li style={{ textAlign: "left" }}>
+                                <li style={{ textAlign: 'left' }}>
                                   be at least 8 characters long.
                                 </li>
                               </ul>
@@ -264,9 +264,9 @@ export default function RegisterPage() {
                             className="input d-flex align-items-center"
                             type="button"
                             style={{
-                              borderRadius: "50%",
-                              width: "1rem",
-                              height: "1rem",
+                              borderRadius: '50%',
+                              width: '1rem',
+                              height: '1rem',
                             }}
                           >
                             <BsQuestionCircleFill />
@@ -288,7 +288,7 @@ export default function RegisterPage() {
                     />
                     <Form.Control.Feedback type="invalid">
                       <p>
-                        Please provide a valid password. The password needs to:{" "}
+                        Please provide a valid password. The password needs to:{' '}
                       </p>
                       <ul>
                         <li>include both lower and upper case characters</li>
@@ -408,7 +408,7 @@ export default function RegisterPage() {
                       label="Male"
                       name="gender"
                       value="male"
-                      type={"radio"}
+                      type={'radio'}
                       id="inline-radio-gender-male"
                       onChange={handleChange}
                     />
@@ -417,7 +417,7 @@ export default function RegisterPage() {
                       label="Female"
                       name="gender"
                       value="female"
-                      type={"radio"}
+                      type={'radio'}
                       id="inline-radio-gender-female"
                       onChange={handleChange}
                     />
@@ -451,7 +451,7 @@ export default function RegisterPage() {
                   </Button>
                   <br />
                   <Form.Text>
-                    Already have an account?{" "}
+                    Already have an account?{' '}
                     <LinkContainer
                       to="/login"
                       className="login-link text-primary"

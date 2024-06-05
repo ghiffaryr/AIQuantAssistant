@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import Container from "react-bootstrap/esm/Container";
-import Form from "react-bootstrap/Form";
-import Toast from "react-bootstrap/Toast";
-import ToastContainer from "react-bootstrap/ToastContainer";
-import InputGroup from "react-bootstrap/InputGroup";
-import FooterComponent from "../../components/basic/FooterComponent";
-import NavbarComponent from "../../components/basic/NavbarComponent";
-import { FaUser, FaUnlock } from "react-icons/fa";
-import { LinkContainer } from "react-router-bootstrap";
-import { useLocation, useNavigate } from "react-router-dom";
-import Button from "react-bootstrap/esm/Button";
-import "../../css/pages/main/LoginPage.css";
-import { API } from "../../env/Constants";
-import axios from "axios";
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
+import React, { useState } from 'react';
+import Container from 'react-bootstrap/esm/Container';
+import Form from 'react-bootstrap/Form';
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FooterComponent from '../../components/basic/FooterComponent';
+import NavbarComponent from '../../components/basic/NavbarComponent';
+import { FaUser, FaUnlock } from 'react-icons/fa';
+import { LinkContainer } from 'react-router-bootstrap';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Button from 'react-bootstrap/esm/Button';
+import '../../css/pages/main/LoginPage.css';
+import { API } from '../../env/Constants';
+import axios from 'axios';
+import Row from 'react-bootstrap/esm/Row';
+import Col from 'react-bootstrap/esm/Col';
 
 export default function LoginPage() {
-  const [inputs, setInputs] = useState({ email: "", password: "" });
+  const [inputs, setInputs] = useState({ email: '', password: '' });
   const [showLoginToast, setShowLoginToast] = useState(false);
   const [errorLogin, setErrorLogin] = useState({});
   const [showMergeToServerCartToast, setShowMergeToServerCartToast] =
@@ -41,28 +41,28 @@ export default function LoginPage() {
       let { status, data } = await axios.get(`${API}/profile`);
 
       // localStorage.setItem("userEmail", data.email);
-      localStorage.setItem("userName", data.name);
-      localStorage.setItem("userImage", data.image);
-      localStorage.setItem("userPhone", data.phone);
-      localStorage.setItem("userAddress", data.address);
-      localStorage.setItem("userGender", data.gender);
-      localStorage.setItem("userBirthdate", data.birthdate);
-      localStorage.setItem("userRole", data.role);
-      localStorage.setItem("userCreateTime", data.createTime);
-      localStorage.setItem("userUpdateTime", data.updateTime);
+      localStorage.setItem('userName', data.name);
+      localStorage.setItem('userImage', data.image);
+      localStorage.setItem('userPhone', data.phone);
+      localStorage.setItem('userAddress', data.address);
+      localStorage.setItem('userGender', data.gender);
+      localStorage.setItem('userBirthdate', data.birthdate);
+      localStorage.setItem('userRole', data.role);
+      localStorage.setItem('userCreateTime', data.createTime);
+      localStorage.setItem('userUpdateTime', data.updateTime);
       setErrorLogin({});
       setShowLoginToast(true);
     } catch (error) {
       // localStorage.removeItem("userEmail");
-      localStorage.removeItem("userName");
-      localStorage.removeItem("userImage");
-      localStorage.removeItem("userPhone");
-      localStorage.removeItem("userAddress");
-      localStorage.removeItem("userGender");
-      localStorage.removeItem("userBirthdate");
-      localStorage.removeItem("userRole");
-      localStorage.removeItem("userCreateTime");
-      localStorage.removeItem("userUpdateTime");
+      localStorage.removeItem('userName');
+      localStorage.removeItem('userImage');
+      localStorage.removeItem('userPhone');
+      localStorage.removeItem('userAddress');
+      localStorage.removeItem('userGender');
+      localStorage.removeItem('userBirthdate');
+      localStorage.removeItem('userRole');
+      localStorage.removeItem('userCreateTime');
+      localStorage.removeItem('userUpdateTime');
       for (let errorObject of error.response.data.errors) {
         setErrorLogin(errorObject);
         setShowLoginToast(true);
@@ -74,7 +74,7 @@ export default function LoginPage() {
     try {
       let { status, data } = await axios.post(
         `${API}/cart`,
-        JSON.parse(localStorage.getItem("cart"))
+        JSON.parse(localStorage.getItem('cart')),
       );
       setErrorMergeToServerCart({});
       setShowMergeToServerCartToast(true);
@@ -98,7 +98,7 @@ export default function LoginPage() {
           quantity: orderDetail.quantity,
         });
       }
-      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem('cart', JSON.stringify(cart));
       setErrorGetServerCart({});
       setShowGetServerCartToast(false);
     } catch (error) {
@@ -116,37 +116,37 @@ export default function LoginPage() {
         password: inputs.password,
       });
 
-      localStorage.setItem("userEmail", data.email);
-      localStorage.setItem("userToken", data.token);
-      localStorage.setItem("tokenType", data.type);
+      localStorage.setItem('userEmail', data.email);
+      localStorage.setItem('userToken', data.token);
+      localStorage.setItem('tokenType', data.type);
       setErrorLogin({});
       setShowLoginToast(true);
       axios.defaults.headers.common = {
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+        'Access-Control-Allow-Origin': '*',
       };
       await getProfile();
       if (
-        localStorage.getItem("userRole") === "ROLE_CUSTOMER" &&
-        localStorage.getItem("cart")
+        localStorage.getItem('userRole') === 'ROLE_CUSTOMER' &&
+        localStorage.getItem('cart')
       ) {
         await mergeToServerCart();
       }
-      if (localStorage.getItem("userRole") === "ROLE_CUSTOMER") {
+      if (localStorage.getItem('userRole') === 'ROLE_CUSTOMER') {
         await getServerCart();
       }
       setTimeout(() => {
         if (location.state) {
           navigate(`${location.state.from.pathname}`);
         } else {
-          navigate("/");
+          navigate('/');
         }
       }, 3000);
     } catch (error) {
-      setInputs({ ...inputs, password: "" });
-      localStorage.removeItem("userEmail");
-      localStorage.removeItem("userToken");
-      localStorage.removeItem("tokenType");
+      setInputs({ ...inputs, password: '' });
+      localStorage.removeItem('userEmail');
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('tokenType');
       for (let errorObject of error.response.data.errors) {
         setErrorLogin(errorObject);
         setShowLoginToast(true);
@@ -154,7 +154,7 @@ export default function LoginPage() {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     const form = e.currentTarget;
 
     setValidated(true);
@@ -169,7 +169,7 @@ export default function LoginPage() {
       <NavbarComponent navStyle="simple" />
       <>
         <Container className="container d-flex justify-content-center flex-column align-items-center mt-5 pt-5">
-          {localStorage.getItem("userToken") ? (
+          {localStorage.getItem('userToken') ? (
             <>
               <h3 className="main-title">You are logged in.</h3>
               <LinkContainer to="/">
@@ -233,7 +233,7 @@ export default function LoginPage() {
                   <Row>
                     <Col xs={12}>
                       <Form.Text>
-                        Forget your password?{" "}
+                        Forget your password?{' '}
                         <LinkContainer
                           to="/recover"
                           className="recover-link text-primary"
@@ -244,7 +244,7 @@ export default function LoginPage() {
                     </Col>
                     <Col xs={12}>
                       <Form.Text>
-                        You don't have an account?{" "}
+                        You don't have an account?{' '}
                         <LinkContainer
                           to="/register"
                           className="register-link text-primary"

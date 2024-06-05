@@ -1,11 +1,11 @@
-import axios from "axios";
-import React, { useState } from "react";
-import Toast from "react-bootstrap/Toast";
-import Button from "react-bootstrap/esm/Button";
-import ToastContainer from "react-bootstrap/esm/ToastContainer";
-import OrderStatusEnum from "../../enums/OrderStatusEnum";
-import { API } from "../../env/Constants";
-import OrderOrderDetailList from "./OrderOrderDetailList";
+import axios from 'axios';
+import React, { useState } from 'react';
+import Toast from 'react-bootstrap/Toast';
+import Button from 'react-bootstrap/esm/Button';
+import ToastContainer from 'react-bootstrap/esm/ToastContainer';
+import OrderStatusEnum from '../../enums/OrderStatusEnum';
+import { API } from '../../env/Constants';
+import OrderOrderDetailList from './OrderOrderDetailList';
 
 export default function Order({
   id,
@@ -25,7 +25,7 @@ export default function Order({
 
   function handleStatusLocalChange(status) {
     let newOrders = orders;
-    newOrders = newOrders.map((order) => {
+    newOrders = newOrders.map(order => {
       if (order.orderId === id) {
         order.orderStatus = status;
       }
@@ -34,15 +34,15 @@ export default function Order({
     setOrders(newOrders);
   }
 
-  const handleCancelOrder = async (id) => {
+  const handleCancelOrder = async id => {
     try {
       axios.defaults.headers.common = {
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+        'Access-Control-Allow-Origin': '*',
       };
       let { status, data } = await axios.patch(`${API}/order/cancel/${id}`, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
       handleStatusLocalChange(Number(2));
@@ -55,15 +55,15 @@ export default function Order({
       }
     }
   };
-  const handleFinishOrder = async (id) => {
+  const handleFinishOrder = async id => {
     try {
       axios.defaults.headers.common = {
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+        'Access-Control-Allow-Origin': '*',
       };
       let { status, data } = await axios.patch(`${API}/order/finish/${id}`, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
       handleStatusLocalChange(Number(1));
@@ -102,8 +102,8 @@ export default function Order({
                     </div>
                   )}
                   {status === 0 &&
-                    (localStorage.getItem("userRole") === "ROLE_EMPLOYEE" ||
-                      localStorage.getItem("userRole") === "ROLE_MANAGER") && (
+                    (localStorage.getItem('userRole') === 'ROLE_EMPLOYEE' ||
+                      localStorage.getItem('userRole') === 'ROLE_MANAGER') && (
                       <div className="ms-4">
                         <Button
                           variant="outline-success"

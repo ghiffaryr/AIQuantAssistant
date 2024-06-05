@@ -1,32 +1,32 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
-import ToastContainer from "react-bootstrap/esm/ToastContainer";
-import Toast from "react-bootstrap/Toast";
-import Form from "react-bootstrap/Form";
-import { FaPlus, FaMinus } from "react-icons/fa";
-import ProductStatusEnum from "../../enums/ProductStatusEnum";
-import { API } from "../../env/Constants";
-import Button from "react-bootstrap/esm/Button";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import FloatingLabel from 'react-bootstrap/esm/FloatingLabel';
+import ToastContainer from 'react-bootstrap/esm/ToastContainer';
+import Toast from 'react-bootstrap/Toast';
+import Form from 'react-bootstrap/Form';
+import { FaPlus, FaMinus } from 'react-icons/fa';
+import ProductStatusEnum from '../../enums/ProductStatusEnum';
+import { API } from '../../env/Constants';
+import Button from 'react-bootstrap/esm/Button';
 
 export default function OrderOrderDetail({ id, code, price, quantity }) {
   const [product, setProduct] = useState({
     productId: null,
-    productCode: "",
-    productName: "",
+    productCode: '',
+    productName: '',
     productPrice: null,
     productPeriod: null,
-    productDescription: "",
-    productImage: "",
+    productDescription: '',
+    productImage: '',
     productStatus: null,
-    productCategoryCode: "",
-    createTime: "",
-    updateTime: "",
+    productCategoryCode: '',
+    createTime: '',
+    updateTime: '',
   });
   const [showGetProductToast, setShowGetProductToast] = useState(false);
   const [errorGetProduct, setErrorGetProduct] = useState({});
 
-  const getProduct = async (code) => {
+  const getProduct = async code => {
     try {
       let { status, data } = await axios.get(`${API}/product/${code}`);
       setProduct(data);
@@ -52,7 +52,7 @@ export default function OrderOrderDetail({ id, code, price, quantity }) {
             src={
               product.productImage
                 ? product.productImage
-                : "https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/product_image_notfound.jpg?alt=media&token=9b66da8d-37b7-4f30-bbc2-1338d7e2f52c"
+                : 'https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/product_image_notfound.jpg?alt=media&token=9b66da8d-37b7-4f30-bbc2-1338d7e2f52c'
             }
             className="card-img-top"
             alt="Product Image"
@@ -69,8 +69,8 @@ export default function OrderOrderDetail({ id, code, price, quantity }) {
               </p>
               <p className="card-text">${product.productPrice}</p>
               <p className="card-text">
-                {product.productPeriod}{" "}
-                {product.productPeriod < 2 ? "month" : "months"}
+                {product.productPeriod}{' '}
+                {product.productPeriod < 2 ? 'month' : 'months'}
               </p>
             </div>
           </div>

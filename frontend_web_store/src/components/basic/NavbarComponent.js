@@ -1,54 +1,60 @@
-import Button from "react-bootstrap/Button";
-import Navbar from "react-bootstrap/Navbar";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Toast from "react-bootstrap/Toast";
-import ToastContainer from "react-bootstrap/ToastContainer";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Badge from "react-bootstrap/Badge";
-import { LinkContainer } from "react-router-bootstrap";
-import { useEffect, useState } from "react";
-import { BsCartFill } from "react-icons/bs";
-import { FaUser } from "react-icons/fa";
-import { AiOutlineStock } from "react-icons/ai";
-import { useNavigate } from "react-router";
-import "../../css/components/basic/Navbar.css";
+import Button from 'react-bootstrap/Button';
+import Navbar from 'react-bootstrap/Navbar';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Badge from 'react-bootstrap/Badge';
+import { LinkContainer } from 'react-router-bootstrap';
+import { useState } from 'react';
+import { BsCartFill } from 'react-icons/bs';
+import { FaUser } from 'react-icons/fa';
+import { AiOutlineStock } from 'react-icons/ai';
+import { useNavigate } from 'react-router';
+import '../../css/components/basic/Navbar.css';
 
 function NavbarComponent(props) {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
 
   function handleLogout() {
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("userToken");
-    localStorage.removeItem("tokenType");
-    localStorage.removeItem("userName");
-    localStorage.removeItem("userImage");
-    localStorage.removeItem("userPhone");
-    localStorage.removeItem("userAddress");
-    localStorage.removeItem("userGender");
-    localStorage.removeItem("userBirthdate");
-    localStorage.removeItem("userRole");
-    localStorage.removeItem("userCreateTime");
-    localStorage.removeItem("userUpdateTime");
-    localStorage.removeItem("cart");
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userToken');
+    localStorage.removeItem('tokenType');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userImage');
+    localStorage.removeItem('userPhone');
+    localStorage.removeItem('userAddress');
+    localStorage.removeItem('userGender');
+    localStorage.removeItem('userBirthdate');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('userCreateTime');
+    localStorage.removeItem('userUpdateTime');
+    localStorage.removeItem('cart');
     setShow(true);
     setTimeout(() => {
-      navigate("/");
+      navigate('/');
     }, 3000);
   }
 
   return (
     <>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className={`${props.navbarClassname}`}>
+      <Navbar
+        collapseOnSelect
+        expand="lg"
+        bg="dark"
+        variant="dark"
+        className={`${props.navbarClassname}`}
+      >
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
-              <AiOutlineStock className="text-primary" />{" "}
+              <AiOutlineStock className="text-primary" />{' '}
               <span className="text-white">Quant Assistant</span>
             </Navbar.Brand>
           </LinkContainer>
-          {props.navStyle !== "simple" && (
+          {props.navStyle !== 'simple' && (
             <>
               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
               <Navbar.Collapse id="responsive-navbar-nav">
@@ -81,8 +87,8 @@ function NavbarComponent(props) {
                   Nav
                 </Nav>
                 <Nav>
-                  {localStorage.getItem("userRole") === "ROLE_EMPLOYEE" ||
-                  localStorage.getItem("userRole") === "ROLE_MANAGER" ? (
+                  {localStorage.getItem('userRole') === 'ROLE_EMPLOYEE' ||
+                  localStorage.getItem('userRole') === 'ROLE_MANAGER' ? (
                     <LinkContainer to="/order" className="nav-tab-link">
                       <Button variant="link" className="nav-item">
                         <BsCartFill />
@@ -93,29 +99,29 @@ function NavbarComponent(props) {
                     <LinkContainer to="/cart" className="nav-tab-link">
                       <Button variant="link" className="nav-item">
                         <BsCartFill />
-                        Cart{" "}
+                        Cart{' '}
                         <Badge bg="secondary">
                           {props.cartOrderDetailCount}
-                        </Badge>{" "}
+                        </Badge>{' '}
                       </Button>
                     </LinkContainer>
                   )}
-                  {localStorage.getItem("userToken") ? (
+                  {localStorage.getItem('userToken') ? (
                     <Button variant="link" className="nav-item nav-tab-link">
                       <FaUser />
                       <NavDropdown
                         title={
-                          localStorage.getItem("userEmail")
-                            ? localStorage.getItem("userEmail")
-                            : "User"
+                          localStorage.getItem('userEmail')
+                            ? localStorage.getItem('userEmail')
+                            : 'User'
                         }
                         menuVariant="light"
                       >
                         <LinkContainer to="/profile">
                           <NavDropdown.Item>Profile</NavDropdown.Item>
                         </LinkContainer>
-                        {localStorage.getItem("userRole") ===
-                          "ROLE_CUSTOMER" && (
+                        {localStorage.getItem('userRole') ===
+                          'ROLE_CUSTOMER' && (
                           <>
                             <LinkContainer to="/order">
                               <NavDropdown.Item>Order</NavDropdown.Item>
@@ -167,5 +173,5 @@ function NavbarComponent(props) {
 export default NavbarComponent;
 
 NavbarComponent.defaultProps = {
-  navbarClassname: ""
-}
+  navbarClassname: '',
+};

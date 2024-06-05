@@ -1,25 +1,25 @@
-import React from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
-import HomePage from "../pages/main/HomePage";
-import LoginPage from "../pages/main/LoginPage";
-import RegisterPage from "../pages/main/login/RegisterPage";
-import NotFoundPage from "../pages/exception/NotFoundPage";
-import CategoryPage from "../pages/main/CategoryPage";
-import RecoverPage from "../pages/main/login/RecoverPage";
-import ProductByCategoryPage from "../pages/main/category/ProductByCategoryPage";
-import CartPage from "../pages/main/CartPage";
-import ProductPage from "../pages/main/ProductPage";
-import NewsPage from "../pages/main/NewsPage";
-import OrderPage from "../pages/main/OrderPage";
-import SubscriptionPage from "../pages/main/SubscriptionPage";
-import UnauthenticatedAndCustomerAccess from "../components/protected/UnauthenticatedAndCustomerAccess";
-import ProfilePage from "../pages/main/ProfilePage";
-import AuthenticatedAccess from "../components/protected/AuthenticatedAccess";
-import StockPage from "../pages/main/services/StockPage";
-import SentimentAnalysisPage from "../pages/main/services/SentimentAnalysisPages";
-import NarrativeSummary from "../pages/main/services/NarrativeSummary";
-import AnalysisResult from "../pages/main/services/AnalysisResultPages";
-import Sidebar from "../components/basic/Sidebar";
+import React from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import HomePage from '../pages/main/HomePage';
+import LoginPage from '../pages/main/LoginPage';
+import RegisterPage from '../pages/main/login/RegisterPage';
+import NotFoundPage from '../pages/exception/NotFoundPage';
+import CategoryPage from '../pages/main/CategoryPage';
+import RecoverPage from '../pages/main/login/RecoverPage';
+import ProductByCategoryPage from '../pages/main/category/ProductByCategoryPage';
+import CartPage from '../pages/main/CartPage';
+import ProductPage from '../pages/main/ProductPage';
+import NewsPage from '../pages/main/NewsPage';
+import OrderPage from '../pages/main/OrderPage';
+import SubscriptionPage from '../pages/main/SubscriptionPage';
+import UnauthenticatedAndCustomerAccess from '../components/protected/UnauthenticatedAndCustomerAccess';
+import ProfilePage from '../pages/main/ProfilePage';
+import AuthenticatedAccess from '../components/protected/AuthenticatedAccess';
+import StockPage from '../pages/main/services/StockPage';
+import SentimentAnalysisPage from '../pages/main/services/SentimentAnalysisPages';
+import NarrativeSummary from '../pages/main/services/NarrativeSummary';
+import AnalysisResult from '../pages/main/services/AnalysisResultPages';
+import Sidebar from '../components/basic/Sidebar';
 
 function ApiRoutes() {
   const location = useLocation();
@@ -60,14 +60,14 @@ function ApiRoutes() {
       <Route
         path="/services/forecasting"
         element={
-         <Sidebar>
+          <Sidebar>
             <AuthenticatedAccess>
               <SubscriptionPage />
             </AuthenticatedAccess>
-         </Sidebar>
+          </Sidebar>
         }
       />
-      <Route 
+      <Route
         path="/services/stocks"
         element={
           <Sidebar>
@@ -77,34 +77,34 @@ function ApiRoutes() {
           </Sidebar>
         }
       />
-      <Route 
+      <Route
         path="/services/sentiment-analysis"
         element={
-         <Sidebar>
+          <Sidebar>
             <AuthenticatedAccess>
               <SentimentAnalysisPage />
             </AuthenticatedAccess>
-         </Sidebar>
+          </Sidebar>
         }
       />
-      <Route 
+      <Route
         path="/services/summary"
         element={
-         <Sidebar>
+          <Sidebar>
             <AuthenticatedAccess>
               <NarrativeSummary />
             </AuthenticatedAccess>
-         </Sidebar>
+          </Sidebar>
         }
       />
-      <Route 
+      <Route
         path="/services/result"
         element={
-         <Sidebar>
+          <Sidebar>
             <AuthenticatedAccess>
               <AnalysisResult />
             </AuthenticatedAccess>
-         </Sidebar>
+          </Sidebar>
         }
       />
       <Route path="*" element={<NotFoundPage />} />

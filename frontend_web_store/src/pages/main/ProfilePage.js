@@ -1,47 +1,47 @@
-import React, { useState } from "react";
-import NavbarComponent from "../../components/basic/NavbarComponent";
-import Form from "react-bootstrap/Form";
-import Toast from "react-bootstrap/Toast";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import axios from "axios";
-import { API } from "../../env/Constants";
-import { storage } from "../../env/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
-import { BsQuestionCircleFill } from "react-icons/bs";
-import Button from "react-bootstrap/esm/Button";
-import { useEffect } from "react";
-import Breadcrumbs from "../../components/basic/Breadcrumbs";
-import FooterComponent from "../../components/basic/FooterComponent";
-import ToastContainer from "react-bootstrap/esm/ToastContainer";
-import { useNavigate } from "react-router-dom";
-import "../../css/pages/main/ProfilePage.css";
+import React, { useState } from 'react';
+import NavbarComponent from '../../components/basic/NavbarComponent';
+import Form from 'react-bootstrap/Form';
+import Toast from 'react-bootstrap/Toast';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import axios from 'axios';
+import { API } from '../../env/Constants';
+import { storage } from '../../env/firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+import { BsQuestionCircleFill } from 'react-icons/bs';
+import Button from 'react-bootstrap/esm/Button';
+import { useEffect } from 'react';
+import Breadcrumbs from '../../components/basic/Breadcrumbs';
+import FooterComponent from '../../components/basic/FooterComponent';
+import ToastContainer from 'react-bootstrap/esm/ToastContainer';
+import { useNavigate } from 'react-router-dom';
+import '../../css/pages/main/ProfilePage.css';
 
 export default function ProfilePage() {
   const [showGetServerCartToast, setShowGetServerCartToast] = useState(false);
   const [errorGetServerCart, setErrorGetServerCart] = useState({});
   const [cartOrderDetailCount, setCartOrderDetailCount] = useState(0);
   const [inputs, setInputs] = useState({
-    image: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    coPassword: "",
-    phone: "",
-    address: "",
+    image: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    coPassword: '',
+    phone: '',
+    address: '',
     gender: null,
-    birthdate: "",
-    role: "ROLE_CUSTOMER",
+    birthdate: '',
+    role: 'ROLE_CUSTOMER',
   });
   const [showGetProfileToast, setShowGetProfileToast] = useState(false);
   const [errorGetProfile, setErrorGetProfile] = useState({});
   const [showUploadProfilePictureToast, setShowUploadProfilePictureToast] =
     useState(false);
   const [errorUploadProfilePicture, setErrorUploadProfilePicture] = useState(
-    {}
+    {},
   );
   const [showUpdateProfileToast, setShowUpdateProfileToast] = useState(false);
   const [errorUpdateProfile, setErrorUpdateProfile] = useState({});
@@ -52,10 +52,10 @@ export default function ProfilePage() {
   const navigate = useNavigate();
 
   const getServerCart = async () => {
-    if (localStorage.getItem("userRole") === "ROLE_CUSTOMER") {
+    if (localStorage.getItem('userRole') === 'ROLE_CUSTOMER') {
       axios.defaults.headers.common = {
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+        'Access-Control-Allow-Origin': '*',
       };
       try {
         let { status, data } = await axios.get(`${API}/cart`);
@@ -68,7 +68,7 @@ export default function ProfilePage() {
             quantity: orderDetail.quantity,
           });
         }
-        localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage.setItem('cart', JSON.stringify(cart));
         setErrorGetServerCart({});
         setShowGetServerCartToast(false);
       } catch (error) {
@@ -80,18 +80,18 @@ export default function ProfilePage() {
     }
   };
 
-  const getProfile = async (e) => {
+  const getProfile = async e => {
     try {
       axios.defaults.headers.common = {
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+        'Access-Control-Allow-Origin': '*',
       };
       let { status, data } = await axios.get(`${API}/profile`);
       setInputs({
         ...inputs,
         image: data.image,
-        firstName: data.name.split(" ")[0],
-        lastName: data.name.split(" ")[1],
+        firstName: data.name.split(' ')[0],
+        lastName: data.name.split(' ')[1],
         email: data.email,
         phone: data.phone,
         address: data.address,
@@ -124,7 +124,7 @@ export default function ProfilePage() {
   //   });
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("cart"));
+    const cart = JSON.parse(localStorage.getItem('cart'));
     let counter = Number(0);
     if (cart) {
       for (let i = 0; i < cart.length; i++) {
@@ -138,15 +138,15 @@ export default function ProfilePage() {
     setInputs({
       ...inputs,
       [e.target.name]:
-        e.target.name === "gender" && e.target.value === "male"
+        e.target.name === 'gender' && e.target.value === 'male'
           ? true
-          : e.target.name === "gender" && e.target.value === "female"
-          ? false
-          : e.target.value,
+          : e.target.name === 'gender' && e.target.value === 'female'
+            ? false
+            : e.target.value,
     });
   }
 
-  const handleSubmitUpdateProfile = async (e) => {
+  const handleSubmitUpdateProfile = async e => {
     const form = e.currentTarget;
 
     setValidated(true);
@@ -154,19 +154,19 @@ export default function ProfilePage() {
     if (form.checkValidity()) {
       try {
         axios.defaults.headers.common = {
-          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+          'Access-Control-Allow-Origin': '*',
         };
         let { status, data } = await axios.patch(`${API}/profile/update`, {
           ...Object.fromEntries(
             Object.entries(inputs).filter(
               ([key, value]) =>
-                key !== "firstName" &&
-                key !== "lastName" &&
-                key !== "coPassword" &&
-                value !== "" &&
-                value !== null
-            )
+                key !== 'firstName' &&
+                key !== 'lastName' &&
+                key !== 'coPassword' &&
+                value !== '' &&
+                value !== null,
+            ),
           ),
           name: `${inputs.firstName} ${inputs.lastName}`,
           birthdate: new Date(inputs.birthdate).toISOString(),
@@ -176,8 +176,8 @@ export default function ProfilePage() {
       } catch (error) {
         setInputs({
           ...inputs,
-          password: "",
-          coPassword: "",
+          password: '',
+          coPassword: '',
         });
         for (let errorObject of error.response.data.errors) {
           setErrorUpdateProfile(errorObject);
@@ -192,43 +192,43 @@ export default function ProfilePage() {
     const fileName = e.target.files[0].name;
     const storageRef = ref(storage, `${fileName}`);
     uploadBytes(storageRef, e.target.files[0])
-      .then((snapshot) => {
+      .then(snapshot => {
         return getDownloadURL(storageRef);
       })
-      .then((downloadURL) => {
+      .then(downloadURL => {
         setInputs({
           ...inputs,
           image: downloadURL,
         });
       })
-      .catch((err) => {
-        setErrorUploadProfilePicture({ code: 500, message: "Upload failed!" });
+      .catch(err => {
+        setErrorUploadProfilePicture({ code: 500, message: 'Upload failed!' });
         setShowUploadProfilePictureToast(true);
       });
   }
 
-  const handleDeactivateAccount = async (e) => {
+  const handleDeactivateAccount = async e => {
     try {
       axios.defaults.headers.common = {
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+        'Access-Control-Allow-Origin': '*',
       };
       let { status, data } = await axios.patch(`${API}/profile/deactivate`);
-      localStorage.removeItem("userEmail");
-      localStorage.removeItem("userToken");
-      localStorage.removeItem("tokenType");
-      localStorage.removeItem("userName");
-      localStorage.removeItem("userImage");
-      localStorage.removeItem("userPhone");
-      localStorage.removeItem("userAddress");
-      localStorage.removeItem("userGender");
-      localStorage.removeItem("userBirthdate");
-      localStorage.removeItem("userRole");
-      localStorage.removeItem("userCreateTime");
-      localStorage.removeItem("userUpdateTime");
-      localStorage.removeItem("cart");
+      localStorage.removeItem('userEmail');
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('tokenType');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('userImage');
+      localStorage.removeItem('userPhone');
+      localStorage.removeItem('userAddress');
+      localStorage.removeItem('userGender');
+      localStorage.removeItem('userBirthdate');
+      localStorage.removeItem('userRole');
+      localStorage.removeItem('userCreateTime');
+      localStorage.removeItem('userUpdateTime');
+      localStorage.removeItem('cart');
       setTimeout(() => {
-        navigate("/login");
+        navigate('/login');
       }, 3000);
       setErrorDeactivateAccount({});
       setShowDeactivateAccountToast(true);
@@ -256,7 +256,7 @@ export default function ProfilePage() {
                 src={
                   inputs.image
                     ? inputs.image
-                    : "https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/profile_image_notfound.png?alt=media&token=e1488150-c31b-4020-9ca5-b8694f6c72b3"
+                    : 'https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/profile_image_notfound.png?alt=media&token=e1488150-c31b-4020-9ca5-b8694f6c72b3'
                 }
                 alt="Profile Picture"
               />
@@ -393,21 +393,21 @@ export default function ProfilePage() {
                       &nbsp;
                       <span className="d-flex align-items-center">
                         <OverlayTrigger
-                          placement={"top"}
+                          placement={'top'}
                           overlay={
-                            <Tooltip id={"tooltip-top"}>
-                              <p style={{ textAlign: "left" }}>
-                                The password needs to:{" "}
+                            <Tooltip id={'tooltip-top'}>
+                              <p style={{ textAlign: 'left' }}>
+                                The password needs to:{' '}
                               </p>
                               <ul>
-                                <li style={{ textAlign: "left" }}>
+                                <li style={{ textAlign: 'left' }}>
                                   include both lower and upper case characters
                                 </li>
-                                <li style={{ textAlign: "left" }}>
+                                <li style={{ textAlign: 'left' }}>
                                   include at least one number and one special
                                   character
                                 </li>
-                                <li style={{ textAlign: "left" }}>
+                                <li style={{ textAlign: 'left' }}>
                                   be at least 8 characters long.
                                 </li>
                               </ul>
@@ -418,9 +418,9 @@ export default function ProfilePage() {
                             className="input d-flex align-items-center"
                             type="button"
                             style={{
-                              borderRadius: "50%",
-                              width: "1rem",
-                              height: "1rem",
+                              borderRadius: '50%',
+                              width: '1rem',
+                              height: '1rem',
                             }}
                           >
                             <BsQuestionCircleFill />
@@ -442,7 +442,7 @@ export default function ProfilePage() {
                     />
                     <Form.Control.Feedback type="invalid">
                       <p>
-                        Please provide a valid password. The password needs to:{" "}
+                        Please provide a valid password. The password needs to:{' '}
                       </p>
                       <ul>
                         <li>include both lower and upper case characters</li>
@@ -538,7 +538,7 @@ export default function ProfilePage() {
                       label="Male"
                       name="gender"
                       value="male"
-                      type={"radio"}
+                      type={'radio'}
                       id="inline-radio-gender-male"
                       onChange={handleChange}
                       checked={inputs.gender === true}
@@ -548,7 +548,7 @@ export default function ProfilePage() {
                       label="Female"
                       name="gender"
                       value="female"
-                      type={"radio"}
+                      type={'radio'}
                       id="inline-radio-gender-female"
                       onChange={handleChange}
                       checked={inputs.gender === false}
@@ -587,7 +587,7 @@ export default function ProfilePage() {
                   <Row>
                     <Col xs={12}>
                       <Form.Text>
-                        Deactivate your account?{" "}
+                        Deactivate your account?{' '}
                         <a
                           className="deactivate-link text-danger"
                           onClick={handleDeactivateAccount}

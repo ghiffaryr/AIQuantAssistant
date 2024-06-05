@@ -1,12 +1,12 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import Button from "react-bootstrap/esm/Button";
-import Form from "react-bootstrap/Form";
-import Toast from "react-bootstrap/Toast";
-import ToastContainer from "react-bootstrap/esm/ToastContainer";
-import { API } from "../../env/Constants";
-import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
-import Plot from "react-plotly.js";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import Button from 'react-bootstrap/esm/Button';
+import Form from 'react-bootstrap/Form';
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/esm/ToastContainer';
+import { API } from '../../env/Constants';
+import FloatingLabel from 'react-bootstrap/esm/FloatingLabel';
+import Plot from 'react-plotly.js';
 
 export default function Subscription({
   id,
@@ -17,19 +17,19 @@ export default function Subscription({
 }) {
   const [productCategory, setProductCategory] = useState({
     productCategoryId: null,
-    productCategoryCode: "",
-    productCategoryName: "",
-    productCategoryDescription: "",
-    productCategoryImage: "",
-    createTime: "",
-    updateTime: "",
+    productCategoryCode: '',
+    productCategoryName: '',
+    productCategoryDescription: '',
+    productCategoryImage: '',
+    createTime: '',
+    updateTime: '',
   });
   const [showGetProductCategoryToast, setShowGetProductCategoryToast] =
     useState(false);
   const [errorGetProductCategory, setErrorGetProductCategory] = useState({});
   const [inputs, setInputs] = useState({
     forecastingHorizon: 1,
-    stockCode: "",
+    stockCode: '',
     trainingWindow: 3,
   });
   const [validated, setValidated] = useState(false);
@@ -45,14 +45,14 @@ export default function Subscription({
     });
   }
 
-  const getProductCategory = async (productCategoryCode) => {
+  const getProductCategory = async productCategoryCode => {
     try {
       axios.defaults.headers.common = {
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+        'Access-Control-Allow-Origin': '*',
       };
       let { status, data } = await axios.get(
-        `${API}/category/${productCategoryCode}`
+        `${API}/category/${productCategoryCode}`,
       );
       setProductCategory(data);
       setErrorGetProductCategory({});
@@ -72,13 +72,13 @@ export default function Subscription({
   const handlePredict = async (
     stockCode,
     trainingWindow,
-    forecastingHorizon
+    forecastingHorizon,
   ) => {
     setLoading(true);
     try {
       axios.defaults.headers.common = {
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+        'Access-Control-Allow-Origin': '*',
       };
       let { status, data } = await axios.post(
         `${API}/category/${productCategoryCode}/predict`,
@@ -86,7 +86,7 @@ export default function Subscription({
           stockCode: stockCode,
           trainingWindow: trainingWindow,
           forecastingHorizon: forecastingHorizon,
-        }
+        },
       );
       setPrediction(data);
       setErrorPredict({});
@@ -100,7 +100,7 @@ export default function Subscription({
     setLoading(false);
   };
 
-  const handleSubmitPredict = async (e) => {
+  const handleSubmitPredict = async e => {
     const form = e.currentTarget;
 
     setValidated(true);
@@ -109,7 +109,7 @@ export default function Subscription({
       await handlePredict(
         e.target[0].value,
         e.target[1].value,
-        e.target[2].value
+        e.target[2].value,
       );
     }
   };
@@ -124,7 +124,7 @@ export default function Subscription({
                 src={
                   productCategory.productCategoryImage
                     ? productCategory.productCategoryImage
-                    : "https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/product_image_notfound.jpg?alt=media&token=9b66da8d-37b7-4f30-bbc2-1338d7e2f52c"
+                    : 'https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/product_image_notfound.jpg?alt=media&token=9b66da8d-37b7-4f30-bbc2-1338d7e2f52c'
                 }
                 className="card-img-top"
                 alt="Category Image"
@@ -168,13 +168,13 @@ export default function Subscription({
                           name="stockCode"
                           value={inputs.stockCode}
                           onChange={handleChange}
-                          onWheel={(e) => e.target.blur()}
+                          onWheel={e => e.target.blur()}
                           placeholder="Stock Code"
                           pattern="^(?!\s*$).+"
                           required
                         />
                         <Form.Control.Feedback type="invalid">
-                        category/sentiment/predict cannot be blank.
+                          category/sentiment/predict cannot be blank.
                         </Form.Control.Feedback>
                       </FloatingLabel>
                     </div>
@@ -190,7 +190,7 @@ export default function Subscription({
                           name="trainingWindow"
                           value={inputs.trainingWindow}
                           onChange={handleChange}
-                          onWheel={(e) => e.target.blur()}
+                          onWheel={e => e.target.blur()}
                           placeholder="Training Window (month)"
                           min={1}
                           required
@@ -211,7 +211,7 @@ export default function Subscription({
                           name="forecastingHorizon"
                           value={inputs.forecastingHorizon}
                           onChange={handleChange}
-                          onWheel={(e) => e.target.blur()}
+                          onWheel={e => e.target.blur()}
                           placeholder="Forecasting Horizon (month)"
                           min={1}
                           required
@@ -227,9 +227,9 @@ export default function Subscription({
                           className="spinner-border text-primary"
                           role="status"
                           style={{
-                            width: "2rem",
-                            height: "2rem",
-                            borderWidth: "0.25rem",
+                            width: '2rem',
+                            height: '2rem',
+                            borderWidth: '0.25rem',
                           }}
                         />
                       </div>

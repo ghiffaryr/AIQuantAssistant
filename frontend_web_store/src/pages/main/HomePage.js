@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import Button from "react-bootstrap/esm/Button";
-import { LinkContainer } from "react-router-bootstrap";
-import FooterComponent from "../../components/basic/FooterComponent";
-import NavbarComponent from "../../components/basic/NavbarComponent";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import "../../css/pages/main/HomePage.css";
-import axios from "axios";
-import { API } from "../../env/Constants";
-import Toast from "react-bootstrap/Toast";
-import ToastContainer from "react-bootstrap/esm/ToastContainer";
+import React, { useEffect, useState } from 'react';
+import Button from 'react-bootstrap/esm/Button';
+import { LinkContainer } from 'react-router-bootstrap';
+import FooterComponent from '../../components/basic/FooterComponent';
+import NavbarComponent from '../../components/basic/NavbarComponent';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import '../../css/pages/main/HomePage.css';
+import axios from 'axios';
+import { API } from '../../env/Constants';
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/esm/ToastContainer';
 
 export default function HomePage() {
   const [showGetServerCartToast, setShowGetServerCartToast] = useState(false);
@@ -17,13 +17,13 @@ export default function HomePage() {
   const [cartOrderDetailCount, setCartOrderDetailCount] = useState(0);
 
   const getServerCart = async () => {
-    if (localStorage.getItem("userRole") === "ROLE_CUSTOMER") {
+    if (localStorage.getItem('userRole') === 'ROLE_CUSTOMER') {
       axios.defaults.headers.common = {
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+        'Access-Control-Allow-Origin': '*',
       };
       try {
-        let { status, data } = await (`${API}/cart`);
+        let { status, data } = await `${API}/cart`;
         let cart = [];
         for (let orderDetail of data.orderDetails) {
           cart.push({
@@ -33,7 +33,7 @@ export default function HomePage() {
             quantity: orderDetail.quantity,
           });
         }
-        localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage.setItem('cart', JSON.stringify(cart));
         setErrorGetServerCart({});
         setShowGetServerCartToast(false);
       } catch (error) {
@@ -58,7 +58,7 @@ export default function HomePage() {
   // });
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("cart"));
+    const cart = JSON.parse(localStorage.getItem('cart'));
     let counter = 0;
     if (cart) {
       for (let i = 0; i < cart.length; i++) {

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import Toast from "react-bootstrap/Toast";
-import ToastContainer from "react-bootstrap/esm/ToastContainer";
-import Breadcrumbs from "../../../components/basic/Breadcrumbs";
-import NavbarComponent from "../../../components/basic/NavbarComponent";
-import { API } from "../../../env/Constants";
-import ProductList from "../../../components/product/ProductList";
-import axios from "axios";
-import FooterComponent from "../../../components/basic/FooterComponent";
-import { PaginationControl } from "react-bootstrap-pagination-control";
+import React, { useEffect, useState } from 'react';
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/esm/ToastContainer';
+import Breadcrumbs from '../../../components/basic/Breadcrumbs';
+import NavbarComponent from '../../../components/basic/NavbarComponent';
+import { API } from '../../../env/Constants';
+import ProductList from '../../../components/product/ProductList';
+import axios from 'axios';
+import FooterComponent from '../../../components/basic/FooterComponent';
+import { PaginationControl } from 'react-bootstrap-pagination-control';
 
 export default function ProductByCategoryPage() {
   const [showGetServerCartToast, setShowGetServerCartToast] = useState(false);
@@ -16,7 +16,7 @@ export default function ProductByCategoryPage() {
   const [showGetProductsByCategoryToast, setShowGetProductsByCategoryToast] =
     useState(false);
   const [errorGetProductsByCategory, setErrorGetProductsByCategory] = useState(
-    {}
+    {},
   );
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(6);
@@ -24,10 +24,10 @@ export default function ProductByCategoryPage() {
   const [products, setProducts] = useState([]);
 
   const getServerCart = async () => {
-    if (localStorage.getItem("userRole") === "ROLE_CUSTOMER") {
+    if (localStorage.getItem('userRole') === 'ROLE_CUSTOMER') {
       axios.defaults.headers.common = {
-        Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${localStorage.getItem('userToken')}`,
+        'Access-Control-Allow-Origin': '*',
       };
       try {
         let { status, data } = await axios.get(`${API}/cart`);
@@ -40,7 +40,7 @@ export default function ProductByCategoryPage() {
             quantity: orderDetail.quantity,
           });
         }
-        localStorage.setItem("cart", JSON.stringify(cart));
+        localStorage.setItem('cart', JSON.stringify(cart));
         setErrorGetServerCart({});
         setShowGetServerCartToast(false);
       } catch (error) {
@@ -55,16 +55,16 @@ export default function ProductByCategoryPage() {
   const getProductsByCategory = async () => {
     try {
       const productCategoryCode = window.location.pathname.substring(
-        window.location.pathname.lastIndexOf("/") + 1
+        window.location.pathname.lastIndexOf('/') + 1,
       );
       let { status, data } = await axios.get(
-        localStorage.getItem("userRole") === "ROLE_EMPLOYEE" ||
-          localStorage.getItem("userRole") === "ROLE_MANAGER"
+        localStorage.getItem('userRole') === 'ROLE_EMPLOYEE' ||
+          localStorage.getItem('userRole') === 'ROLE_MANAGER'
           ? `${API}/category/${productCategoryCode}/product`
           : `${API}/category/${productCategoryCode}/product/onsale`,
         {
           params: { page: page, size: size },
-        }
+        },
       );
       setProducts(data.page.content);
       setTotalPages(data.totalPages);
@@ -93,7 +93,7 @@ export default function ProductByCategoryPage() {
   // });
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("cart"));
+    const cart = JSON.parse(localStorage.getItem('cart'));
     let counter = Number(0);
     if (cart) {
       for (let i = 0; i < cart.length; i++) {
@@ -118,7 +118,7 @@ export default function ProductByCategoryPage() {
           between={4}
           total={totalPages}
           limit={1}
-          changePage={(page) => {
+          changePage={page => {
             setPage(page);
           }}
           ellipsis={1}

@@ -1,24 +1,24 @@
-import React, { useState } from "react";
-import Container from "react-bootstrap/esm/Container";
-import Form from "react-bootstrap/Form";
-import Toast from "react-bootstrap/Toast";
-import ToastContainer from "react-bootstrap/ToastContainer";
-import InputGroup from "react-bootstrap/InputGroup";
-import FooterComponent from "../../../components/basic/FooterComponent";
-import NavbarComponent from "../../../components/basic/NavbarComponent";
-import { FaUser } from "react-icons/fa";
-import { VscSymbolKey } from "react-icons/vsc";
-import { LinkContainer } from "react-router-bootstrap";
-import Button from "react-bootstrap/esm/Button";
-import "../../../css/pages/main/login/RecoverPage.css";
-import { API } from "../../../env/Constants";
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
-import axios from "axios";
+import React, { useState } from 'react';
+import Container from 'react-bootstrap/esm/Container';
+import Form from 'react-bootstrap/Form';
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FooterComponent from '../../../components/basic/FooterComponent';
+import NavbarComponent from '../../../components/basic/NavbarComponent';
+import { FaUser } from 'react-icons/fa';
+import { VscSymbolKey } from 'react-icons/vsc';
+import { LinkContainer } from 'react-router-bootstrap';
+import Button from 'react-bootstrap/esm/Button';
+import '../../../css/pages/main/login/RecoverPage.css';
+import { API } from '../../../env/Constants';
+import Row from 'react-bootstrap/esm/Row';
+import Col from 'react-bootstrap/esm/Col';
+import axios from 'axios';
 
 export default function RecoverPage() {
-  const [inputs, setInputs] = useState({ email: "", recoveryPhrase: "" });
-  const [recoverPassword, setRecoverPassword] = useState("");
+  const [inputs, setInputs] = useState({ email: '', recoveryPhrase: '' });
+  const [recoverPassword, setRecoverPassword] = useState('');
   const [showRecoverToast, setShowRecoverToast] = useState(false);
   const [errorRecover, setErrorRecover] = useState({});
   const [validated, setValidated] = useState(false);
@@ -41,8 +41,8 @@ export default function RecoverPage() {
       setShowRecoverToast(true);
       setRecoverPassword(data.password);
     } catch (error) {
-      setInputs({ ...inputs, recoveryPhrase: "" });
-      setRecoverPassword("");
+      setInputs({ ...inputs, recoveryPhrase: '' });
+      setRecoverPassword('');
       for (let errorObject of error.response.data.errors) {
         setErrorRecover(errorObject);
         setShowRecoverToast(true);
@@ -50,7 +50,7 @@ export default function RecoverPage() {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     const form = e.currentTarget;
 
     setValidated(true);
@@ -65,7 +65,7 @@ export default function RecoverPage() {
       <NavbarComponent navStyle="simple" />
       <>
         <Container className="container d-flex justify-content-center flex-column align-items-center mt-5 pt-5">
-          {localStorage.getItem("userToken") ? (
+          {localStorage.getItem('userToken') ? (
             <>
               <h3 className="main-title">You are logged in.</h3>
               <LinkContainer to="/">
@@ -134,7 +134,7 @@ export default function RecoverPage() {
                   <Row>
                     <Col xs={12}>
                       <Form.Text>
-                        Remember your password?{" "}
+                        Remember your password?{' '}
                         <LinkContainer
                           to="/login"
                           className="login-link text-primary"
@@ -145,7 +145,7 @@ export default function RecoverPage() {
                     </Col>
                     <Col xs={12}>
                       <Form.Text>
-                        You don't have an account?{" "}
+                        You don't have an account?{' '}
                         <LinkContainer
                           to="/register"
                           className="register-link text-primary"
