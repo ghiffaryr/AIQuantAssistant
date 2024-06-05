@@ -23,7 +23,7 @@ export default function HomePage() {
         "Access-Control-Allow-Origin": "*",
       };
       try {
-        let { status, data } = await axios.get(`${API}/cart`);
+        let { status, data } = await (`${API}/cart`);
         let cart = [];
         for (let orderDetail of data.orderDetails) {
           cart.push({

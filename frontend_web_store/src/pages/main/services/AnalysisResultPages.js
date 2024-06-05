@@ -1,4 +1,3 @@
-import NavbarComponent from "../../../components/basic/NavbarComponent";
 import HeaderTitleComponent from "../../../components/basic/HeaderTitleComponent";
 import { Card, Col, Container, Fade, Row } from "react-bootstrap";
 import TextWithStatusColor from "../../../components/commons/TextWithStatusColor";

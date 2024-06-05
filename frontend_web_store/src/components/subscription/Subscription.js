@@ -174,7 +174,7 @@ export default function Subscription({
                           required
                         />
                         <Form.Control.Feedback type="invalid">
-                          Stock code cannot be blank.
+                        category/sentiment/predict cannot be blank.
                         </Form.Control.Feedback>
                       </FloatingLabel>
                     </div>

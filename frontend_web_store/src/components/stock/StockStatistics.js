@@ -47,10 +47,20 @@ export default function StockStatistics({
                         <p className="flex-grow-1 fs-5 fw-bold text-muted">1 year high(52w)</p>
                         <p className="pe-4 fs-5 fw-bold">{data.yearHigh}</p>
                     </div>
-                    <div className="d-flex flex-row align-items-center stock-statistics-row pb-2">
+                    <div className="d-flex flex-row align-items-center stock-statistics-row pb-2 border-bottom border-2">
                         <i class="bi bi-arrow-bar-down medium-icons ps-4 pe-4"></i>
                         <p className="flex-grow-1 fs-5 fw-bold text-muted">1 year low(52w)</p>
                         <p className="pe-4 fs-5 fw-bold">{data.yearLow}</p>
+                    </div>
+                    <div className="d-flex flex-row align-items-center stock-statistics-row pb-2 border-bottom border-2">
+                        <i class="bi bi-book medium-icons ps-4 pe-4"></i>
+                        <p className="flex-grow-1 fs-5 fw-bold text-muted">Price per book</p>
+                        <p className="pe-4 fs-5 fw-bold">{data.pricePerBook}</p>
+                    </div>
+                    <div className="d-flex flex-row align-items-center stock-statistics-row pb-2">
+                        <i class="bi  bi-credit-card-2-back medium-icons ps-4 pe-4"></i>
+                        <p className="flex-grow-1 fs-5 fw-bold text-muted">Debt to equity</p>
+                        <p className="pe-4 fs-5 fw-bold">{data.debtToEquity}</p>
                     </div>
                 </Card.Body>
             </Card>

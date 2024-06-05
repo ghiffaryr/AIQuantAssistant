@@ -10,6 +10,7 @@ export default function HeadlineCard({
     content,
     status,
 }) {
+    
     return (
         <Card
             variant="light"
@@ -29,7 +30,7 @@ export default function HeadlineCard({
                         status={SentimentEnum.POSITIVE}
                         className="fs-5"
                     >
-                        {`(${elapsedTime} Hour Ago)`}
+                        {`(${elapsedTime} Hours Ago)`}
                     </TextWithStatusColor>
                 </div>
                 <p>{content}</p>
