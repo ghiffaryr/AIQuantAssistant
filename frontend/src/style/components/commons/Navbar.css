@@ -1,0 +1,33 @@
+.nav-item {
+  display: flex !important;
+  align-items: center;
+  gap: 3px;
+  text-decoration: none;
+  color: orange;
+}
+
+.nav-item:hover {
+  color: #3a5b9d;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.nav-tab-link {
+  color: #f8f9fa !important;
+}
+
+.nav-tab-dropdown > a {
+  color: #f8f9fa !important;
+}
+
+.nav-tab-link:hover {
+  border: 1px solid #f8f9fa !important;
+  color: #f8f9fa;
+}
+
+.navbar-height-inherit {
+  height: inherit;
+}
