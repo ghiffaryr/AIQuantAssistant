@@ -1,0 +1,23 @@
+.gradient-card-bg-negative {
+  background: linear-gradient(
+    to bottom,
+    #ffcfcf,
+    #fcfafa
+  ); /* Gradient red color */
+}
+
+.gradient-card-bg-positive {
+  background: linear-gradient(
+    to bottom,
+    #afffac,
+    #fcfafa
+  ); /* Gradient red color */
+}
+
+.gradient-card-bg-neutral {
+  background: linear-gradient(
+    to bottom,
+    #e5e5e5,
+    #fcfafa
+  ); /* Gradient red color */
+}
