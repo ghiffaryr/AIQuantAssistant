@@ -1,0 +1,19 @@
+:root {
+  --bg-main: url('https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/background_main.jpg?alt=media&token=3682fc26-28b2-4bb4-9d2d-c649c2345155');
+}
+
+.main-homepage {
+  width: 100%;
+  height: calc(100vh - 56px);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
+    var(--bg-main);
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0;
+}
+
+.main-content {
+  width: 100%;
+  height: calc(100vh - 330px);
+  margin: 0;
+}
