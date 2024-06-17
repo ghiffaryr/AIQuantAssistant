@@ -4,11 +4,13 @@ import { createCartSlice } from './cartStore';
 import { WithSelectors } from '@/utils/type';
 import { StoreApi, UseBoundStore } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
+import { mountStoreDevtool } from 'simple-zustand-devtools';
 import {
   UserDataSlice,
   UserDataType,
   createPersistUserDataSlice,
 } from './persistUserDataStore';
+import { DEV } from '@/env/env';
 
 const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(
   _store: S,
@@ -56,6 +58,10 @@ const useBoundStoreBase = create<CartSlice & UserDataSlice>()(
     },
   ),
 );
+
+if (DEV) {
+  mountStoreDevtool('Store', useBoundStoreBase);
+}
 
 const useBoundStore = createSelectors(useBoundStoreBase);
 
