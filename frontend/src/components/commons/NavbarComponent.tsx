@@ -39,7 +39,8 @@ const NavbarComponent: React.FC<NavbarComponentProps> = (
         expand="lg"
         bg="dark"
         variant="dark"
-        className={`${props.navbarClassname}`}>
+        className={`${props.navbarClassname}`}
+      >
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
@@ -108,7 +109,8 @@ const NavbarComponent: React.FC<NavbarComponentProps> = (
                             ? localStorage.getItem('userEmail')
                             : 'User'
                         }
-                        menuVariant="light">
+                        menuVariant="light"
+                      >
                         <LinkContainer to="/profile">
                           <NavDropdown.Item>Profile</NavDropdown.Item>
                         </LinkContainer>
@@ -144,7 +146,8 @@ const NavbarComponent: React.FC<NavbarComponentProps> = (
             onClose={() => setShow(false)}
             show={show}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-info">
               <img
                 src="holder.js/20x20?text=%20"
