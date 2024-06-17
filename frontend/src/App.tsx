@@ -1,14 +1,22 @@
 import './App.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import PageRoutes from './routes/routes';
 import { BrowserRouter } from 'react-router-dom';
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import setupGlobalAxiosInterceptor from './api/setupGlobalAxiosInterceptor';
+
+const queryClient = new QueryClient();
 
 function App() {
+  setupGlobalAxiosInterceptor();
   return (
     <>
-      <BrowserRouter>
-        <PageRoutes />
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <PageRoutes />
+        </BrowserRouter>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </>
   );
 }

@@ -1,8 +1,10 @@
 import { StateCreator } from 'zustand';
-import { CartSlice } from './storeType';
+import { CartSlice, CartDetailsType } from './storeType';
+import { WithoutFunctions } from '@/utils/type';
 
-const initialValue = {
+const initialValue: WithoutFunctions<CartSlice> = {
   cart: 0,
+  cartDetails: [],
 };
 
 export const createCartSlice: StateCreator<
@@ -13,4 +15,7 @@ export const createCartSlice: StateCreator<
 > = set => ({
   ...initialValue,
   addCart: () => set(state => ({ cart: state.cart + 1 })),
+  setCartOrderDetails: val => set({ cartDetails: val }),
+  appendCartOrderDetails: (...val: CartDetailsType[]) =>
+    set(state => ({ cartDetails: [...state.cartDetails, ...val] })),
 });
