@@ -8,6 +8,7 @@ import useBoundStore from '@/store/store';
 import { useGetProfile, useLoginMutation } from '@/api/auth';
 import { useGetCart } from '@/api/cart';
 import { CartDetailsType } from '@/store/storeType';
+import Role from '@/enums/RoleEnum';
 
 const useLogin = () => {
   const [inputs, setInputs] = useState({ email: '', password: '' });
@@ -71,7 +72,7 @@ const useLogin = () => {
   }, [userToken]);
 
   useEffect(() => {
-    if (userRole === 'ROLE_CUSTOMER') {
+    if (userRole === Role.Customer) {
       refetchCart();
     }
   }, [userRole]);

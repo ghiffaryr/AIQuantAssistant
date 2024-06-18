@@ -15,17 +15,26 @@ import { FaUser } from 'react-icons/fa';
 import '@/style/components/commons/Navbar.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useAuthService from '@/hooks/useAuthService';
+import useBoundStore from '@/store/store';
+import Role from '@/enums/RoleEnum';
+import { useQueryClient } from '@tanstack/react-query';
 
 const NavbarComponent: React.FC<NavbarComponentProps> = (
   props: NavbarComponentProps,
 ) => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
-  const { removeUserData } = useAuthService();
+  const queryClient = useQueryClient();
+
+  const removeUserData = useBoundStore.use.removeUserData();
+  const userEmail = useBoundStore.use.userEmail?.();
+  const userToken = useBoundStore.use.userToken?.();
+  const userRole = useBoundStore.use.userRole?.();
 
   const handleLogout = () => {
     removeUserData();
+    // invalidate all the queries in the cache
+    queryClient.invalidateQueries();
     setShow(true);
     setTimeout(() => {
       navigate('/');
@@ -81,8 +90,7 @@ const NavbarComponent: React.FC<NavbarComponentProps> = (
                   Nav
                 </Nav>
                 <Nav>
-                  {localStorage.getItem('userRole') === 'ROLE_EMPLOYEE' ||
-                  localStorage.getItem('userRole') === 'ROLE_MANAGER' ? (
+                  {userRole === Role.Employee || userRole === Role.Manager ? (
                     <LinkContainer to="/order" className="nav-tab-link">
                       <Button variant="link" className="nav-item">
                         <BsCartFill />
@@ -100,22 +108,17 @@ const NavbarComponent: React.FC<NavbarComponentProps> = (
                       </Button>
                     </LinkContainer>
                   )}
-                  {localStorage.getItem('userToken') ? (
+                  {userToken ? (
                     <Button variant="link" className="nav-item nav-tab-link">
                       <FaUser />
                       <NavDropdown
-                        title={
-                          localStorage.getItem('userEmail')
-                            ? localStorage.getItem('userEmail')
-                            : 'User'
-                        }
+                        title={userEmail ? userEmail : 'User'}
                         menuVariant="light"
                       >
                         <LinkContainer to="/profile">
                           <NavDropdown.Item>Profile</NavDropdown.Item>
                         </LinkContainer>
-                        {localStorage.getItem('userRole') ===
-                          'ROLE_CUSTOMER' && (
+                        {userRole === Role.Customer && (
                           <>
                             <LinkContainer to="/order">
                               <NavDropdown.Item>Order</NavDropdown.Item>
