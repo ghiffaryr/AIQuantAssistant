@@ -5,6 +5,7 @@ import React from 'react';
 import NotFoundPage from '@/pages/exception/NotFoundPage';
 import LoginPage from '@/pages/main/LoginPage';
 import HomePage from '@/pages/main/HomePage';
+import NewsPage from '@/pages/main/NewsPage';
 
 const PageRoutes: React.FC = () => {
   const location = useLocation();
@@ -14,6 +15,7 @@ const PageRoutes: React.FC = () => {
       {/* <Route path="/cart" element={<CartPage />} /> */}
       <Route path="/login" element={<LoginPage />} />
       <Route path="*" element={<NotFoundPage />} />
+      <Route path="/news" element={<NewsPage />} />
     </Routes>
   );
 };
