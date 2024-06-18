@@ -5,7 +5,9 @@ import PageRoutes from './routes/routes';
 import { BrowserRouter } from 'react-router-dom';
 import setupGlobalAxiosInterceptor from './api/setupGlobalAxiosInterceptor';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { staleTime: 300 * 1000 } },
+});
 
 function App() {
   setupGlobalAxiosInterceptor();
