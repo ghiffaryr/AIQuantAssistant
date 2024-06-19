@@ -9,4 +9,8 @@ type WithSelectors<S> = S extends { getState: () => infer T }
   ? S & { use: { [K in keyof T]: () => T[K] } }
   : never;
 
-export type { WithoutFunctions, WithSelectors };
+type MappedType<T extends string | number | symbol, K> = {
+  [P in T]: K;
+};
+
+export type { WithoutFunctions, WithSelectors, MappedType };

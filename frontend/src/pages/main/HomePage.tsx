@@ -46,7 +46,8 @@ export default function HomePage() {
             onClose={() => setShowGetServerCartToast(false)}
             show={showGetServerCartToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-danger">
               <img
                 src="holder.js/20x20?text=%20"

@@ -2,12 +2,14 @@
 import { useGetCart } from '@/api/cart';
 import Role from '@/enums/RoleEnum';
 import useBoundStore from '@/store/store';
-import axios from 'axios';
+import errorHandler from '@/utils/error';
 import { useEffect, useState } from 'react';
 
 const useServerCart = () => {
   const [showGetServerCartToast, setShowGetServerCartToast] = useState(false);
-  const [errorGetServerCart, setErrorGetServerCart] = useState({});
+  const [errorGetServerCart, setErrorGetServerCart] = useState<{
+    message?: string;
+  }>({});
   const [cartOrderDetailCount, setCartOrderDetailCount] = useState(0);
 
   const userRole = useBoundStore.use.userRole?.();
@@ -39,16 +41,17 @@ const useServerCart = () => {
     }
 
     if (cartIsError) {
-      if (axios.isAxiosError(cartError)) {
-        for (const errorObject of (cartError.response || { data: [] }).data
-          .errors) {
-          setErrorGetServerCart(errorObject);
+      errorHandler({
+        error: cartError,
+        axiosErrorHandlerFn: err => {
+          setErrorGetServerCart(err);
           setShowGetServerCartToast(true);
-        }
-      }
-
-      setErrorGetServerCart({ message: cartError.message });
-      setShowGetServerCartToast(true);
+        },
+        generalErrorHandlerFn: err => {
+          setErrorGetServerCart({ message: err.message });
+          setShowGetServerCartToast(true);
+        },
+      });
     }
   }, [cartData, cartError, cartIsError, cartIsSuccess]);
 

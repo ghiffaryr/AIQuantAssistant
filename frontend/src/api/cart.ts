@@ -52,16 +52,6 @@ export const useDeleteCartByCode = (
   });
 };
 
-export const useGetProductByCode = (code: string) => {
-  return useQuery({
-    queryKey: ['cart', code],
-    queryFn: ({ signal }) => {
-      return axios.get(`${VITE_API_URL}/product/${code}`, { signal });
-    },
-    enabled: !!code,
-  });
-};
-
 export const useGetCart = (
   options: Omit<
     UseQueryOptions<AxiosResponse<CartDetailResponseType>>,

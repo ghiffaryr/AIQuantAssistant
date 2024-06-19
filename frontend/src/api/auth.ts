@@ -22,7 +22,7 @@ export const useGetProfile = (
     Error,
     AxiosResponse<ProfileDataType, any>
   >({
-    queryKey: ['auth'],
+    queryKey: ['auth', 'profile'],
     queryFn: ({ signal }) => {
       return axios.get(`${VITE_API_URL}/profile`, { signal });
     },

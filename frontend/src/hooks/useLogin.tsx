@@ -3,12 +3,12 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '@/style/pages/main/LoginPage.css';
-import axios from 'axios';
 import useBoundStore from '@/store/store';
 import { useGetProfile, useLoginMutation } from '@/api/auth';
 import { useGetCart } from '@/api/cart';
 import { CartDetailsType } from '@/store/storeType';
 import Role from '@/enums/RoleEnum';
+import errorHandler from '@/utils/error';
 
 const useLogin = () => {
   const [inputs, setInputs] = useState({ email: '', password: '' });
@@ -53,15 +53,17 @@ const useLogin = () => {
       setInputs({ ...inputs, password: '' });
       removeUserData();
 
-      if (axios.isAxiosError(error)) {
-        for (const errorObject of (error.response || { data: [] }).data
-          .errors) {
-          setErrorLogin(errorObject);
+      errorHandler({
+        axiosErrorHandlerFn: err => {
+          setErrorLogin(err);
           setShowLoginToast(true);
-        }
-        setErrorLogin({ message: error.message });
-        setShowLoginToast(true);
-      }
+        },
+        generalErrorHandlerFn: err => {
+          setErrorLogin({ message: err.message });
+          setShowLoginToast(true);
+        },
+        error,
+      });
     },
   });
 
@@ -111,15 +113,17 @@ const useLogin = () => {
 
     if (profileIsError) {
       removeUserData();
-      if (axios.isAxiosError(profileError)) {
-        for (const errorObject of (profileError.response || { data: [] }).data
-          .errors) {
-          setErrorLogin(errorObject);
+      errorHandler({
+        error: profileError,
+        axiosErrorHandlerFn: err => {
+          setErrorLogin(err);
           setShowLoginToast(true);
-        }
-      }
-      setErrorLogin({ message: profileError?.message });
-      setShowLoginToast(true);
+        },
+        generalErrorHandlerFn: err => {
+          setErrorLogin({ message: err?.message });
+          setShowLoginToast(true);
+        },
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profileData, profileError, profileIsError, profileIsSuccess]);
@@ -142,17 +146,17 @@ const useLogin = () => {
     }
 
     if (cartIsError) {
-      if (axios.isAxiosError(cartError)) {
-        for (const errorObject of (cartError.response || { data: [] }).data
-          .errors) {
-          setErrorGetServerCart(errorObject);
+      errorHandler({
+        error: cartError,
+        axiosErrorHandlerFn: err => {
+          setErrorGetServerCart(err);
           setShowGetServerCartToast(true);
-        }
-        return;
-      }
-
-      setErrorGetServerCart({ message: cartError?.message });
-      setShowGetServerCartToast(true);
+        },
+        generalErrorHandlerFn: err => {
+          setErrorGetServerCart({ message: err?.message });
+          setShowGetServerCartToast(true);
+        },
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartData, cartError, cartIsError, cartIsSuccess]);
