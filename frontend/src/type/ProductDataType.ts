@@ -1,3 +1,8 @@
+type ProductDataResponseType = {
+  content?: ProductDataType[];
+  totalPages?: number;
+};
+
 type ProductDataType = {
   productId?: number | null;
   productCode?: string;
@@ -12,4 +17,4 @@ type ProductDataType = {
   updateTime?: string;
 };
 
-export type { ProductDataType };
+export type { ProductDataType, ProductDataResponseType };

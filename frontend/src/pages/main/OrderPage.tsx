@@ -13,6 +13,7 @@ import { useGetOrder, useGetOrderByStatus } from '@/api/order';
 import { OrderDataResponseType, OrderDataType } from '@/type/OrderDataType';
 import errorHandler from '@/utils/error';
 import { EOrderStatus } from '@/enums/OrderStatusEnum';
+import { keepPreviousData } from '@tanstack/react-query';
 
 const OrderPage = () => {
   const [showGetOrdersToast, setShowGetOrdersToast] = useState(false);
@@ -44,6 +45,7 @@ const OrderPage = () => {
     isSuccess: orderWithStatusIsSuccess,
     isError: orderWithStatusIsError,
   } = useGetOrderByStatus(page, size, orderStatus || 0, {
+    placeholderData: keepPreviousData,
     enabled:
       orderStatus != null &&
       (orderStatus == EOrderStatus.New ||
@@ -57,6 +59,7 @@ const OrderPage = () => {
     isSuccess: orderIsSuccess,
     isError: orderIsError,
   } = useGetOrder(page, size, {
+    placeholderData: keepPreviousData,
     enabled:
       orderStatus == null ||
       !(

@@ -6,6 +6,7 @@ import {
   useMutation,
   useQuery,
   UseQueryOptions,
+  useQueryClient,
 } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 
@@ -14,22 +15,63 @@ type CodeQuantityType = {
   quantity: number;
 };
 
-// TODO: invalidated cart query
-export const useUpdateCartByCode = (
-  mutationOptions: UseMutationOptions<AxiosResponse<any, any>, Error, any>,
+const InvalidateQKey = 'cart';
+
+export const useGetCart = (
+  options: Omit<
+    UseQueryOptions<AxiosResponse<CartDetailResponseType>>,
+    'queryKey' | 'queryFn'
+  > = {},
 ) => {
-  return useMutation<AxiosResponse<any, any>, Error, any>({
-    mutationFn: val => {
-      const { code, quantity } = val as CodeQuantityType;
-      return axios.put(
-        `${VITE_API_URL}/cart/${code}/update`,
-        Number(quantity),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+  return useQuery<AxiosResponse<CartDetailResponseType, any>>({
+    queryKey: ['cart'],
+    queryFn: ({ signal }) => {
+      return axios.get(`${VITE_API_URL}/cart`, { signal });
+    },
+    ...options,
+  });
+};
+
+export const useUpdateCartByCode = <T extends AxiosResponse<any, any>>(
+  mutationOptions: Omit<
+    UseMutationOptions<T, Error, CodeQuantityType>,
+    'onSuccess'
+  > & { successSideEffect: (data: T) => void },
+) => {
+  const queryClient = useQueryClient();
+  return useMutation<T, Error, CodeQuantityType>({
+    mutationFn: ({ code, quantity }) => {
+      return axios.put(`${VITE_API_URL}/cart/${code}/update`, quantity, {
+        headers: {
+          'Content-Type': 'application/json',
         },
-      );
+      });
+    },
+    onSuccess: data => {
+      mutationOptions.successSideEffect(data);
+      queryClient.invalidateQueries({ queryKey: [InvalidateQKey] });
+    },
+    ...mutationOptions,
+  });
+};
+
+export const useAddCart = <T extends AxiosResponse<any, any>>(
+  mutationOptions: Omit<
+    UseMutationOptions<T, Error, CodeQuantityType>,
+    'onSuccess'
+  > & { successSideEffect: (data: T) => void },
+) => {
+  const queryClient = useQueryClient();
+  return useMutation<T, Error, CodeQuantityType>({
+    mutationFn: ({ code, quantity }) => {
+      return axios.post(`${VITE_API_URL}/cart/add`, {
+        productCode: code,
+        quantity: quantity,
+      });
+    },
+    onSuccess: data => {
+      mutationOptions.successSideEffect(data);
+      queryClient.invalidateQueries({ queryKey: [InvalidateQKey] });
     },
     ...mutationOptions,
   });
@@ -49,21 +91,6 @@ export const useDeleteCartByCode = (
       return axios.delete(`${VITE_API_URL}/cart/${code}/delete`);
     },
     ...mutationOptions,
-  });
-};
-
-export const useGetCart = (
-  options: Omit<
-    UseQueryOptions<AxiosResponse<CartDetailResponseType>>,
-    'queryKey' | 'queryFn'
-  > = {},
-) => {
-  return useQuery<AxiosResponse<CartDetailResponseType, any>>({
-    queryKey: ['cart'],
-    queryFn: ({ signal }) => {
-      return axios.get(`${VITE_API_URL}/cart`, { signal });
-    },
-    ...options,
   });
 };
 
