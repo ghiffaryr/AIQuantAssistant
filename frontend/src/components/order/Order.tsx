@@ -8,6 +8,7 @@ import OrderDetailList from './OrderDetailList';
 import { useCancelOrder, useFinishOrder } from '@/api/order';
 import errorHandler from '@/utils/error';
 import { OrderDataResponseType, OrderDetailType } from '@/type/OrderDataType';
+import useBoundStore from '@/store/store';
 
 const Order = ({
   id,
@@ -22,6 +23,8 @@ const Order = ({
   const [errorCancelOrder, setErrorCancelOrder] = useState({});
   const [showFinishOrderToast, setShowFinishOrderToast] = useState(false);
   const [errorFinishOrder, setErrorFinishOrder] = useState({});
+
+  const userRole = useBoundStore.use.userRole?.();
 
   const cancelOrderMutate = useCancelOrder({
     onError: err => {
@@ -99,7 +102,7 @@ const Order = ({
               </div>
               <div className="col">
                 <div className="d-flex justify-content-end">
-                  {status === 0 && (
+                  {status === EOrderStatus.New && (
                     <div className="ms-4">
                       <Button
                         variant="outline-danger"
@@ -108,9 +111,9 @@ const Order = ({
                       </Button>
                     </div>
                   )}
-                  {status === 0 &&
-                    (localStorage.getItem('userRole') === 'ROLE_EMPLOYEE' ||
-                      localStorage.getItem('userRole') === 'ROLE_MANAGER') && (
+                  {status === EOrderStatus.New &&
+                    (userRole === 'ROLE_EMPLOYEE' ||
+                      userRole === 'ROLE_MANAGER') && (
                       <div className="ms-4">
                         <Button
                           variant="outline-success"
