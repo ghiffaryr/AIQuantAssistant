@@ -27,7 +27,6 @@ export default function Product({
   updateTime,
   products,
   setProducts,
-  getCartRefetch,
 }: ProductProps) {
   const [inputs, setInputs] = useState({ quantity: 1 });
   const [validated, setValidated] = useState(false);
@@ -134,7 +133,6 @@ export default function Product({
         addCart.mutate({ code, quantity });
       }
     }
-    getCartRefetch();
   };
 
   const handleSubmitAddToCart = async (e: any) => {
@@ -372,5 +370,4 @@ type ProductProps = {
   updateTime?: string;
   products: ProductDataType[];
   setProducts: React.Dispatch<React.SetStateAction<ProductDataType[]>>;
-  getCartRefetch: () => Promise<any>;
 };

@@ -24,7 +24,7 @@ export const useGetCart = (
   > = {},
 ) => {
   return useQuery<AxiosResponse<CartDetailResponseType, any>>({
-    queryKey: ['cart'],
+    queryKey: [InvalidateQKey],
     queryFn: ({ signal }) => {
       return axios.get(`${VITE_API_URL}/cart`, { signal });
     },

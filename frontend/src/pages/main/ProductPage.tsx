@@ -44,7 +44,6 @@ export default function ProductPage() {
     errorGetServerCart,
     setShowGetServerCartToast,
     showGetServerCartToast,
-    getCartRefetch,
   } = useServerCart();
 
   const userRole = useBoundStore.use.userRole?.();
@@ -262,11 +261,7 @@ export default function ProductPage() {
             </Button>
           </div>
         )}
-        <ProductList
-          products={products}
-          setProducts={setProducts}
-          getCartRefetch={getCartRefetch}
-        />
+        <ProductList products={products} setProducts={setProducts} />
         <PaginationControl
           page={page}
           between={4}

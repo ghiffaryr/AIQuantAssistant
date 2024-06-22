@@ -106,7 +106,8 @@ const Order = ({
                     <div className="ms-4">
                       <Button
                         variant="outline-danger"
-                        onClick={() => handleCancelOrder(id)}>
+                        onClick={() => handleCancelOrder(id)}
+                      >
                         Cancel Order
                       </Button>
                     </div>
@@ -117,7 +118,8 @@ const Order = ({
                       <div className="ms-4">
                         <Button
                           variant="outline-success"
-                          onClick={() => handleFinishOrder(id)}>
+                          onClick={() => handleFinishOrder(id)}
+                        >
                           Finish Order
                         </Button>
                       </div>
@@ -144,7 +146,8 @@ const Order = ({
               onClose={() => setShowCancelOrderToast(false)}
               show={showCancelOrderToast}
               delay={3000}
-              autohide>
+              autohide
+            >
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -160,7 +163,8 @@ const Order = ({
               onClose={() => setShowCancelOrderToast(false)}
               show={showCancelOrderToast}
               delay={3000}
-              autohide>
+              autohide
+            >
               <Toast.Header className="bg-success">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -179,7 +183,8 @@ const Order = ({
               onClose={() => setShowFinishOrderToast(false)}
               show={showFinishOrderToast}
               delay={3000}
-              autohide>
+              autohide
+            >
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -195,7 +200,8 @@ const Order = ({
               onClose={() => setShowFinishOrderToast(false)}
               show={showFinishOrderToast}
               delay={3000}
-              autohide>
+              autohide
+            >
               <Toast.Header className="bg-success">
                 <img
                   src="holder.js/20x20?text=%20"
