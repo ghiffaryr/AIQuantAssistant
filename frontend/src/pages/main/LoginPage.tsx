@@ -67,7 +67,8 @@ const LoginPage = () => {
                 className="login-form"
                 noValidate
                 validated={validated}
-                onSubmit={handleSubmit}>
+                onSubmit={handleSubmit}
+              >
                 <InputGroup className="mb-3">
                   <InputGroup.Text>
                     <FaUser />
@@ -109,7 +110,8 @@ const LoginPage = () => {
                   <Button
                     type="submit"
                     variant="outline-primary"
-                    className="w-100 mt-3">
+                    className="w-100 mt-3"
+                  >
                     Login
                   </Button>
                   <Row>
@@ -118,7 +120,8 @@ const LoginPage = () => {
                         Forget your password?{' '}
                         <LinkContainer
                           to="/recover"
-                          className="recover-link text-primary">
+                          className="recover-link text-primary"
+                        >
                           <span>Recover</span>
                         </LinkContainer>
                       </Form.Text>
@@ -128,7 +131,8 @@ const LoginPage = () => {
                         You don't have an account?{' '}
                         <LinkContainer
                           to="/register"
-                          className="register-link text-primary">
+                          className="register-link text-primary"
+                        >
                           <span>Register</span>
                         </LinkContainer>
                       </Form.Text>
@@ -147,7 +151,8 @@ const LoginPage = () => {
             onClose={() => setShowLoginToast(false)}
             show={showLoginToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-danger">
               <img
                 src="holder.js/20x20?text=%20"
@@ -163,7 +168,8 @@ const LoginPage = () => {
             onClose={() => setShowLoginToast(false)}
             show={showLoginToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-success">
               <img
                 src="holder.js/20x20?text=%20"
@@ -182,7 +188,8 @@ const LoginPage = () => {
             onClose={() => setShowGetServerCartToast(false)}
             show={showGetServerCartToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-danger">
               <img
                 src="holder.js/20x20?text=%20"

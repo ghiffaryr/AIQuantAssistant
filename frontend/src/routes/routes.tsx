@@ -11,6 +11,7 @@ import ProductPage from '@/pages/main/ProductPage';
 import CategoryPage from '@/pages/main/CategoryPage';
 import ProductByCategoryPage from '@/pages/category/ProductByCategoryPage';
 import InferencePage from '@/pages/main/InferencePage';
+import ProfilePage from '@/pages/main/ProfilePage';
 
 const PageRoutes: React.FC = () => {
   const location = useLocation();
@@ -24,7 +25,8 @@ const PageRoutes: React.FC = () => {
       <Route path="/product" element={<ProductPage />} />
       <Route path="/category" element={<CategoryPage />} />
       <Route path="/category/:code" element={<ProductByCategoryPage />} />
-      <Route path="subscription" element={<InferencePage />} />
+      <Route path="/subscription" element={<InferencePage />} />
+      <Route path="/profile" element={<ProfilePage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

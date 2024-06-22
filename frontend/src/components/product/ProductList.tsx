@@ -10,7 +10,8 @@ const ProductList = ({ products, setProducts }: ProductListProps) => {
         <div
           className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4
         "
-          id="products-row">
+          id="products-row"
+        >
           {products.map((product, idx) => (
             <Product
               key={idx}

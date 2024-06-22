@@ -80,7 +80,8 @@ const CategoryPage = () => {
             <Button
               className="w-100"
               variant="outline-primary"
-              onClick={() => setShowCreateCategoryModal(true)}>
+              onClick={() => setShowCreateCategoryModal(true)}
+            >
               Create Category
             </Button>
           </div>
@@ -104,7 +105,8 @@ const CategoryPage = () => {
             onClose={() => setShowGetServerCartToast(false)}
             show={showGetServerCartToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-danger">
               <img
                 src="holder.js/20x20?text=%20"
@@ -123,7 +125,8 @@ const CategoryPage = () => {
             onClose={() => setShowGetCategoriesToast(false)}
             show={showGetCategoriesToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-danger">
               <img
                 src="holder.js/20x20?text=%20"
