@@ -3,13 +3,17 @@ import { VITE_API_URL } from '@/env/env';
 import { LoginResponseType } from '@/type/LoginType';
 import { LoginPayloadType } from '@/type/LoginType';
 import { ProfileDataType } from '@/type/ProfileDataType';
+import { MappedType } from '@/utils/type';
 import {
   UseMutationOptions,
   UseQueryOptions,
   useMutation,
   useQuery,
+  useQueryClient,
 } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
+
+const InvalidateProfileQKey = 'profile';
 
 export const useGetProfile = (
   options: Omit<
@@ -30,7 +34,58 @@ export const useGetProfile = (
   });
 };
 
-// TODO: invalidated cart query
+export const useUpdateProfile = <T extends AxiosResponse<any, any>>(
+  mutationOptions: Omit<
+    UseMutationOptions<T, Error, MappedType<string, any>>,
+    'onSuccess'
+  > & { successSideEffect: (data: T) => void },
+) => {
+  const queryClient = useQueryClient();
+  return useMutation<T, Error, MappedType<string, any>>({
+    mutationFn: inputs => {
+      return axios.patch(`${VITE_API_URL}/profile/update`, {
+        ...Object.fromEntries(
+          Object.entries(inputs).filter(
+            ([key, value]) =>
+              key !== 'firstName' &&
+              key !== 'lastName' &&
+              key !== 'coPassword' &&
+              value !== '' &&
+              value !== null,
+          ),
+        ),
+        name: `${inputs.firstName} ${inputs.lastName}`,
+        birthdate: new Date(inputs.birthdate).toISOString(),
+      });
+    },
+    onSuccess: data => {
+      mutationOptions.successSideEffect(data);
+      queryClient.invalidateQueries({
+        predicate: query => {
+          return query.queryKey.some(val => val === InvalidateProfileQKey);
+        },
+      });
+    },
+    ...mutationOptions,
+  });
+};
+
+export const useDeactivateProfile = (
+  mutationOptions: UseMutationOptions<
+    AxiosResponse<any, any>,
+    Error,
+    void,
+    unknown
+  >,
+) => {
+  return useMutation<AxiosResponse<any, any>, Error, void>({
+    mutationFn: () => {
+      return axios.patch(`${VITE_API_URL}/profile/deactivate`);
+    },
+    ...mutationOptions,
+  });
+};
+
 export const useLoginMutation = (
   mutationOptions: UseMutationOptions<
     AxiosResponse<LoginResponseType, any>,

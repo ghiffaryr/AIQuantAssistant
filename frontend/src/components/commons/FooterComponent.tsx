@@ -12,7 +12,8 @@ const FooterComponent = ({ position, variant, color }: FooterComponentType) => {
               : color === 'white'
                 ? 'copyright d-flex text-white justify-content-center align-items-center'
                 : 'copyright d-flex justify-content-center align-items-center'
-        }>
+        }
+      >
         © 2023 Ghiffary Rifqialdi
       </p>
     </div>

@@ -256,7 +256,8 @@ const ProductPage = () => {
             <Button
               className="w-100"
               variant="outline-primary"
-              onClick={() => setShowCreateProductModal(true)}>
+              onClick={() => setShowCreateProductModal(true)}
+            >
               Create Product
             </Button>
           </div>
@@ -280,7 +281,8 @@ const ProductPage = () => {
             onClose={() => setShowGetServerCartToast(false)}
             show={showGetServerCartToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-danger">
               <img
                 src="holder.js/20x20?text=%20"
@@ -299,7 +301,8 @@ const ProductPage = () => {
             onClose={() => setShowGetProductsToast(false)}
             show={showGetProductsToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-danger">
               <img
                 src="holder.js/20x20?text=%20"

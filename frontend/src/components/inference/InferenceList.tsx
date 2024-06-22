@@ -8,7 +8,8 @@ const InferenceList = ({ subscriptions }: InferenceListProps) => {
         <div
           className="row row-cols-1 g-4
         "
-          id="subscriptions-row">
+          id="subscriptions-row"
+        >
           {subscriptions.map((subscription, idx) => (
             <Inference
               key={idx}

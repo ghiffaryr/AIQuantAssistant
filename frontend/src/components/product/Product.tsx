@@ -203,11 +203,13 @@ const Product = ({
                   className="cart-form"
                   noValidate
                   validated={validated}
-                  onSubmit={handleSubmitAddToCart}>
+                  onSubmit={handleSubmitAddToCart}
+                >
                   <FloatingLabel
                     controlId="floatingInput"
                     label="Quantity"
-                    className="mb-3">
+                    className="mb-3"
+                  >
                     <Form.Control
                       type="number"
                       name="quantity"
@@ -234,7 +236,8 @@ const Product = ({
               <div className="text-center mt-3">
                 <Button
                   variant="outline-primary"
-                  onClick={() => setShowUpdateProductModal(true)}>
+                  onClick={() => setShowUpdateProductModal(true)}
+                >
                   Update
                 </Button>
               </div>
@@ -244,7 +247,8 @@ const Product = ({
                 <div className="d-flex justify-content-evenly">
                   <Button
                     variant="outline-primary"
-                    onClick={() => setShowUpdateProductModal(true)}>
+                    onClick={() => setShowUpdateProductModal(true)}
+                  >
                     Update
                   </Button>
                   <Button variant="outline-danger" onClick={handleDelete}>
@@ -271,7 +275,8 @@ const Product = ({
               onClose={() => setShowAddToCartToast(false)}
               show={showAddToCartToast}
               delay={3000}
-              autohide>
+              autohide
+            >
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -287,7 +292,8 @@ const Product = ({
               onClose={() => setShowAddToCartToast(false)}
               show={showAddToCartToast}
               delay={3000}
-              autohide>
+              autohide
+            >
               <Toast.Header className="bg-success">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -306,7 +312,8 @@ const Product = ({
               onClose={() => setShowDeleteProductToast(false)}
               show={showDeleteProductToast}
               delay={3000}
-              autohide>
+              autohide
+            >
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -322,7 +329,8 @@ const Product = ({
               onClose={() => setShowDeleteProductToast(false)}
               show={showDeleteProductToast}
               delay={3000}
-              autohide>
+              autohide
+            >
               <Toast.Header className="bg-success">
                 <img
                   src="holder.js/20x20?text=%20"

@@ -185,7 +185,8 @@ const Category = ({
                   <div className="text-center mt-3 mb-3">
                     <Button
                       variant="outline-primary"
-                      onClick={() => setShowUpdateCategoryModal(true)}>
+                      onClick={() => setShowUpdateCategoryModal(true)}
+                    >
                       Update
                     </Button>
                   </div>
@@ -195,7 +196,8 @@ const Category = ({
                     <div className="d-flex justify-content-evenly">
                       <Button
                         variant="outline-primary"
-                        onClick={() => setShowUpdateCategoryModal(true)}>
+                        onClick={() => setShowUpdateCategoryModal(true)}
+                      >
                         Update
                       </Button>
                       <Button variant="outline-danger" onClick={handleDelete}>
@@ -226,12 +228,14 @@ const Category = ({
                         className="cart-form row row-cols-1 row-cols-lg-3 g-4 justify-content-center"
                         noValidate
                         validated={validated}
-                        onSubmit={handleSubmitForecastPredict}>
+                        onSubmit={handleSubmitForecastPredict}
+                      >
                         <div className="col">
                           <FloatingLabel
                             controlId="floatingInput"
                             label="Stock Code"
-                            className="mb-3">
+                            className="mb-3"
+                          >
                             <Form.Control
                               type="text"
                               name="stockCode"
@@ -252,7 +256,8 @@ const Category = ({
                           <FloatingLabel
                             controlId="floatingInput"
                             label="Training Window (month)"
-                            className="mb-3">
+                            className="mb-3"
+                          >
                             <Form.Control
                               type="number"
                               name="trainingWindow"
@@ -272,7 +277,8 @@ const Category = ({
                           <FloatingLabel
                             controlId="floatingInput"
                             label="Forecasting Horizon (month)"
-                            className="mb-3">
+                            className="mb-3"
+                          >
                             <Form.Control
                               type="number"
                               name="forecastingHorizon"
@@ -306,7 +312,8 @@ const Category = ({
                             <Button
                               className="w-100"
                               type="submit"
-                              variant="outline-primary">
+                              variant="outline-primary"
+                            >
                               Predict
                             </Button>
                           </div>
@@ -329,12 +336,14 @@ const Category = ({
                         className="cart-form row row-cols-1 row-cols-lg-1 g-4 justify-content-center"
                         noValidate
                         validated={validated}
-                        onSubmit={handleSubmitTextPredict}>
+                        onSubmit={handleSubmitTextPredict}
+                      >
                         <div className="col">
                           <FloatingLabel
                             controlId="floatingInput"
                             label="Input"
-                            className="mb-3">
+                            className="mb-3"
+                          >
                             <Form.Control
                               as="textarea"
                               name="input"
@@ -367,7 +376,8 @@ const Category = ({
                             <Button
                               className="w-100"
                               type="submit"
-                              variant="outline-primary">
+                              variant="outline-primary"
+                            >
                               Predict
                             </Button>
                           </div>
@@ -401,7 +411,8 @@ const Category = ({
                     onClose={() => setShowPredictToast(false)}
                     show={showPredictToast}
                     delay={3000}
-                    autohide>
+                    autohide
+                  >
                     <Toast.Header className="bg-danger">
                       <img
                         src="holder.js/20x20?text=%20"
@@ -417,7 +428,8 @@ const Category = ({
                     onClose={() => setShowPredictToast(false)}
                     show={showPredictToast}
                     delay={3000}
-                    autohide>
+                    autohide
+                  >
                     <Toast.Header className="bg-success">
                       <img
                         src="holder.js/20x20?text=%20"
@@ -436,7 +448,8 @@ const Category = ({
                     onClose={() => setShowDeleteCategoryToast(false)}
                     show={showDeleteCategoryToast}
                     delay={3000}
-                    autohide>
+                    autohide
+                  >
                     <Toast.Header className="bg-danger">
                       <img
                         src="holder.js/20x20?text=%20"
@@ -454,7 +467,8 @@ const Category = ({
                     onClose={() => setShowDeleteCategoryToast(false)}
                     show={showDeleteCategoryToast}
                     delay={3000}
-                    autohide>
+                    autohide
+                  >
                     <Toast.Header className="bg-success">
                       <img
                         src="holder.js/20x20?text=%20"
