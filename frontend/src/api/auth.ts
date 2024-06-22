@@ -70,6 +70,68 @@ export const useUpdateProfile = <T extends AxiosResponse<any, any>>(
   });
 };
 
+export const useRegisterProfile = <T extends AxiosResponse<any, any>>(
+  mutationOptions: Omit<
+    UseMutationOptions<T, Error, MappedType<string, any>>,
+    'onSuccess'
+  > & { successSideEffect: (data: T) => void },
+) => {
+  const queryClient = useQueryClient();
+  return useMutation<T, Error, MappedType<string, any>>({
+    mutationFn: inputs => {
+      return axios.post(`${VITE_API_URL}/register`, {
+        ...Object.fromEntries(
+          Object.entries(inputs).filter(
+            ([key, value]) =>
+              key !== 'firstName' &&
+              key !== 'lastName' &&
+              key !== 'coPassword' &&
+              value !== '' &&
+              value !== null,
+          ),
+        ),
+        name: `${inputs.firstName} ${inputs.lastName}`,
+        birthdate: new Date(inputs.birthdate).toISOString(),
+      });
+    },
+    onSuccess: data => {
+      mutationOptions.successSideEffect(data);
+      queryClient.invalidateQueries({
+        predicate: query => {
+          return query.queryKey.some(val => val === InvalidateProfileQKey);
+        },
+      });
+    },
+    ...mutationOptions,
+  });
+};
+
+export const useRecover = <T extends AxiosResponse<any, any>>(
+  mutationOptions: Omit<
+    UseMutationOptions<T, Error, MappedType<string, string>>,
+    'onSuccess'
+  > & { successSideEffect: (data: T) => void },
+) => {
+  const queryClient = useQueryClient();
+  return useMutation<T, Error, MappedType<string, string>>({
+    mutationFn: inputs => {
+      return axios.put(`${VITE_API_URL}/recover`, {
+        email: inputs.email,
+        recoveryPhrase: inputs.recoveryPhrase,
+      });;
+    },
+    onSuccess: data => {
+      mutationOptions.successSideEffect(data);
+      queryClient.invalidateQueries({
+        predicate: query => {
+          return query.queryKey.some(val => val === InvalidateProfileQKey);
+        },
+      });
+    },
+    ...mutationOptions,
+  });
+};
+
 export const useDeactivateProfile = (
   mutationOptions: UseMutationOptions<
     AxiosResponse<any, any>,

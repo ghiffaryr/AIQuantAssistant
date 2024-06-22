@@ -1,37 +1,27 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from 'react';
-import NavbarComponent from '@/components/commons/NavbarComponent';
+import Container from 'react-bootstrap/esm/Container';
 import Form from 'react-bootstrap/Form';
 import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
+import FooterComponent from '@/components/commons/FooterComponent';
+import NavbarComponent from '@/components/commons/NavbarComponent';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { LinkContainer } from 'react-router-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import Button from 'react-bootstrap/esm/Button';
+import '@/style/pages/main/login/Register.css';
 import { storage } from '@/utils/firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import { BsQuestionCircleFill } from 'react-icons/bs';
-import Button from 'react-bootstrap/esm/Button';
-import { useEffect } from 'react';
-import Breadcrumbs from '@/components/commons/Breadcrumbs';
-import FooterComponent from '@/components/commons/FooterComponent';
-import ToastContainer from 'react-bootstrap/esm/ToastContainer';
-import { useNavigate } from 'react-router-dom';
-import '@/style/pages/main/ProfilePage.css';
-import useServerCart from '@/hooks/useServerCart';
-import {
-  useDeactivateProfile,
-  useGetProfile,
-  useUpdateProfile,
-} from '@/api/auth';
-import errorHandler from '@/utils/error';
 import { MappedType } from '@/utils/type';
-import useBoundStore from '@/store/store';
+import { useRegisterProfile } from '@/api/auth';
+import errorHandler from '@/utils/error';
 
-const ProfilePage = () => {
+const RegisterPage = () => {
   const [inputs, setInputs] = useState<MappedType<string, any>>({
     image: '',
     firstName: '',
@@ -39,120 +29,42 @@ const ProfilePage = () => {
     email: '',
     password: '',
     coPassword: '',
+    recoveryPhrase: '',
     phone: '',
     address: '',
     gender: null,
     birthdate: '',
     role: 'ROLE_CUSTOMER',
   });
-  const [showGetProfileToast, setShowGetProfileToast] = useState(false);
-  const [errorGetProfile, setErrorGetProfile] = useState<any>({});
-  const [showUploadProfilePictureToast, setShowUploadProfilePictureToast] =
-    useState(false);
-  const [errorUploadProfilePicture, setErrorUploadProfilePicture] =
-    useState<any>({});
-  const [showUpdateProfileToast, setShowUpdateProfileToast] = useState(false);
-  const [errorUpdateProfile, setErrorUpdateProfile] = useState<any>({});
+  const [showRegisterToast, setShowRegisterToast] = useState(false);
+  const [errorRegister, setErrorRegister] = useState<any>({});
   const [validated, setValidated] = useState(false);
-  const [showDeactivateAccountToast, setShowDeactivateAccountToast] =
-    useState(false);
-  const [errorDeactivateAccount, setErrorDeactivateAccount] = useState<any>({});
   const navigate = useNavigate();
 
-  const {
-    cartOrderDetailCount,
-    errorGetServerCart,
-    setShowGetServerCartToast,
-    showGetServerCartToast,
-  } = useServerCart();
-
-  const {
-    data: profileData,
-    error: profileError,
-    isError: profileIsError,
-    isSuccess: profileIsSuccess,
-  } = useGetProfile({ enabled: true });
-
-  const removeUserData = useBoundStore.use.removeUserData();
-
-  useEffect(() => {
-    if (profileIsSuccess) {
-      setInputs({
-        ...inputs,
-        image: profileData.data.image!,
-        firstName: profileData.data.name!.split(' ')[0],
-        lastName: profileData.data.name!.split(' ')[1],
-        email: profileData.data.email!,
-        phone: profileData.data.phone!,
-        address: profileData.data.address!,
-        gender: profileData.data.gender,
-        birthdate: profileData.data.birthdate!,
-        role: profileData.data.role!,
-      });
-      setErrorGetProfile({});
-      setShowGetProfileToast(true);
-    }
-
-    if (profileIsError) {
-      errorHandler({
-        error: profileError,
-        axiosErrorHandlerFn: err => {
-          setErrorGetProfile(err);
-          setShowGetProfileToast(true);
-        },
-        generalErrorHandlerFn: err => {
-          setErrorGetProfile({ message: err.message });
-          setShowGetProfileToast(true);
-        },
-      });
-    }
-  }, [profileData, profileError, profileIsError, profileIsSuccess]);
-
-  const profileUpdate = useUpdateProfile({
+  const registerMutation = useRegisterProfile({
     successSideEffect: () => {
-      setErrorUpdateProfile({});
-      setShowUpdateProfileToast(true);
+      setErrorRegister({});
+      setShowRegisterToast(true);
+      setTimeout(() => {
+        navigate('/login');
+      }, 3000);
     },
     onError: error => {
       setInputs({
         ...inputs,
         password: '',
         coPassword: '',
+        recoveryPhrase: '',
       });
-
       errorHandler({
         error,
         axiosErrorHandlerFn: err => {
-          setErrorUpdateProfile(err);
-          setShowUpdateProfileToast(true);
+          setErrorRegister(err);
+          setShowRegisterToast(true);
         },
         generalErrorHandlerFn: err => {
-          setErrorUpdateProfile(err);
-          setShowUpdateProfileToast(true);
-        },
-      });
-    },
-  });
-
-  const deactivateProfile = useDeactivateProfile({
-    onSuccess: () => {
-      removeUserData();
-      setTimeout(() => {
-        navigate('/login');
-      }, 3000);
-      setErrorDeactivateAccount({});
-      setShowDeactivateAccountToast(true);
-    },
-    onError: error => {
-      errorHandler({
-        error,
-        axiosErrorHandlerFn: err => {
-          setErrorDeactivateAccount(err);
-          setShowDeactivateAccountToast(true);
-        },
-        generalErrorHandlerFn: err => {
-          setErrorDeactivateAccount(err);
-          setShowDeactivateAccountToast(true);
+          setErrorRegister(err);
+          setShowRegisterToast(true);
         },
       });
     },
@@ -170,13 +82,13 @@ const ProfilePage = () => {
     });
   }
 
-  const handleSubmitUpdateProfile = (e: any) => {
+  const handleSubmit = (e: any) => {
     const form = e.currentTarget;
 
     setValidated(true);
     e.preventDefault();
     if (form.checkValidity()) {
-      profileUpdate.mutate(inputs);
+      registerMutation.mutate(inputs);
     }
   };
 
@@ -195,66 +107,37 @@ const ProfilePage = () => {
         });
       })
       .catch(() => {
-        setErrorUploadProfilePicture({ code: 500, message: 'Upload failed!' });
-        setShowUploadProfilePictureToast(true);
+        setErrorRegister({ code: 500, message: 'Upload failed!' });
+        setShowRegisterToast(true);
       });
   }
 
-  const handleDeactivateAccount = () => {
-    deactivateProfile.mutate();
-  };
-
   return (
     <>
-      <NavbarComponent cartOrderDetailCount={cartOrderDetailCount} />
+      <NavbarComponent navStyle="simple" />
       <>
-        <Breadcrumbs />
-        <div className="container mb-3">
-          <div
-            className="row g-5 d-flex align-items-center justify-content-center"
-            id="profile-row">
-            <div className="col col-12 col-md-5 col-lg-4 d-flex align-items-center justify-content-center">
-              <img
-                className="img-fluid rounded-5"
-                src={
-                  inputs.image
-                    ? inputs.image
-                    : 'https://firebasestorage.googleapis.com/v0/b/ai-quant-assistant.appspot.com/o/profile_image_notfound.png?alt=media&token=e1488150-c31b-4020-9ca5-b8694f6c72b3'
-                }
-                alt="Profile"
-              />
-            </div>
-            <div className="col col-12 col-md-7 col-lg-8">
+        <Container className="container register-main d-flex justify-content-center flex-column align-items-center my-5 pt-5">
+          {localStorage.getItem('user_token') ? (
+            <>
+              <h3 className="main-title">You are already registered.</h3>
+              <LinkContainer to="/">
+                <Button variant="outline-danger">Go back to Home page</Button>
+              </LinkContainer>
+            </>
+          ) : (
+            <>
+              <h1 className="main-title mb-4">Register a new account</h1>
               <Form
-                className="profile-form"
+                className="login-form"
                 noValidate
                 validated={validated}
-                onSubmit={handleSubmitUpdateProfile}>
+                onSubmit={handleSubmit}>
                 <Form.Group
                   as={Row}
                   className="mb-3"
                   controlId="validationCustom01">
                   <Form.Label column sm="4">
-                    Profile Picture Link
-                  </Form.Label>
-                  <Col sm="8">
-                    <Form.Control
-                      name="image"
-                      type="text"
-                      onChange={handleChange}
-                      value={inputs.image}
-                      placeholder="Profile Picture Link"
-                      aria-label="Profile Picture Link"
-                      aria-describedby="basic-addon1"
-                    />
-                  </Col>
-                </Form.Group>
-                <Form.Group
-                  as={Row}
-                  className="mb-3"
-                  controlId="validationCustom02">
-                  <Form.Label column sm="4">
-                    Upload Profile Picture
+                    Profile Picture
                   </Form.Label>
                   <Col sm="8">
                     <Form.Control
@@ -271,7 +154,7 @@ const ProfilePage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom03">
+                  controlId="validationCustom02">
                   <Form.Label column sm="4">
                     <div className="d-inline-flex">
                       First Name&nbsp;<span className="text-danger">*</span>
@@ -296,7 +179,7 @@ const ProfilePage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom04">
+                  controlId="validationCustom03">
                   <Form.Label column sm="4">
                     Last Name&nbsp;<span className="text-danger">*</span>
                   </Form.Label>
@@ -319,7 +202,7 @@ const ProfilePage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom05">
+                  controlId="validationCustom04">
                   <Form.Label column sm="4">
                     Email Address&nbsp;<span className="text-danger">*</span>
                   </Form.Label>
@@ -342,7 +225,7 @@ const ProfilePage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom06">
+                  controlId="validationCustom05">
                   <Form.Label column sm="4">
                     <div className="d-inline-flex">
                       Password&nbsp;<span className="text-danger">*</span>
@@ -410,7 +293,7 @@ const ProfilePage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom07">
+                  controlId="validationCustom06">
                   <Form.Label column sm="4">
                     Confirm Password <span className="text-danger">*</span>
                   </Form.Label>
@@ -427,6 +310,29 @@ const ProfilePage = () => {
                     />
                     <Form.Control.Feedback type="invalid">
                       Passwords don't match.
+                    </Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="validationCustom07">
+                  <Form.Label column sm="4">
+                    Recovery Phrase <span className="text-danger">*</span>
+                  </Form.Label>
+                  <Col sm="8">
+                    <Form.Control
+                      type="password"
+                      name="recoveryPhrase"
+                      placeholder="Recovery Phrase"
+                      aria-label="Recovery Phrase"
+                      value={inputs.recoveryPhrase}
+                      onChange={handleChange}
+                      pattern="^(?!\s*$).+"
+                      required
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Recovery phrase cannot be blank.
                     </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
@@ -490,7 +396,6 @@ const ProfilePage = () => {
                       type={'radio'}
                       id="inline-radio-gender-male"
                       onChange={handleChange}
-                      checked={inputs.gender === true}
                     />
                     <Form.Check
                       inline
@@ -500,7 +405,6 @@ const ProfilePage = () => {
                       type={'radio'}
                       id="inline-radio-gender-female"
                       onChange={handleChange}
-                      checked={inputs.gender === false}
                     />
                   </Col>
                 </Form.Group>
@@ -518,9 +422,6 @@ const ProfilePage = () => {
                       placeholder="Birth Date"
                       aria-label="Birth Date"
                       onChange={handleChange}
-                      value={
-                        inputs.birthdate && inputs.birthdate.substring(0, 10)
-                      }
                     />
                   </Col>
                 </Form.Group>
@@ -529,32 +430,29 @@ const ProfilePage = () => {
                     type="submit"
                     variant="outline-primary"
                     className="w-50 mt-3">
-                    Update
+                    Register
                   </Button>
-                  <Row>
-                    <Col xs={12}>
-                      <Form.Text>
-                        Deactivate your account?{' '}
-                        <a
-                          className="deactivate-link text-danger"
-                          onClick={handleDeactivateAccount}>
-                          <span>Deactivate</span>
-                        </a>
-                      </Form.Text>
-                    </Col>
-                  </Row>
+                  <br />
+                  <Form.Text>
+                    Already have an account?{' '}
+                    <LinkContainer
+                      to="/login"
+                      className="login-link text-primary">
+                      <span>Login</span>
+                    </LinkContainer>
+                  </Form.Text>
                 </div>
               </Form>
-            </div>
-          </div>
-        </div>
+            </>
+          )}
+        </Container>
         <FooterComponent />
       </>
       <ToastContainer className="position-fixed p-3 top-0 end-0">
-        {Object.keys(errorGetServerCart).length > 0 && (
+        {Object.keys(errorRegister).length > 0 ? (
           <Toast
-            onClose={() => setShowGetServerCartToast(false)}
-            show={showGetServerCartToast}
+            onClose={() => setShowRegisterToast(false)}
+            show={showRegisterToast}
             delay={3000}
             autohide>
             <Toast.Header className="bg-danger">
@@ -565,69 +463,12 @@ const ProfilePage = () => {
               />
               <strong className="me-auto text-light">Error</strong>
             </Toast.Header>
-            <Toast.Body>{errorGetServerCart.message}</Toast.Body>
-          </Toast>
-        )}
-      </ToastContainer>
-      <ToastContainer className="position-fixed p-3 top-0 end-0">
-        {Object.keys(errorGetProfile).length > 0 && (
-          <Toast
-            onClose={() => setShowGetProfileToast(false)}
-            show={showGetProfileToast}
-            delay={3000}
-            autohide>
-            <Toast.Header className="bg-danger">
-              <img
-                src="holder.js/20x20?text=%20"
-                className="rounded me-2"
-                alt=""
-              />
-              <strong className="me-auto text-light">Error</strong>
-            </Toast.Header>
-            <Toast.Body>{errorGetProfile.message}</Toast.Body>
-          </Toast>
-        )}
-      </ToastContainer>
-      <ToastContainer className="position-fixed p-3 top-0 end-0">
-        {Object.keys(errorUploadProfilePicture).length > 0 && (
-          <Toast
-            onClose={() => setShowUploadProfilePictureToast(false)}
-            show={showUploadProfilePictureToast}
-            delay={3000}
-            autohide>
-            <Toast.Header className="bg-danger">
-              <img
-                src="holder.js/20x20?text=%20"
-                className="rounded me-2"
-                alt=""
-              />
-              <strong className="me-auto text-light">Error</strong>
-            </Toast.Header>
-            <Toast.Body>{errorUploadProfilePicture.message}</Toast.Body>
-          </Toast>
-        )}
-      </ToastContainer>
-      <ToastContainer className="position-fixed p-3 top-0 end-0">
-        {Object.keys(errorUpdateProfile).length > 0 ? (
-          <Toast
-            onClose={() => setShowUpdateProfileToast(false)}
-            show={showUpdateProfileToast}
-            delay={3000}
-            autohide>
-            <Toast.Header className="bg-danger">
-              <img
-                src="holder.js/20x20?text=%20"
-                className="rounded me-2"
-                alt=""
-              />
-              <strong className="me-auto text-light">Error</strong>
-            </Toast.Header>
-            <Toast.Body>{errorUpdateProfile.message}</Toast.Body>
+            <Toast.Body>{errorRegister.message}</Toast.Body>
           </Toast>
         ) : (
           <Toast
-            onClose={() => setShowUpdateProfileToast(false)}
-            show={showUpdateProfileToast}
+            onClose={() => setShowRegisterToast(false)}
+            show={showRegisterToast}
             delay={3000}
             autohide>
             <Toast.Header className="bg-success">
@@ -638,42 +479,7 @@ const ProfilePage = () => {
               />
               <strong className="me-auto text-light">Success</strong>
             </Toast.Header>
-            <Toast.Body>Update profile success!</Toast.Body>
-          </Toast>
-        )}
-      </ToastContainer>
-      <ToastContainer className="position-fixed p-3 top-0 end-0">
-        {Object.keys(errorDeactivateAccount).length > 0 ? (
-          <Toast
-            onClose={() => setShowDeactivateAccountToast(false)}
-            show={showDeactivateAccountToast}
-            delay={3000}
-            autohide>
-            <Toast.Header className="bg-danger">
-              <img
-                src="holder.js/20x20?text=%20"
-                className="rounded me-2"
-                alt=""
-              />
-              <strong className="me-auto text-light">Error</strong>
-            </Toast.Header>
-            <Toast.Body>{errorDeactivateAccount.message}</Toast.Body>
-          </Toast>
-        ) : (
-          <Toast
-            onClose={() => setShowDeactivateAccountToast(false)}
-            show={showDeactivateAccountToast}
-            delay={3000}
-            autohide>
-            <Toast.Header className="bg-success">
-              <img
-                src="holder.js/20x20?text=%20"
-                className="rounded me-2"
-                alt=""
-              />
-              <strong className="me-auto text-light">Success</strong>
-            </Toast.Header>
-            <Toast.Body>Deactivate account success!</Toast.Body>
+            <Toast.Body>Successfully registered! Please log in!</Toast.Body>
           </Toast>
         )}
       </ToastContainer>
@@ -681,4 +487,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default RegisterPage;
