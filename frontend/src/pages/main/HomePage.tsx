@@ -10,7 +10,7 @@ import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/esm/ToastContainer';
 import useServerCart from '@/hooks/useServerCart';
 
-export default function HomePage() {
+const HomePage = () => {
   const {
     cartOrderDetailCount,
     errorGetServerCart,
@@ -46,8 +46,7 @@ export default function HomePage() {
             onClose={() => setShowGetServerCartToast(false)}
             show={showGetServerCartToast}
             delay={3000}
-            autohide
-          >
+            autohide>
             <Toast.Header className="bg-danger">
               <img
                 src="holder.js/20x20?text=%20"
@@ -62,4 +61,6 @@ export default function HomePage() {
       </ToastContainer>
     </>
   );
-}
+};
+
+export default HomePage;

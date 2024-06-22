@@ -17,7 +17,7 @@ import useBoundStore from '@/store/store';
 import { ProductDataType } from '@/type/ProductDataType';
 import errorHandler from '@/utils/error';
 
-export default function ProductByCategoryPage() {
+const ProductByCategoryPage = () => {
   const [showGetProductsByCategoryToast, setShowGetProductsByCategoryToast] =
     useState(false);
   const [errorGetProductsByCategory, setErrorGetProductsByCategory] = useState(
@@ -174,4 +174,6 @@ export default function ProductByCategoryPage() {
       </ToastContainer>
     </>
   );
-}
+};
+
+export default ProductByCategoryPage;

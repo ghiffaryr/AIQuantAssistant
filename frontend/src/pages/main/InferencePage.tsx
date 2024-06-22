@@ -3,28 +3,24 @@ import { useEffect, useState } from 'react';
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/esm/ToastContainer';
 import Breadcrumbs from '@/components/commons/Breadcrumbs';
-import NavbarComponent from '@/components/commons/NavbarComponent';
-import CategoryList from '@/components/category/CategoryList';
 import FooterComponent from '@/components/commons/FooterComponent';
+import NavbarComponent from '@/components/commons/NavbarComponent';
+import SubscriptionList from '../../components/inference/InferenceList';
 import { PaginationControl } from 'react-bootstrap-pagination-control';
-import { Button } from 'react-bootstrap';
-import CreateCategoryModal from '@/components/category/CreateCategoryModal';
 import useServerCart from '@/hooks/useServerCart';
-import { useGetCategory } from '@/api/category';
-import { CategoryDetailType } from '@/type/CategoryType';
+import { useGetSubscription } from '@/api/subscription';
+import { SubscriptionType } from '@/type/SubscriptionType';
 import errorHandler from '@/utils/error';
-import useBoundStore from '@/store/store';
-import Role from '@/enums/RoleEnum';
 
-const CategoryPage = () => {
-  const [showGetCategoriesToast, setShowGetCategoriesToast] = useState(false);
-  const [errorGetCategories, setErrorGetCategories] = useState({});
+const InferencePage = () => {
+  const [showGetSubscriptionsToast, setShowGetSubscriptionsToast] =
+    useState(false);
+  const [errorGetSubscriptions, setErrorGetSubscriptions] = useState({});
   const [page, setPage] = useState(1);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [size, setSize] = useState(6);
   const [totalPages, setTotalPages] = useState(1);
-  const [categories, setCategories] = useState<CategoryDetailType[]>([]);
-  const [showCreateCategoryModal, setShowCreateCategoryModal] = useState(false);
+  const [subscriptions, setSubscriptions] = useState<SubscriptionType[]>([]);
 
   const {
     cartOrderDetailCount,
@@ -34,58 +30,52 @@ const CategoryPage = () => {
   } = useServerCart();
 
   const {
-    data: categoryData,
-    error: categoryError,
-    isError: categoryIsError,
-    isSuccess: categoryIsSuccess,
-  } = useGetCategory(page, size, {
-    enabled: true,
-  });
-
-  const userRole = useBoundStore.use.userRole?.();
+    data: subscriptionData,
+    error: subscriptionError,
+    isError: subscriptionIsError,
+    isSuccess: subscriptionIsSuccess,
+  } = useGetSubscription(page, size, { enabled: true });
 
   useEffect(() => {
-    if (categoryIsSuccess) {
-      setCategories(categoryData.data.content!);
-      setTotalPages(categoryData.data.totalPages!);
-      setErrorGetCategories({});
-      setShowGetCategoriesToast(true);
+    if (subscriptionIsSuccess) {
+      setSubscriptions(subscriptionData.data.content || []);
+      setTotalPages(subscriptionData.data.totalPages!);
+      setErrorGetSubscriptions({});
+      setShowGetSubscriptionsToast(true);
     }
 
-    if (categoryIsError) {
+    if (subscriptionIsError) {
       errorHandler({
-        error: categoryError,
+        error: subscriptionError,
         axiosErrorHandlerFn: err => {
-          if (err.code === 30) {
-            setCategories([]);
-          }
-          setErrorGetCategories(err);
-          setShowGetCategoriesToast(true);
+          setErrorGetSubscriptions(err);
+          setShowGetSubscriptionsToast(true);
         },
         generalErrorHandlerFn: err => {
-          setErrorGetCategories({ message: err.message });
-          setShowGetCategoriesToast(true);
+          setErrorGetSubscriptions({ message: err.message });
+          setShowGetSubscriptionsToast(true);
         },
       });
     }
-  }, [categoryData, categoryError, categoryIsError, categoryIsSuccess]);
+  }, [
+    subscriptionData,
+    subscriptionError,
+    subscriptionIsError,
+    subscriptionIsSuccess,
+  ]);
 
   return (
     <>
       <NavbarComponent cartOrderDetailCount={cartOrderDetailCount} />
       <>
         <Breadcrumbs />
-        {userRole == Role.Manager && (
-          <div className="container mb-3">
-            <Button
-              className="w-100"
-              variant="outline-primary"
-              onClick={() => setShowCreateCategoryModal(true)}>
-              Create Category
-            </Button>
-          </div>
-        )}
-        <CategoryList categories={categories} setCategories={setCategories} />
+        <div className="container mb-4 d-flex align-items-center">
+          <small>
+            <span className="text-danger">*</span> Search for Stock Code at
+            Yahoo Finance
+          </small>
+        </div>
+        <SubscriptionList subscriptions={subscriptions} />
         <PaginationControl
           page={page}
           between={4}
@@ -118,10 +108,10 @@ const CategoryPage = () => {
         )}
       </ToastContainer>
       <ToastContainer className="position-fixed p-3 top-0 end-0">
-        {Object.keys(errorGetCategories).length > 0 && (
+        {Object.keys(errorGetSubscriptions).length > 0 && (
           <Toast
-            onClose={() => setShowGetCategoriesToast(false)}
-            show={showGetCategoriesToast}
+            onClose={() => setShowGetSubscriptionsToast(false)}
+            show={showGetSubscriptionsToast}
             delay={3000}
             autohide>
             <Toast.Header className="bg-danger">
@@ -132,18 +122,12 @@ const CategoryPage = () => {
               />
               <strong className="me-auto text-light">Error</strong>
             </Toast.Header>
-            <Toast.Body>{(errorGetCategories as any).message}</Toast.Body>
+            <Toast.Body>{(errorGetSubscriptions as any).message}</Toast.Body>
           </Toast>
         )}
       </ToastContainer>
-      <>
-        <CreateCategoryModal
-          show={showCreateCategoryModal}
-          onHide={() => setShowCreateCategoryModal(false)}
-        />
-      </>
     </>
   );
 };
 
-export default CategoryPage;
+export default InferencePage;

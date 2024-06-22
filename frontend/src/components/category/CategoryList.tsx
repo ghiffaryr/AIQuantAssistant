@@ -2,11 +2,7 @@ import React from 'react';
 import Category from './Category';
 import { CategoryDetailType } from '@/type/CategoryType';
 import useBoundStore from '@/store/store';
-
-export default function CategoryList({
-  categories,
-  setCategories,
-}: CategoryListProps) {
+const CategoryList = ({ categories, setCategories }: CategoryListProps) => {
   const userRole = useBoundStore.use.userRole?.();
   return (
     <>
@@ -53,9 +49,11 @@ export default function CategoryList({
       </div>
     </>
   );
-}
+};
 
 type CategoryListProps = {
   categories: CategoryDetailType[];
   setCategories: React.Dispatch<React.SetStateAction<CategoryDetailType[]>>;
 };
+
+export default CategoryList;

@@ -25,7 +25,7 @@ import { ProductDataType } from '@/type/ProductDataType';
 import { EProductStatus } from '@/enums/ProductStatusEnum';
 import { MappedType } from '@/utils/type';
 
-export default function ProductPage() {
+const ProductPage = () => {
   const [showGetProductsToast, setShowGetProductsToast] = useState(false);
   const [errorGetProducts, setErrorGetProducts] = useState({});
   const [page, setPage] = useState(1);
@@ -320,4 +320,6 @@ export default function ProductPage() {
       </>
     </>
   );
-}
+};
+
+export default ProductPage;

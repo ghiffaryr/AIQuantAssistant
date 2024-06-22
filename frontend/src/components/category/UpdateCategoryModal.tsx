@@ -12,7 +12,7 @@ import { useCategorySellerUpdate } from '@/api/category';
 import { CategoryDetailType } from '@/type/CategoryType';
 import errorHandler from '@/utils/error';
 
-export default function UpdateCategoryModal({
+const UpdateCategoryModal = ({
   code,
   name,
   description,
@@ -21,7 +21,7 @@ export default function UpdateCategoryModal({
   setCategories,
   show,
   onHide,
-}: UpdateCategoryModalProps) {
+}: UpdateCategoryModalProps) => {
   const [inputs, setInputs] = useState({
     productCategoryCode: code!,
     productCategoryDescription: description!,
@@ -111,8 +111,7 @@ export default function UpdateCategoryModal({
         aria-labelledby="contained-modal-title-vcenter"
         centered
         show={show}
-        onHide={onHide}
-      >
+        onHide={onHide}>
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             Update Category
@@ -125,13 +124,11 @@ export default function UpdateCategoryModal({
               className="update-product-form"
               id="update-product-form"
               noValidate
-              validated={validated}
-            >
+              validated={validated}>
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom01"
-              >
+                controlId="validationCustom01">
                 <Form.Label column sm="4">
                   <div className="d-inline-flex">
                     Code&nbsp;<span className="text-danger">*</span>
@@ -156,8 +153,7 @@ export default function UpdateCategoryModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom02"
-              >
+                controlId="validationCustom02">
                 <Form.Label column sm="4">
                   <div className="d-inline-flex">
                     Name&nbsp;<span className="text-danger">*</span>
@@ -182,8 +178,7 @@ export default function UpdateCategoryModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom03"
-              >
+                controlId="validationCustom03">
                 <Form.Label column sm="4">
                   Image Link
                 </Form.Label>
@@ -202,8 +197,7 @@ export default function UpdateCategoryModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom04"
-              >
+                controlId="validationCustom04">
                 <Form.Label column sm="4">
                   Upload Image
                 </Form.Label>
@@ -222,8 +216,7 @@ export default function UpdateCategoryModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom05"
-              >
+                controlId="validationCustom05">
                 <Form.Label column sm="4">
                   Description
                 </Form.Label>
@@ -256,8 +249,7 @@ export default function UpdateCategoryModal({
                   (
                     document.getElementById('update-form-button') as HTMLElement
                   ).click()
-                }
-              >
+                }>
                 Save changes
               </Button>
             </div>
@@ -274,8 +266,7 @@ export default function UpdateCategoryModal({
               onClose={() => setShowUploadImageToast(false)}
               show={showUploadImageToast}
               delay={3000}
-              autohide
-            >
+              autohide>
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -294,8 +285,7 @@ export default function UpdateCategoryModal({
               onClose={() => setShowUpdateCategoryToast(false)}
               show={showUpdateCategoryToast}
               delay={3000}
-              autohide
-            >
+              autohide>
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -311,8 +301,7 @@ export default function UpdateCategoryModal({
               onClose={() => setShowUpdateCategoryToast(false)}
               show={showUpdateCategoryToast}
               delay={3000}
-              autohide
-            >
+              autohide>
               <Toast.Header className="bg-success">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -328,7 +317,7 @@ export default function UpdateCategoryModal({
       </>
     </>
   );
-}
+};
 
 type UpdateCategoryModalProps = {
   id?: number;
@@ -343,3 +332,5 @@ type UpdateCategoryModalProps = {
   show: boolean;
   onHide: () => void;
 };
+
+export default UpdateCategoryModal;
