@@ -3,6 +3,10 @@ type ProductDataResponseType = {
   totalPages?: number;
 };
 
+type ProductCategoryResponseType = {
+  page?: ProductDataResponseType
+}
+
 type ProductDataType = {
   productId?: number | null;
   productCode?: string;
@@ -17,4 +21,4 @@ type ProductDataType = {
   updateTime?: string;
 };
 
-export type { ProductDataType, ProductDataResponseType };
+export type { ProductDataType, ProductDataResponseType, ProductCategoryResponseType };

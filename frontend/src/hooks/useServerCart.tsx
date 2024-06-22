@@ -21,7 +21,6 @@ const useServerCart = () => {
     error: cartError,
     isError: cartIsError,
     isSuccess: cartIsSuccess,
-    refetch: getCartRefetch,
   } = useGetCart({ enabled: userRole === Role.Customer });
 
   useEffect(() => {
@@ -71,7 +70,6 @@ const useServerCart = () => {
     errorGetServerCart,
     cartOrderDetailCount,
     setShowGetServerCartToast,
-    getCartRefetch,
   };
 };
 

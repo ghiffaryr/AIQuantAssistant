@@ -6,7 +6,6 @@ import { ProductDataType } from '@/type/ProductDataType';
 export default function ProductList({
   products,
   setProducts,
-  getCartRefetch,
 }: ProductListProps) {
   return (
     <>
@@ -14,8 +13,7 @@ export default function ProductList({
         <div
           className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4
         "
-          id="products-row"
-        >
+          id="products-row">
           {products.map((product, idx) => (
             <Product
               key={idx}
@@ -32,7 +30,6 @@ export default function ProductList({
               updateTime={product.updateTime}
               products={products}
               setProducts={setProducts}
-              getCartRefetch={getCartRefetch}
             />
           ))}
         </div>
@@ -44,5 +41,4 @@ export default function ProductList({
 type ProductListProps = {
   products: ProductDataType[];
   setProducts: React.Dispatch<React.SetStateAction<ProductDataType[]>>;
-  getCartRefetch: () => Promise<any>;
 };
