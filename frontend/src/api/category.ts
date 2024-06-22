@@ -43,6 +43,29 @@ export const useGetCategory = (
   });
 };
 
+export const useGetCategoryByProductCategoryCode = (
+  productCategoryCode: string,
+  options: Omit<
+    UseQueryOptions<AxiosResponse<CategoryDetailType>>,
+    'queryKey' | 'queryFn'
+  > = {},
+) => {
+  return useQuery<
+    AxiosResponse<CategoryDetailType, any>,
+    Error,
+    AxiosResponse<CategoryDetailType, any>
+  >({
+    queryKey: [InvalidateQKey, productCategoryCode],
+    queryFn: ({ signal }) => {
+      return axios.get(`${VITE_API_URL}/category/${productCategoryCode}`, {
+        signal,
+      });
+    },
+    placeholderData: keepPreviousData,
+    ...options,
+  });
+};
+
 export const useGetProductCategory = (
   code: string,
   page: number,
@@ -59,12 +82,10 @@ export const useGetProductCategory = (
   >({
     queryKey: [InvalidateQKey, 'product', page, size, code],
     queryFn: ({ signal }) => {
-      return axios.get( `${VITE_API_URL}/category/${code}/product`,
-        {
-          signal,
-          params: { page: page, size: size },
-        },
-      );
+      return axios.get(`${VITE_API_URL}/category/${code}/product`, {
+        signal,
+        params: { page: page, size: size },
+      });
     },
     placeholderData: keepPreviousData,
     ...options,
@@ -87,12 +108,10 @@ export const useGetProductCategoryOnsale = (
   >({
     queryKey: [InvalidateQKey, 'product', page, size, code],
     queryFn: ({ signal }) => {
-      return axios.get( `${VITE_API_URL}/category/${code}/product/onsale`,
-        {
-          signal,
-          params: { page: page, size: size },
-        },
-      );
+      return axios.get(`${VITE_API_URL}/category/${code}/product/onsale`, {
+        signal,
+        params: { page: page, size: size },
+      });
     },
     placeholderData: keepPreviousData,
     ...options,

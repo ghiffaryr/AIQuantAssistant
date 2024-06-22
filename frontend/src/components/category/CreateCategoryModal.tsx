@@ -11,10 +11,7 @@ import Toast from 'react-bootstrap/Toast';
 import { useCategorySellerCreate } from '@/api/category';
 import errorHandler from '@/utils/error';
 
-export default function CreateCategoryModal({
-  show,
-  onHide,
-}: CreateCategoryModalProps) {
+const CreateCategoryModal = ({ show, onHide }: CreateCategoryModalProps) => {
   const [inputs, setInputs] = useState({
     productCategoryCode: '',
     productCategoryDescription: '',
@@ -91,8 +88,7 @@ export default function CreateCategoryModal({
         aria-labelledby="contained-modal-title-vcenter"
         centered
         show={show}
-        onHide={onHide}
-      >
+        onHide={onHide}>
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             Create Category
@@ -105,13 +101,11 @@ export default function CreateCategoryModal({
               className="create-product-form"
               id="create-product-form"
               noValidate
-              validated={validated}
-            >
+              validated={validated}>
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom01"
-              >
+                controlId="validationCustom01">
                 <Form.Label column sm="4">
                   <div className="d-inline-flex">
                     Code&nbsp;<span className="text-danger">*</span>
@@ -136,8 +130,7 @@ export default function CreateCategoryModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom02"
-              >
+                controlId="validationCustom02">
                 <Form.Label column sm="4">
                   <div className="d-inline-flex">
                     Name&nbsp;<span className="text-danger">*</span>
@@ -162,8 +155,7 @@ export default function CreateCategoryModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom03"
-              >
+                controlId="validationCustom03">
                 <Form.Label column sm="4">
                   Image Link
                 </Form.Label>
@@ -182,8 +174,7 @@ export default function CreateCategoryModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom04"
-              >
+                controlId="validationCustom04">
                 <Form.Label column sm="4">
                   Upload Image
                 </Form.Label>
@@ -202,8 +193,7 @@ export default function CreateCategoryModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom05"
-              >
+                controlId="validationCustom05">
                 <Form.Label column sm="4">
                   Description
                 </Form.Label>
@@ -236,8 +226,7 @@ export default function CreateCategoryModal({
                   (
                     document.getElementById('create-form-button') as HTMLElement
                   ).click()
-                }
-              >
+                }>
                 Create
               </Button>
             </div>
@@ -254,8 +243,7 @@ export default function CreateCategoryModal({
               onClose={() => setShowUploadImageToast(false)}
               show={showUploadImageToast}
               delay={3000}
-              autohide
-            >
+              autohide>
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -274,8 +262,7 @@ export default function CreateCategoryModal({
               onClose={() => setShowCreateCategoryToast(false)}
               show={showCreateCategoryToast}
               delay={3000}
-              autohide
-            >
+              autohide>
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -291,8 +278,7 @@ export default function CreateCategoryModal({
               onClose={() => setShowCreateCategoryToast(false)}
               show={showCreateCategoryToast}
               delay={3000}
-              autohide
-            >
+              autohide>
               <Toast.Header className="bg-success">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -308,9 +294,11 @@ export default function CreateCategoryModal({
       </>
     </>
   );
-}
+};
 
 type CreateCategoryModalProps = {
   show: boolean;
   onHide: () => void;
 };
+
+export default CreateCategoryModal;

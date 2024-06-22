@@ -11,10 +11,7 @@ import Toast from 'react-bootstrap/Toast';
 import { useProductSellerCreate } from '@/api/product';
 import errorHandler from '@/utils/error';
 
-export default function CreateProductModal({
-  show,
-  onHide,
-}: CreateProductModalProps) {
+const CreateProductModal = ({ show, onHide }: CreateProductModalProps) => {
   const [inputs, setInputs] = useState({
     productCategoryCode: '',
     productCode: '',
@@ -95,8 +92,7 @@ export default function CreateProductModal({
         aria-labelledby="contained-modal-title-vcenter"
         centered
         show={show}
-        onHide={onHide}
-      >
+        onHide={onHide}>
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             Create Product
@@ -109,13 +105,11 @@ export default function CreateProductModal({
               className="update-product-form"
               id="update-product-form"
               noValidate
-              validated={validated}
-            >
+              validated={validated}>
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom01"
-              >
+                controlId="validationCustom01">
                 <Form.Label column sm="4">
                   <div className="d-inline-flex">
                     Category Code&nbsp;<span className="text-danger">*</span>
@@ -140,8 +134,7 @@ export default function CreateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom02"
-              >
+                controlId="validationCustom02">
                 <Form.Label column sm="4">
                   <div className="d-inline-flex">
                     Code&nbsp;<span className="text-danger">*</span>
@@ -166,8 +159,7 @@ export default function CreateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom03"
-              >
+                controlId="validationCustom03">
                 <Form.Label column sm="4">
                   <div className="d-inline-flex">
                     Name&nbsp;<span className="text-danger">*</span>
@@ -192,8 +184,7 @@ export default function CreateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom04"
-              >
+                controlId="validationCustom04">
                 <Form.Label column sm="4">
                   <div className="d-inline-flex">
                     Price&nbsp;<span className="text-danger">*</span>
@@ -216,8 +207,7 @@ export default function CreateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom05"
-              >
+                controlId="validationCustom05">
                 <Form.Label column sm="4">
                   <div className="d-inline-flex">
                     Period&nbsp;<span className="text-danger">*</span>
@@ -240,8 +230,7 @@ export default function CreateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom06"
-              >
+                controlId="validationCustom06">
                 <Form.Label column sm="4">
                   Status&nbsp;<span className="text-danger">*</span>
                 </Form.Label>
@@ -271,8 +260,7 @@ export default function CreateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom07"
-              >
+                controlId="validationCustom07">
                 <Form.Label column sm="4">
                   Image Link
                 </Form.Label>
@@ -291,8 +279,7 @@ export default function CreateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom08"
-              >
+                controlId="validationCustom08">
                 <Form.Label column sm="4">
                   Upload Image
                 </Form.Label>
@@ -311,8 +298,7 @@ export default function CreateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom09"
-              >
+                controlId="validationCustom09">
                 <Form.Label column sm="4">
                   Description
                 </Form.Label>
@@ -343,8 +329,7 @@ export default function CreateProductModal({
                 variant="outline-success"
                 onClick={() =>
                   document.getElementById('create-form-button')?.click()
-                }
-              >
+                }>
                 Create
               </Button>
             </div>
@@ -361,8 +346,7 @@ export default function CreateProductModal({
               onClose={() => setShowUploadImageToast(false)}
               show={showUploadImageToast}
               delay={3000}
-              autohide
-            >
+              autohide>
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -381,8 +365,7 @@ export default function CreateProductModal({
               onClose={() => setShowCreateProductToast(false)}
               show={showCreateProductToast}
               delay={3000}
-              autohide
-            >
+              autohide>
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -398,8 +381,7 @@ export default function CreateProductModal({
               onClose={() => setShowCreateProductToast(false)}
               show={showCreateProductToast}
               delay={3000}
-              autohide
-            >
+              autohide>
               <Toast.Header className="bg-success">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -415,9 +397,11 @@ export default function CreateProductModal({
       </>
     </>
   );
-}
+};
 
 type CreateProductModalProps = {
   show: boolean;
   onHide: () => void;
 };
+
+export default CreateProductModal;

@@ -14,7 +14,7 @@ import { numberToPercentage } from '@/utils/number';
 import { CategoryDetailType } from '@/type/CategoryType';
 import useBoundStore from '@/store/store';
 
-export default function Category({
+const Category = ({
   id,
   code,
   name,
@@ -24,7 +24,7 @@ export default function Category({
   updateTime,
   categories,
   setCategories,
-}: CategoryProps) {
+}: CategoryProps) => {
   const [inputs, setInputs] = useState<{ [key: string]: any }>({
     forecastingHorizon: 1,
     stockCode: '',
@@ -521,7 +521,7 @@ export default function Category({
       </div>
     </>
   );
-}
+};
 
 type CategoryProps = {
   id?: number;
@@ -534,3 +534,5 @@ type CategoryProps = {
   categories?: CategoryDetailType[];
   setCategories?: React.Dispatch<React.SetStateAction<CategoryDetailType[]>>;
 };
+
+export default Category;

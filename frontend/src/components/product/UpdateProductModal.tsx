@@ -13,7 +13,7 @@ import { useProductSellerUpdate } from '@/api/product';
 import { EProductStatus } from '@/enums/ProductStatusEnum';
 import errorHandler from '@/utils/error';
 
-export default function UpdateProductModal({
+const UpdateProductModal = ({
   categoryCode,
   code,
   name,
@@ -26,7 +26,7 @@ export default function UpdateProductModal({
   setProducts,
   show,
   onHide,
-}: UpdateProductModalProps) {
+}: UpdateProductModalProps) => {
   const [inputs, setInputs] = useState<ProductDataType>({
     productCategoryCode: categoryCode,
     productCode: code,
@@ -127,8 +127,7 @@ export default function UpdateProductModal({
         aria-labelledby="contained-modal-title-vcenter"
         centered
         show={show}
-        onHide={onHide}
-      >
+        onHide={onHide}>
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             Update Product
@@ -141,13 +140,11 @@ export default function UpdateProductModal({
               className="update-product-form"
               id="update-product-form"
               noValidate
-              validated={validated}
-            >
+              validated={validated}>
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom01"
-              >
+                controlId="validationCustom01">
                 <Form.Label column sm="4">
                   <div className="d-inline-flex">
                     Category Code&nbsp;<span className="text-danger">*</span>
@@ -172,8 +169,7 @@ export default function UpdateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom02"
-              >
+                controlId="validationCustom02">
                 <Form.Label column sm="4">
                   <div className="d-inline-flex">
                     Code&nbsp;<span className="text-danger">*</span>
@@ -198,8 +194,7 @@ export default function UpdateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom03"
-              >
+                controlId="validationCustom03">
                 <Form.Label column sm="4">
                   <div className="d-inline-flex">
                     Name&nbsp;<span className="text-danger">*</span>
@@ -224,8 +219,7 @@ export default function UpdateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom04"
-              >
+                controlId="validationCustom04">
                 <Form.Label column sm="4">
                   <div className="d-inline-flex">
                     Price&nbsp;<span className="text-danger">*</span>
@@ -248,8 +242,7 @@ export default function UpdateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom05"
-              >
+                controlId="validationCustom05">
                 <Form.Label column sm="4">
                   <div className="d-inline-flex">
                     Period&nbsp;<span className="text-danger">*</span>
@@ -272,8 +265,7 @@ export default function UpdateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom06"
-              >
+                controlId="validationCustom06">
                 <Form.Label column sm="4">
                   Status&nbsp;<span className="text-danger">*</span>
                 </Form.Label>
@@ -303,8 +295,7 @@ export default function UpdateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom07"
-              >
+                controlId="validationCustom07">
                 <Form.Label column sm="4">
                   Image Link
                 </Form.Label>
@@ -323,8 +314,7 @@ export default function UpdateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom08"
-              >
+                controlId="validationCustom08">
                 <Form.Label column sm="4">
                   Upload Image
                 </Form.Label>
@@ -343,8 +333,7 @@ export default function UpdateProductModal({
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="validationCustom09"
-              >
+                controlId="validationCustom09">
                 <Form.Label column sm="4">
                   Description
                 </Form.Label>
@@ -375,8 +364,7 @@ export default function UpdateProductModal({
                 variant="outline-success"
                 onClick={() =>
                   document.getElementById('update-form-button')?.click()
-                }
-              >
+                }>
                 Save changes
               </Button>
             </div>
@@ -393,8 +381,7 @@ export default function UpdateProductModal({
               onClose={() => setShowUploadImageToast(false)}
               show={showUploadImageToast}
               delay={3000}
-              autohide
-            >
+              autohide>
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -413,8 +400,7 @@ export default function UpdateProductModal({
               onClose={() => setShowUpdateProductToast(false)}
               show={showUpdateProductToast}
               delay={3000}
-              autohide
-            >
+              autohide>
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -430,8 +416,7 @@ export default function UpdateProductModal({
               onClose={() => setShowUpdateProductToast(false)}
               show={showUpdateProductToast}
               delay={3000}
-              autohide
-            >
+              autohide>
               <Toast.Header className="bg-success">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -447,7 +432,7 @@ export default function UpdateProductModal({
       </>
     </>
   );
-}
+};
 
 type UpdateProductModalProps = {
   categoryCode?: string;
@@ -463,3 +448,5 @@ type UpdateProductModalProps = {
   show: boolean;
   onHide: () => void;
 };
+
+export default UpdateProductModal;

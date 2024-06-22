@@ -3,10 +3,7 @@ import React from 'react';
 import Product from './Product';
 import { ProductDataType } from '@/type/ProductDataType';
 
-export default function ProductList({
-  products,
-  setProducts,
-}: ProductListProps) {
+const ProductList = ({ products, setProducts }: ProductListProps) => {
   return (
     <>
       <div className="container mb-3">
@@ -36,9 +33,11 @@ export default function ProductList({
       </div>
     </>
   );
-}
+};
 
 type ProductListProps = {
   products: ProductDataType[];
   setProducts: React.Dispatch<React.SetStateAction<ProductDataType[]>>;
 };
+
+export default ProductList;

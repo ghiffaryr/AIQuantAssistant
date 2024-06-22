@@ -15,7 +15,7 @@ import errorHandler from '@/utils/error';
 import useBoundStore from '@/store/store';
 import { useAddCart, useUpdateCartByCode } from '@/api/cart';
 
-export default function Product({
+const Product = ({
   categoryCode,
   code,
   name,
@@ -27,7 +27,7 @@ export default function Product({
   updateTime,
   products,
   setProducts,
-}: ProductProps) {
+}: ProductProps) => {
   const [inputs, setInputs] = useState({ quantity: 1 });
   const [validated, setValidated] = useState(false);
   const [showAddToCartToast, setShowAddToCartToast] = useState(false);
@@ -354,7 +354,7 @@ export default function Product({
       </>
     </>
   );
-}
+};
 
 type ProductProps = {
   id?: number;
@@ -371,3 +371,5 @@ type ProductProps = {
   products: ProductDataType[];
   setProducts: React.Dispatch<React.SetStateAction<ProductDataType[]>>;
 };
+
+export default Product;

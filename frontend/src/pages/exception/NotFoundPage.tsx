@@ -2,7 +2,7 @@ import '@/style/pages/exception/NotFoundPage.css';
 import { Link } from 'react-router-dom';
 import FooterComponent from '@/components/commons/FooterComponent';
 
-export default function NotFoundPage() {
+const NotFoundPage = () => {
   return (
     <>
       <div className="main-notfound">
@@ -20,4 +20,6 @@ export default function NotFoundPage() {
       </div>
     </>
   );
-}
+};
+
+export default NotFoundPage;
