@@ -118,7 +118,7 @@ export const useRecover = <T extends AxiosResponse<any, any>>(
       return axios.put(`${VITE_API_URL}/recover`, {
         email: inputs.email,
         recoveryPhrase: inputs.recoveryPhrase,
-      });;
+      });
     },
     onSuccess: data => {
       mutationOptions.successSideEffect(data);
