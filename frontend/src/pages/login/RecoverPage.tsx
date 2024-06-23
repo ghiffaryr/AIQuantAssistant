@@ -95,7 +95,8 @@ const RecoverPage = () => {
                 className="login-form"
                 noValidate
                 validated={validated}
-                onSubmit={handleSubmit}>
+                onSubmit={handleSubmit}
+              >
                 <InputGroup className="mb-3">
                   <InputGroup.Text>
                     <FaUser />
@@ -132,7 +133,8 @@ const RecoverPage = () => {
                   <Button
                     type="submit"
                     variant="outline-primary"
-                    className="w-100 mt-3">
+                    className="w-100 mt-3"
+                  >
                     Recover
                   </Button>
                   <Row>
@@ -141,7 +143,8 @@ const RecoverPage = () => {
                         Remember your password?{' '}
                         <LinkContainer
                           to="/login"
-                          className="login-link text-primary">
+                          className="login-link text-primary"
+                        >
                           <span>Login</span>
                         </LinkContainer>
                       </Form.Text>
@@ -151,7 +154,8 @@ const RecoverPage = () => {
                         You don't have an account?{' '}
                         <LinkContainer
                           to="/register"
-                          className="register-link text-primary">
+                          className="register-link text-primary"
+                        >
                           <span>Register</span>
                         </LinkContainer>
                       </Form.Text>
@@ -170,7 +174,8 @@ const RecoverPage = () => {
             onClose={() => setShowRecoverToast(false)}
             show={showRecoverToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-danger">
               <img
                 src="holder.js/20x20?text=%20"

@@ -212,7 +212,8 @@ const ProfilePage = () => {
         <div className="container mb-3">
           <div
             className="row g-5 d-flex align-items-center justify-content-center"
-            id="profile-row">
+            id="profile-row"
+          >
             <div className="col col-12 col-md-5 col-lg-4 d-flex align-items-center justify-content-center">
               <img
                 className="img-fluid rounded-5"
@@ -229,11 +230,13 @@ const ProfilePage = () => {
                 className="profile-form"
                 noValidate
                 validated={validated}
-                onSubmit={handleSubmitUpdateProfile}>
+                onSubmit={handleSubmitUpdateProfile}
+              >
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom01">
+                  controlId="validationCustom01"
+                >
                   <Form.Label column sm="4">
                     Profile Picture Link
                   </Form.Label>
@@ -252,7 +255,8 @@ const ProfilePage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom02">
+                  controlId="validationCustom02"
+                >
                   <Form.Label column sm="4">
                     Upload Profile Picture
                   </Form.Label>
@@ -271,7 +275,8 @@ const ProfilePage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom03">
+                  controlId="validationCustom03"
+                >
                   <Form.Label column sm="4">
                     <div className="d-inline-flex">
                       First Name&nbsp;<span className="text-danger">*</span>
@@ -296,7 +301,8 @@ const ProfilePage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom04">
+                  controlId="validationCustom04"
+                >
                   <Form.Label column sm="4">
                     Last Name&nbsp;<span className="text-danger">*</span>
                   </Form.Label>
@@ -319,7 +325,8 @@ const ProfilePage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom05">
+                  controlId="validationCustom05"
+                >
                   <Form.Label column sm="4">
                     Email Address&nbsp;<span className="text-danger">*</span>
                   </Form.Label>
@@ -342,7 +349,8 @@ const ProfilePage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom06">
+                  controlId="validationCustom06"
+                >
                   <Form.Label column sm="4">
                     <div className="d-inline-flex">
                       Password&nbsp;<span className="text-danger">*</span>
@@ -368,14 +376,16 @@ const ProfilePage = () => {
                                 </li>
                               </ul>
                             </Tooltip>
-                          }>
+                          }
+                        >
                           <div
                             className="input d-flex align-items-center tw-cursor-pointer"
                             style={{
                               borderRadius: '50%',
                               width: '1rem',
                               height: '1rem',
-                            }}>
+                            }}
+                          >
                             <BsQuestionCircleFill />
                           </div>
                         </OverlayTrigger>
@@ -410,7 +420,8 @@ const ProfilePage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom07">
+                  controlId="validationCustom07"
+                >
                   <Form.Label column sm="4">
                     Confirm Password <span className="text-danger">*</span>
                   </Form.Label>
@@ -433,7 +444,8 @@ const ProfilePage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom08">
+                  controlId="validationCustom08"
+                >
                   <Form.Label column sm="4">
                     Phone
                   </Form.Label>
@@ -455,7 +467,8 @@ const ProfilePage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom09">
+                  controlId="validationCustom09"
+                >
                   <Form.Label column sm="4">
                     Address
                   </Form.Label>
@@ -477,7 +490,8 @@ const ProfilePage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom10">
+                  controlId="validationCustom10"
+                >
                   <Form.Label column sm="4">
                     Gender
                   </Form.Label>
@@ -507,7 +521,8 @@ const ProfilePage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom11">
+                  controlId="validationCustom11"
+                >
                   <Form.Label column sm="4">
                     Birth Date
                   </Form.Label>
@@ -528,7 +543,8 @@ const ProfilePage = () => {
                   <Button
                     type="submit"
                     variant="outline-primary"
-                    className="w-50 mt-3">
+                    className="w-50 mt-3"
+                  >
                     Update
                   </Button>
                   <Row>
@@ -537,7 +553,8 @@ const ProfilePage = () => {
                         Deactivate your account?{' '}
                         <a
                           className="deactivate-link text-danger"
-                          onClick={handleDeactivateAccount}>
+                          onClick={handleDeactivateAccount}
+                        >
                           <span>Deactivate</span>
                         </a>
                       </Form.Text>
@@ -556,7 +573,8 @@ const ProfilePage = () => {
             onClose={() => setShowGetServerCartToast(false)}
             show={showGetServerCartToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-danger">
               <img
                 src="holder.js/20x20?text=%20"
@@ -575,7 +593,8 @@ const ProfilePage = () => {
             onClose={() => setShowGetProfileToast(false)}
             show={showGetProfileToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-danger">
               <img
                 src="holder.js/20x20?text=%20"
@@ -594,7 +613,8 @@ const ProfilePage = () => {
             onClose={() => setShowUploadProfilePictureToast(false)}
             show={showUploadProfilePictureToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-danger">
               <img
                 src="holder.js/20x20?text=%20"
@@ -613,7 +633,8 @@ const ProfilePage = () => {
             onClose={() => setShowUpdateProfileToast(false)}
             show={showUpdateProfileToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-danger">
               <img
                 src="holder.js/20x20?text=%20"
@@ -629,7 +650,8 @@ const ProfilePage = () => {
             onClose={() => setShowUpdateProfileToast(false)}
             show={showUpdateProfileToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-success">
               <img
                 src="holder.js/20x20?text=%20"
@@ -648,7 +670,8 @@ const ProfilePage = () => {
             onClose={() => setShowDeactivateAccountToast(false)}
             show={showDeactivateAccountToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-danger">
               <img
                 src="holder.js/20x20?text=%20"
@@ -664,7 +687,8 @@ const ProfilePage = () => {
             onClose={() => setShowDeactivateAccountToast(false)}
             show={showDeactivateAccountToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-success">
               <img
                 src="holder.js/20x20?text=%20"

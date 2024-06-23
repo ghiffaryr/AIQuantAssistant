@@ -131,11 +131,13 @@ const RegisterPage = () => {
                 className="login-form"
                 noValidate
                 validated={validated}
-                onSubmit={handleSubmit}>
+                onSubmit={handleSubmit}
+              >
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom01">
+                  controlId="validationCustom01"
+                >
                   <Form.Label column sm="4">
                     Profile Picture
                   </Form.Label>
@@ -154,7 +156,8 @@ const RegisterPage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom02">
+                  controlId="validationCustom02"
+                >
                   <Form.Label column sm="4">
                     <div className="d-inline-flex">
                       First Name&nbsp;<span className="text-danger">*</span>
@@ -179,7 +182,8 @@ const RegisterPage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom03">
+                  controlId="validationCustom03"
+                >
                   <Form.Label column sm="4">
                     Last Name&nbsp;<span className="text-danger">*</span>
                   </Form.Label>
@@ -202,7 +206,8 @@ const RegisterPage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom04">
+                  controlId="validationCustom04"
+                >
                   <Form.Label column sm="4">
                     Email Address&nbsp;<span className="text-danger">*</span>
                   </Form.Label>
@@ -225,7 +230,8 @@ const RegisterPage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom05">
+                  controlId="validationCustom05"
+                >
                   <Form.Label column sm="4">
                     <div className="d-inline-flex">
                       Password&nbsp;<span className="text-danger">*</span>
@@ -251,14 +257,16 @@ const RegisterPage = () => {
                                 </li>
                               </ul>
                             </Tooltip>
-                          }>
+                          }
+                        >
                           <div
                             className="input d-flex align-items-center tw-cursor-pointer"
                             style={{
                               borderRadius: '50%',
                               width: '1rem',
                               height: '1rem',
-                            }}>
+                            }}
+                          >
                             <BsQuestionCircleFill />
                           </div>
                         </OverlayTrigger>
@@ -293,7 +301,8 @@ const RegisterPage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom06">
+                  controlId="validationCustom06"
+                >
                   <Form.Label column sm="4">
                     Confirm Password <span className="text-danger">*</span>
                   </Form.Label>
@@ -316,7 +325,8 @@ const RegisterPage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom07">
+                  controlId="validationCustom07"
+                >
                   <Form.Label column sm="4">
                     Recovery Phrase <span className="text-danger">*</span>
                   </Form.Label>
@@ -339,7 +349,8 @@ const RegisterPage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom08">
+                  controlId="validationCustom08"
+                >
                   <Form.Label column sm="4">
                     Phone
                   </Form.Label>
@@ -361,7 +372,8 @@ const RegisterPage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom09">
+                  controlId="validationCustom09"
+                >
                   <Form.Label column sm="4">
                     Address
                   </Form.Label>
@@ -383,7 +395,8 @@ const RegisterPage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom10">
+                  controlId="validationCustom10"
+                >
                   <Form.Label column sm="4">
                     Gender
                   </Form.Label>
@@ -411,7 +424,8 @@ const RegisterPage = () => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  controlId="validationCustom11">
+                  controlId="validationCustom11"
+                >
                   <Form.Label column sm="4">
                     Birth Date
                   </Form.Label>
@@ -429,7 +443,8 @@ const RegisterPage = () => {
                   <Button
                     type="submit"
                     variant="outline-primary"
-                    className="w-50 mt-3">
+                    className="w-50 mt-3"
+                  >
                     Register
                   </Button>
                   <br />
@@ -437,7 +452,8 @@ const RegisterPage = () => {
                     Already have an account?{' '}
                     <LinkContainer
                       to="/login"
-                      className="login-link text-primary">
+                      className="login-link text-primary"
+                    >
                       <span>Login</span>
                     </LinkContainer>
                   </Form.Text>
@@ -454,7 +470,8 @@ const RegisterPage = () => {
             onClose={() => setShowRegisterToast(false)}
             show={showRegisterToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-danger">
               <img
                 src="holder.js/20x20?text=%20"
@@ -470,7 +487,8 @@ const RegisterPage = () => {
             onClose={() => setShowRegisterToast(false)}
             show={showRegisterToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-success">
               <img
                 src="holder.js/20x20?text=%20"

@@ -77,35 +77,37 @@ export const useAddCart = <T extends AxiosResponse<any, any>>(
   });
 };
 
-// TODO: invalidated cart query
-export const useDeleteCartByCode = (
-  mutationOptions: UseMutationOptions<
-    AxiosResponse<any, any>,
-    Error,
-    void,
-    unknown
-  >,
+export const useDeleteCartByCode = <T extends AxiosResponse<any, any>>(
+  mutationOptions: Omit<UseMutationOptions<T, Error, Omit<CodeQuantityType, 'quantity'>>, 'onSuccess'> & {
+    successSideEffect: (data: T) => void;
+  },
 ) => {
-  return useMutation<AxiosResponse<any, any>, Error, any>({
+  const queryClient = useQueryClient();
+  return useMutation<T, Error, Omit<CodeQuantityType, 'quantity'>>({
     mutationFn: ({ code }) => {
       return axios.delete(`${VITE_API_URL}/cart/${code}/delete`);
+    },
+    onSuccess: data => {
+      mutationOptions.successSideEffect(data);
+      queryClient.invalidateQueries({ queryKey: [InvalidateQKey] });
     },
     ...mutationOptions,
   });
 };
 
-// TODO: invalidated cart query
-export const useCartCheckout = (
-  mutationOptions: UseMutationOptions<
-    AxiosResponse<any, any>,
-    Error,
-    void,
-    unknown
-  >,
+export const useCartCheckout = <T extends AxiosResponse<any, any>>(
+  mutationOptions: Omit<UseMutationOptions<T, Error, void>, 'onSuccess'> & {
+    successSideEffect: (data: T) => void;
+  },
 ) => {
-  return useMutation<AxiosResponse<any, any>, Error, void>({
+  const queryClient = useQueryClient();
+  return useMutation<T, Error, void>({
     mutationFn: () => {
       return axios.post(`${VITE_API_URL}/cart/checkout`);
+    },
+    onSuccess: data => {
+      mutationOptions.successSideEffect(data);
+      queryClient.invalidateQueries({ queryKey: [InvalidateQKey] });
     },
     ...mutationOptions,
   });
