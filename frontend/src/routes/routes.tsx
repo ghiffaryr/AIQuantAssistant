@@ -10,23 +10,57 @@ import OrderPage from '@/pages/main/OrderPage';
 import ProductPage from '@/pages/main/ProductPage';
 import CategoryPage from '@/pages/main/CategoryPage';
 import ProductByCategoryPage from '@/pages/category/ProductByCategoryPage';
-import InferencePage from '@/pages/main/InferencePage';
 import ProfilePage from '@/pages/main/ProfilePage';
+import AuthenticatedAccess from '@/pages/protected/AuthenticatedAccess';
+import UnauthenticatedAndCustomerAccess from '@/pages/protected/UnauthenticatedAndCustomerAccess';
+import CartPage from '@/pages/main/CartPage';
+import RegisterPage from '@/pages/login/RegisterPage';
+import RecoverPage from '@/pages/login/RecoverPage';
 
 const PageRoutes: React.FC = () => {
   const location = useLocation();
   return (
     <Routes location={location} key={location.pathname}>
       <Route path="/" element={<HomePage />} />
-      {/* <Route path="/cart" element={<CartPage />} /> */}
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/news" element={<NewsPage />} />
-      <Route path="/order" element={<OrderPage />} />
-      <Route path="/product" element={<ProductPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/recover" element={<RecoverPage />} />
+      <Route
+        path="/cart"
+        element={
+          <UnauthenticatedAndCustomerAccess>
+            <CartPage />
+          </UnauthenticatedAndCustomerAccess>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <AuthenticatedAccess>
+            <ProfilePage />
+          </AuthenticatedAccess>
+        }
+      />
       <Route path="/category" element={<CategoryPage />} />
       <Route path="/category/:code" element={<ProductByCategoryPage />} />
-      <Route path="/subscription" element={<InferencePage />} />
-      <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/product" element={<ProductPage />} />
+      <Route path="/news" element={<NewsPage />} />
+      <Route
+        path="/order"
+        element={
+          <AuthenticatedAccess>
+            <OrderPage />
+          </AuthenticatedAccess>
+        }
+      />
+      <Route
+        path="/inference"
+        element={
+          <AuthenticatedAccess>
+            <OrderPage />
+          </AuthenticatedAccess>
+        }
+      />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

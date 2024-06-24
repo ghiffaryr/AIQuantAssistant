@@ -13,10 +13,7 @@ import errorHandler from '@/utils/error';
 import useBoundStore from '@/store/store';
 import { useDeleteCartByCode, useUpdateCartByCode } from '@/api/cart';
 
-export default function CartOrderDetail({
-  code,
-  quantity,
-}: CartOrderDetailProps) {
+const CartOrderDetail = ({ code, quantity }: CartOrderDetailProps) => {
   const [validated, setValidated] = useState(false);
   const [product, setProduct] = useState<ProductDataType>({
     productId: null,
@@ -288,9 +285,11 @@ export default function CartOrderDetail({
       </>
     </>
   );
-}
+};
 
 type CartOrderDetailProps = {
   code: string;
   quantity: number;
 };
+
+export default CartOrderDetail;
