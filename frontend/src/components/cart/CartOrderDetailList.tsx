@@ -1,7 +1,7 @@
 import CartOrderDetail from './CartOrderDetail';
 import useBoundStore from '@/store/store';
 
-export default function CartOrderDetailList() {
+const CartOrderDetailList = () => {
   const cartOrderDetails = useBoundStore.use.cartDetails?.();
 
   return (
@@ -19,4 +19,6 @@ export default function CartOrderDetailList() {
       </div>
     </>
   );
-}
+};
+
+export default CartOrderDetailList;

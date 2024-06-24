@@ -13,7 +13,7 @@ import useBoundStore from '@/store/store';
 import errorHandler from '@/utils/error';
 import { OrderDetail } from '@/type/CartDetailResponseType';
 
-export default function CartPage() {
+const CartPage = () => {
   const [cartOrderDetailCount, setCartOrderDetailCount] = useState(0);
   const [cartOrderDetailTotalPrice, setCartOrderDetailTotalPrice] = useState(0);
   const [showGetCartOrderDetailsToast, setShowGetCartOrderDetailsToast] =
@@ -204,4 +204,6 @@ export default function CartPage() {
       </ToastContainer>
     </>
   );
-}
+};
+
+export default CartPage;
