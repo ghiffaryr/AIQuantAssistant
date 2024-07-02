@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import ToastContainer from 'react-bootstrap/esm/ToastContainer';
 import Toast from 'react-bootstrap/Toast';
-import ProductStatusEnum from '../../enums/ProductStatusEnum';
+import ProductStatusEnum from '@/enums/ProductStatusEnum';
 import { useGetProductByCode } from '@/api/product';
 import { ProductDataType } from '@/type/ProductDataType';
 import errorHandler from '@/utils/error';

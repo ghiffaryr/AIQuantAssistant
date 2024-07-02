@@ -4,6 +4,10 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import PageRoutes from './routes/routes';
 import { BrowserRouter } from 'react-router-dom';
 import setupGlobalAxiosInterceptor from './api/setupGlobalAxiosInterceptor';
+import { MantineProvider } from '@mantine/core';
+// core styles are required for all packages
+import '@mantine/core/styles.css';
+import '@mantine/core/styles/global.css';
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 300 * 1000 } },
@@ -14,9 +18,11 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <PageRoutes />
-        </BrowserRouter>
+        <MantineProvider>
+          <BrowserRouter>
+            <PageRoutes />
+          </BrowserRouter>
+        </MantineProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </>

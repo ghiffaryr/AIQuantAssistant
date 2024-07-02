@@ -4,9 +4,7 @@ import Button from 'react-bootstrap/esm/Button';
 import Form from 'react-bootstrap/Form';
 import ToastContainer from 'react-bootstrap/esm/ToastContainer';
 import Toast from 'react-bootstrap/Toast';
-import ProductStatusEnum, {
-  EProductStatus,
-} from '../../enums/ProductStatusEnum';
+import ProductStatusEnum, { EProductStatus } from '@/enums/ProductStatusEnum';
 import FloatingLabel from 'react-bootstrap/esm/FloatingLabel';
 import UpdateProductModal from './UpdateProductModal';
 import { useProductSellerDelete } from '@/api/product';

@@ -5,7 +5,7 @@ import ToastContainer from 'react-bootstrap/esm/ToastContainer';
 import Toast from 'react-bootstrap/Toast';
 import Form from 'react-bootstrap/Form';
 import { FaPlus, FaMinus } from 'react-icons/fa';
-import ProductStatusEnum from '../../enums/ProductStatusEnum';
+import ProductStatusEnum from '@/enums/ProductStatusEnum';
 import Button from 'react-bootstrap/esm/Button';
 import { ProductDataType } from '@/type/ProductDataType';
 import { useGetProductByCode } from '@/api/product';
@@ -203,7 +203,8 @@ const CartOrderDetail = ({ code, quantity }: CartOrderDetailProps) => {
                     <div className="col col-2 d-flex justify-content-center align-items-center">
                       <Button
                         variant="outline-primary"
-                        onClick={handleQuantityMinus}>
+                        onClick={handleQuantityMinus}
+                      >
                         <FaMinus />
                       </Button>
                     </div>
@@ -212,10 +213,12 @@ const CartOrderDetail = ({ code, quantity }: CartOrderDetailProps) => {
                         className="cart-order-detail-form w-100"
                         noValidate
                         validated={validated}
-                        onSubmit={handleSubmitCartOrderDetail}>
+                        onSubmit={handleSubmitCartOrderDetail}
+                      >
                         <FloatingLabel
                           controlId="floatingInput"
-                          label="Quantity">
+                          label="Quantity"
+                        >
                           <Form.Control
                             type="number"
                             name="quantity"
@@ -232,7 +235,8 @@ const CartOrderDetail = ({ code, quantity }: CartOrderDetailProps) => {
                     <div className="col col-2 d-flex justify-content-center align-items-center">
                       <Button
                         variant="outline-primary"
-                        onClick={handleQuantityPlus}>
+                        onClick={handleQuantityPlus}
+                      >
                         <FaPlus />
                       </Button>
                     </div>
@@ -250,7 +254,8 @@ const CartOrderDetail = ({ code, quantity }: CartOrderDetailProps) => {
               onClose={() => setShowGetProductToast(false)}
               show={showGetProductToast}
               delay={3000}
-              autohide>
+              autohide
+            >
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -269,7 +274,8 @@ const CartOrderDetail = ({ code, quantity }: CartOrderDetailProps) => {
               onClose={() => setShowGetProductToast(false)}
               show={showUpdateCartOrderDetailToast}
               delay={3000}
-              autohide>
+              autohide
+            >
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
