@@ -78,7 +78,10 @@ export const useAddCart = <T extends AxiosResponse<any, any>>(
 };
 
 export const useDeleteCartByCode = <T extends AxiosResponse<any, any>>(
-  mutationOptions: Omit<UseMutationOptions<T, Error, Omit<CodeQuantityType, 'quantity'>>, 'onSuccess'> & {
+  mutationOptions: Omit<
+    UseMutationOptions<T, Error, Omit<CodeQuantityType, 'quantity'>>,
+    'onSuccess'
+  > & {
     successSideEffect: (data: T) => void;
   },
 ) => {

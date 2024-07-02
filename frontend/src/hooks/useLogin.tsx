@@ -40,7 +40,7 @@ const useLogin = () => {
     isSuccess: cartIsSuccess,
   } = useGetCart({ enabled: false });
   const loginMutate = useLoginMutation({
-    onSuccess: async val => {
+    onSuccess: val => {
       setUserData({
         userEmail: val.data.email,
         userToken: val.data.token,

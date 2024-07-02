@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Toast from 'react-bootstrap/Toast';
 import Button from 'react-bootstrap/esm/Button';
 import ToastContainer from 'react-bootstrap/esm/ToastContainer';
-import OrderStatusEnum, { EOrderStatus } from '../../enums/OrderStatusEnum';
+import OrderStatusEnum, { EOrderStatus } from '@/enums/OrderStatusEnum';
 import OrderDetailList from './OrderDetailList';
 import { useCancelOrder, useFinishOrder } from '@/api/order';
 import errorHandler from '@/utils/error';

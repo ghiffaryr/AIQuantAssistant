@@ -151,7 +151,8 @@ const CartPage = () => {
             onClose={() => setShowGetCartOrderDetailsToast(false)}
             show={showGetCartOrderDetailsToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-danger">
               <img
                 src="holder.js/20x20?text=%20"
@@ -170,7 +171,8 @@ const CartPage = () => {
             onClose={() => setShowCheckoutToast(false)}
             show={showCheckoutToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-danger">
               <img
                 src="holder.js/20x20?text=%20"
@@ -186,7 +188,8 @@ const CartPage = () => {
             onClose={() => setShowCheckoutToast(false)}
             show={showCheckoutToast}
             delay={3000}
-            autohide>
+            autohide
+          >
             <Toast.Header className="bg-success">
               <img
                 src="holder.js/20x20?text=%20"
