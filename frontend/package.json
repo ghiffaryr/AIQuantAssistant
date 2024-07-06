@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port 3000",
+    "dev": "vite",
     "build": "tsc && vite build",
     "tsc": "tsc",
     "lint": "eslint --fix . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
@@ -24,6 +24,7 @@
     "bootstrap-icons": "^1.11.3",
     "chart.js": "^4.4.3",
     "firebase": "10.12.2",
+    "lodash": "^4.17.21",
     "plotly.js": "2.33.0",
     "react": "18.2.0",
     "react-bootstrap": "2.10.2",
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
+    "@types/lodash": "^4.17.6",
     "@types/plotly.js": "^2.29.5",
     "@types/react": "18.2.66",
     "@types/react-dom": "18.2.22",

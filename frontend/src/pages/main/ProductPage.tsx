@@ -5,13 +5,13 @@ import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/esm/ToastContainer';
 import Breadcrumbs from '@/components/commons/Breadcrumbs';
 import NavbarComponent from '@/components/commons/NavbarComponent';
-import ProductList from '../../components/product/ProductList';
+import ProductList from '@/components/product/ProductList';
 import FooterComponent from '@/components/commons/FooterComponent';
 import { PaginationControl } from 'react-bootstrap-pagination-control';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Button } from 'react-bootstrap';
-import CreateProductModal from '../../components/product/CreateProductModal';
+import CreateProductModal from '@/components/product/CreateProductModal';
 import useServerCart from '@/hooks/useServerCart';
 import {
   useGetProduct,

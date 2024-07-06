@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { CartSlice } from './storeType';
 import { createCartSlice } from './cartStore';
+import { createStockSlice } from './stockStore';
 import { WithSelectors } from '@/utils/type';
 import { StoreApi, UseBoundStore } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
@@ -11,6 +12,7 @@ import {
   createPersistUserDataSlice,
 } from './persistUserDataStore';
 import { DEV } from '@/env/env';
+import { StockSlice } from './stockType';
 
 const createSelectors = <S extends UseBoundStore<StoreApi<object>>>(
   _store: S,
@@ -40,11 +42,14 @@ const omittedKey: (keyof UserDataType)[] = [
   'tokenType',
 ];
 
-const useBoundStoreBase = create<CartSlice & UserDataSlice>()(
+type GroupedSlice = CartSlice & UserDataSlice & StockSlice;
+
+const useBoundStoreBase = create<GroupedSlice>()(
   persist(
     (...a) => ({
       ...createPersistUserDataSlice(...a),
       ...createCartSlice(...a),
+      ...createStockSlice(...a),
     }),
     {
       name: 'user-data',
