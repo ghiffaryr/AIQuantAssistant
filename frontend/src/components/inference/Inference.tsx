@@ -13,7 +13,11 @@ import {
 import { CategoryDetailType } from '@/type/CategoryType';
 import errorHandler from '@/utils/error';
 
-const Inference = ({ productCategoryCode, expTime }: InferenceProps) => {
+const Inference = ({
+  stockCode,
+  productCategoryCode,
+  expTime,
+}: InferenceProps) => {
   const [productCategory, setProductCategory] = useState<CategoryDetailType>({
     productCategoryId: undefined,
     productCategoryCode: '',
@@ -28,7 +32,6 @@ const Inference = ({ productCategoryCode, expTime }: InferenceProps) => {
   const [errorGetProductCategory, setErrorGetProductCategory] = useState({});
   const [inputs, setInputs] = useState({
     forecastingHorizon: 1,
-    stockCode: '',
     trainingWindow: 3,
   });
   const [validated, setValidated] = useState(false);
@@ -156,22 +159,18 @@ const Inference = ({ productCategoryCode, expTime }: InferenceProps) => {
                     className="cart-form row row-cols-1 row-cols-lg-3 g-4 justify-content-center"
                     noValidate
                     validated={validated}
-                    onSubmit={handleSubmitPredict}
-                  >
+                    onSubmit={handleSubmitPredict}>
                     <div className="col">
                       <FloatingLabel
                         controlId="floatingInput"
                         label="Stock Code"
-                        className="mb-3"
-                      >
+                        className="mb-3">
                         <Form.Control
                           type="text"
                           name="stockCode"
-                          value={inputs.stockCode}
-                          onChange={handleChange}
-                          onWheel={e => (e.target as HTMLElement).blur()}
+                          value={stockCode}
                           placeholder="Stock Code"
-                          pattern="^(?!\s*$).+"
+                          disabled
                           required
                         />
                         <Form.Control.Feedback type="invalid">
@@ -184,8 +183,7 @@ const Inference = ({ productCategoryCode, expTime }: InferenceProps) => {
                       <FloatingLabel
                         controlId="floatingInput"
                         label="Training Window (month)"
-                        className="mb-3"
-                      >
+                        className="mb-3">
                         <Form.Control
                           type="number"
                           name="trainingWindow"
@@ -205,8 +203,7 @@ const Inference = ({ productCategoryCode, expTime }: InferenceProps) => {
                       <FloatingLabel
                         controlId="floatingInput"
                         label="Forecasting Horizon (month)"
-                        className="mb-3"
-                      >
+                        className="mb-3">
                         <Form.Control
                           type="number"
                           name="forecastingHorizon"
@@ -239,8 +236,7 @@ const Inference = ({ productCategoryCode, expTime }: InferenceProps) => {
                         <Button
                           className="w-100"
                           type="submit"
-                          variant="outline-primary"
-                        >
+                          variant="outline-primary">
                           Predict
                         </Button>
                       </div>
@@ -269,8 +265,7 @@ const Inference = ({ productCategoryCode, expTime }: InferenceProps) => {
               onClose={() => setShowGetProductCategoryToast(false)}
               show={showGetProductCategoryToast}
               delay={3000}
-              autohide
-            >
+              autohide>
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -291,8 +286,7 @@ const Inference = ({ productCategoryCode, expTime }: InferenceProps) => {
               onClose={() => setShowPredictToast(false)}
               show={showPredictToast}
               delay={3000}
-              autohide
-            >
+              autohide>
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -308,8 +302,7 @@ const Inference = ({ productCategoryCode, expTime }: InferenceProps) => {
               onClose={() => setShowPredictToast(false)}
               show={showPredictToast}
               delay={3000}
-              autohide
-            >
+              autohide>
               <Toast.Header className="bg-success">
                 <img
                   src="holder.js/20x20?text=%20"
@@ -328,6 +321,7 @@ const Inference = ({ productCategoryCode, expTime }: InferenceProps) => {
 };
 
 type InferenceProps = {
+  stockCode: string;
   productCategoryCode?: string;
   expTime?: string;
 };
