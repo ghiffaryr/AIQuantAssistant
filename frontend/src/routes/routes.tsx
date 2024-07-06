@@ -11,11 +11,12 @@ import ProductPage from '@/pages/main/ProductPage';
 import CategoryPage from '@/pages/main/CategoryPage';
 import ProductByCategoryPage from '@/pages/category/ProductByCategoryPage';
 import ProfilePage from '@/pages/main/ProfilePage';
-import AuthenticatedAccess from '@/pages/protected/AuthenticatedAccess';
-import UnauthenticatedAndCustomerAccess from '@/pages/protected/UnauthenticatedAndCustomerAccess';
 import CartPage from '@/pages/main/CartPage';
 import RegisterPage from '@/pages/login/RegisterPage';
 import RecoverPage from '@/pages/login/RecoverPage';
+import AuthenticatedAccess from '@/components/protected/AuthenticatedAccess';
+import UnauthenticatedAndCustomerAccess from '@/components/protected/UnauthenticatedAndCustomerAccess';
+import ServicesRoutes from './services';
 
 const PageRoutes: React.FC = () => {
   const location = useLocation();
@@ -53,14 +54,7 @@ const PageRoutes: React.FC = () => {
           </AuthenticatedAccess>
         }
       />
-      <Route
-        path="/inference"
-        element={
-          <AuthenticatedAccess>
-            <OrderPage />
-          </AuthenticatedAccess>
-        }
-      />
+      <Route path="services/*" element={<ServicesRoutes />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

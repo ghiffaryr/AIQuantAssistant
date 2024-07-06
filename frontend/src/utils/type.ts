@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { UseQueryResult } from '@tanstack/react-query';
+import { AxiosResponse } from 'axios';
+
 /* eslint-disable @typescript-eslint/ban-types */
 type FunctionPropertyNames<T> = {
   [K in keyof T]: T[K] extends Function ? K : never;
@@ -13,4 +17,8 @@ type MappedType<T extends string | number | symbol, K> = {
   [P in T]: K;
 };
 
-export type { WithoutFunctions, WithSelectors, MappedType };
+type CombineResult<TResponse, TResult extends { [key: string]: any } = any> = (
+  result: UseQueryResult<AxiosResponse<TResponse, any>, Error>[],
+) => TResult;
+
+export type { WithoutFunctions, WithSelectors, MappedType, CombineResult };
