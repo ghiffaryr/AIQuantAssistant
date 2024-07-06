@@ -1,7 +1,7 @@
 import { create } from 'zustand';
-import { CartSlice } from './storeType';
-import { createCartSlice } from './cartStore';
-import { createStockSlice } from './stockStore';
+import { CartSlice } from './cartType';
+import { createCartSlice } from './cartSlice';
+import { createStockSlice } from './stockSlice';
 import { WithSelectors } from '@/utils/type';
 import { StoreApi, UseBoundStore } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
@@ -10,7 +10,7 @@ import {
   UserDataSlice,
   UserDataType,
   createPersistUserDataSlice,
-} from './persistUserDataStore';
+} from './persistUserDataSlice';
 import { DEV } from '@/env/env';
 import { StockSlice } from './stockType';
 

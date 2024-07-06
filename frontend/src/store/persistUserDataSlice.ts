@@ -1,4 +1,5 @@
 import { StateCreator } from 'zustand';
+import { sliceResetFns } from './resetStore';
 
 export type UserDataType = {
   userName?: string;
@@ -32,7 +33,6 @@ const initialValue: UserDataType = {
 
 export type UserDataAction = {
   setUserData: (val: UserDataType) => void;
-  removeUserData: () => void;
 };
 
 export type UserDataSlice = UserDataType & UserDataAction;
@@ -42,11 +42,10 @@ export const createPersistUserDataSlice: StateCreator<
   [],
   [],
   UserDataSlice
-> = set => ({
-  ...initialValue,
-  setUserData: val => set(state => ({ ...state, ...val })),
-  removeUserData: () => {
-    set(() => ({ ...initialValue }));
-    localStorage.removeItem('user-data');
-  },
-});
+> = set => {
+  sliceResetFns.add(() => set(initialValue));
+  return {
+    ...initialValue,
+    setUserData: val => set(state => ({ ...state, ...val })),
+  };
+};

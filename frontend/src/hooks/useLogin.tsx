@@ -6,9 +6,10 @@ import '@/style/pages/main/LoginPage.css';
 import useBoundStore from '@/store/store';
 import { useGetProfile, useLoginMutation } from '@/api/auth';
 import { useGetCart } from '@/api/cart';
-import { CartDetailsType } from '@/store/storeType';
+import { CartDetailsType } from '@/store/cartType';
 import Role from '@/enums/RoleEnum';
 import errorHandler from '@/utils/error';
+import { resetAllSlices } from '@/store/resetStore';
 
 const useLogin = () => {
   const [inputs, setInputs] = useState({ email: '', password: '' });
@@ -20,7 +21,6 @@ const useLogin = () => {
   const navigate = useNavigate();
 
   const setUserData = useBoundStore.use.setUserData();
-  const removeUserData = useBoundStore.use.removeUserData();
   const setCartOrderDetails = useBoundStore.use.setCartOrderDetails();
   const userToken = useBoundStore.use.userToken?.();
   const userRole = useBoundStore.use.userRole?.();
@@ -51,7 +51,8 @@ const useLogin = () => {
     },
     onError: error => {
       setInputs({ ...inputs, password: '' });
-      removeUserData();
+      useBoundStore.persist.clearStorage();
+      resetAllSlices();
 
       errorHandler({
         axiosErrorHandlerFn: err => {
@@ -88,6 +89,7 @@ const useLogin = () => {
       if (location.state) {
         navigate(`${(location.state as any).from.pathname}`);
       } else {
+        console.log('halo');
         navigate('/');
       }
     }, 3000);
@@ -112,7 +114,9 @@ const useLogin = () => {
     }
 
     if (profileIsError) {
-      removeUserData();
+      useBoundStore.persist.clearStorage();
+      resetAllSlices();
+
       errorHandler({
         error: profileError,
         axiosErrorHandlerFn: err => {

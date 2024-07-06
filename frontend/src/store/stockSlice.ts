@@ -1,6 +1,7 @@
 import { StateCreator } from 'zustand';
 import { WithoutFunctions } from '@/utils/type';
 import { StockSlice } from './stockType';
+import { sliceResetFns } from './resetStore';
 
 const initialValue: WithoutFunctions<StockSlice> = {
   stockCode: '',
@@ -11,7 +12,10 @@ export const createStockSlice: StateCreator<
   [],
   [],
   StockSlice
-> = set => ({
-  ...initialValue,
-  setStockCode: (val: string) => set({ stockCode: val }),
-});
+> = set => {
+  sliceResetFns.add(() => set(initialValue));
+  return {
+    ...initialValue,
+    setStockCode: (val: string) => set({ stockCode: val }),
+  };
+};
