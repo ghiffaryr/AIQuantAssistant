@@ -19,13 +19,14 @@ export const useGetTopGainers = (
   >({
     queryKey: [InvalidateQKey, 'topGainers'],
     queryFn: ({ signal }) => {
-      return axios.get(`${VITE_SCRAPPER_API_URL}/scrapper/stock/gainers`, { signal });
+      return axios.get(`${VITE_SCRAPPER_API_URL}/scrapper/stock/gainers`, {
+        signal,
+      });
     },
     gcTime: +VITE_CACHE_TIME,
     ...options,
   });
 };
-
 
 export const useGetLowGainers = (
   options: Omit<
@@ -40,7 +41,9 @@ export const useGetLowGainers = (
   >({
     queryKey: [InvalidateQKey, 'lowGainers'],
     queryFn: ({ signal }) => {
-      return axios.get(`${VITE_SCRAPPER_API_URL}/scrapper/stock/losers`, { signal });
+      return axios.get(`${VITE_SCRAPPER_API_URL}/scrapper/stock/losers`, {
+        signal,
+      });
     },
     gcTime: +VITE_CACHE_TIME,
     ...options,
@@ -57,7 +60,10 @@ export const useGetStockStatistics = (
   return useQuery<AxiosResponse<StockStatisticResponseDataType, any>>({
     queryKey: [InvalidateQKey, stockCode, 'statistics'],
     queryFn: ({ signal }) => {
-      return axios.post(`${VITE_SCRAPPER_API_URL}/scrapper/stock/${stockCode}/statistics`, { signal });
+      return axios.post(
+        `${VITE_SCRAPPER_API_URL}/scrapper/stock/${stockCode}/statistics`,
+        { signal },
+      );
     },
     gcTime: +VITE_CACHE_TIME,
     ...options,

@@ -212,7 +212,8 @@ export default function StockPage() {
               onClose={() => setIsToastError(false)}
               show={isToastError}
               delay={3000}
-              autohide>
+              autohide
+            >
               <Toast.Header className="bg-danger">
                 <img
                   src="holder.js/20x20?text=%20"

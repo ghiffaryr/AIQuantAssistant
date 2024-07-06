@@ -15,7 +15,8 @@ export default function HeadlineCard({
     <Card
       key="light"
       text="dark"
-      className={`shadow rounded gradient-card-bg-${status} ${className}`}>
+      className={`shadow rounded gradient-card-bg-${status} ${className}`}
+    >
       <Card.Body>
         <div className={`d-flex fs-3 fw-bold align-items-center`}>
           <TextWithStatusColor status={status} className="flex-grow-1">

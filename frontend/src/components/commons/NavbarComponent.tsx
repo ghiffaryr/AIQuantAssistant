@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import useBoundStore from '@/store/store';
 import Role from '@/enums/RoleEnum';
 import { useQueryClient } from '@tanstack/react-query';
+import { resetAllSlices } from '@/store/resetStore';
 
 const NavbarComponent: React.FC<NavbarComponentProps> = (
   props: NavbarComponentProps,
@@ -26,17 +27,18 @@ const NavbarComponent: React.FC<NavbarComponentProps> = (
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const removeUserData = useBoundStore.use.removeUserData();
   const userEmail = useBoundStore.use.userEmail?.();
   const userToken = useBoundStore.use.userToken?.();
   const userRole = useBoundStore.use.userRole?.();
 
-  const handleLogout = () => {
-    removeUserData();
+  const handleLogout = async () => {
+    useBoundStore.persist.clearStorage();
+    resetAllSlices();
     // invalidate all the queries in the cache
-    queryClient.invalidateQueries();
+    await queryClient.invalidateQueries();
     setShow(true);
     setTimeout(() => {
+      console.log('halo');
       navigate('/');
     }, 3000);
   };
@@ -48,8 +50,7 @@ const NavbarComponent: React.FC<NavbarComponentProps> = (
         expand="lg"
         bg="dark"
         variant="dark"
-        className={`${props.navbarClassname}`}
-      >
+        className={`${props.navbarClassname}`}>
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
@@ -113,8 +114,7 @@ const NavbarComponent: React.FC<NavbarComponentProps> = (
                       <FaUser />
                       <NavDropdown
                         title={userEmail ? userEmail : 'User'}
-                        menuVariant="light"
-                      >
+                        menuVariant="light">
                         <LinkContainer to="/profile">
                           <NavDropdown.Item>Profile</NavDropdown.Item>
                         </LinkContainer>
@@ -149,8 +149,7 @@ const NavbarComponent: React.FC<NavbarComponentProps> = (
             onClose={() => setShow(false)}
             show={show}
             delay={3000}
-            autohide
-          >
+            autohide>
             <Toast.Header className="bg-info">
               <img
                 src="holder.js/20x20?text=%20"

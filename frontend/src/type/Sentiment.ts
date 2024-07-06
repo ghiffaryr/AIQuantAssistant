@@ -1,7 +1,7 @@
 type SentimentResponseDataType = {
   label: string;
   score: number;
-  news?: string
+  news?: string;
 };
 
 export type { SentimentResponseDataType };

@@ -8,9 +8,7 @@ import axios, { AxiosResponse } from 'axios';
 
 const InvalidateQKey = 'inference';
 
-export const useInferSentiment = (
-  news: string[],
-) => {
+export const useInferSentiment = (news: string[]) => {
   return useQueries({
     queries: news
       ? news.map<
@@ -27,10 +25,10 @@ export const useInferSentiment = (
                 },
                 { signal },
               );
-              res.data.forEach((_,index) => {
-                res.data[index].news = input
-              })
-              return res
+              res.data.forEach((_, index) => {
+                res.data[index].news = input;
+              });
+              return res;
             },
             gcTime: +VITE_CACHE_TIME,
           };
@@ -39,7 +37,7 @@ export const useInferSentiment = (
   });
 };
 
-export const useInferSummary = <T extends {[key: string]: any}>(
+export const useInferSummary = <T extends { [key: string]: any }>(
   news: string[],
   combineOptions?: CombineResult<string, T>,
 ) => {
